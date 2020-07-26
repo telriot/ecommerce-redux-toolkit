@@ -9,6 +9,7 @@ const MongoStore = require("connect-mongo")(session);
 const passport = require("./passport");
 const authRouter = require("./routes/auth");
 const indexRouter = require("./routes/index");
+const productsRouter = require("./routes/products");
 const usersRouter = require("./routes/users");
 const app = express();
 const cors = require("cors");
@@ -62,7 +63,7 @@ app.use(passport.session());
 app.use("/api", indexRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
-
+app.use("/api/products", productsRouter);
 // Prepare Production Settings
 
 if (process.env.NODE_ENV === "production") {

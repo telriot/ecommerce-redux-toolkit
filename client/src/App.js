@@ -5,13 +5,10 @@ import { useDispatch } from "react-redux";
 import Navbar from "./layout/Navbar";
 
 import { fetchAuthState } from "./features/auth/authSlice";
+import AllProducts from "./features/products/AllProducts";
 
 const useStyles = makeStyles((theme) => ({
-  container: {
-    [theme.breakpoints.up("sm")]: {
-      paddingTop: "40px",
-    },
-  },
+  container: {},
 }));
 
 function App() {
@@ -20,15 +17,13 @@ function App() {
 
   React.useEffect(() => {
     dispatch(fetchAuthState());
-  });
+  }, [dispatch]);
   return (
     <div>
       <Route exact path="/*" component={Navbar}></Route>
-      <div className={classes.container}>
-        <Switch>
-          <Route exact path="/"></Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/" component={AllProducts}></Route>
+      </Switch>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import Navbar from "./layout/Navbar";
 
 import { fetchAuthState } from "./features/auth/authSlice";
 import AllProducts from "./features/products/AllProducts";
+import CartDetail from "./features/cart/CartDetail";
 
 const useStyles = makeStyles((theme) => ({
   container: {},
@@ -23,6 +24,7 @@ function App() {
       <Route exact path="/*" component={Navbar}></Route>
       <Switch>
         <Route exact path="/" component={AllProducts}></Route>
+        <Route exact path="/cart" component={CartDetail}></Route>
       </Switch>
     </div>
   );

@@ -26,7 +26,8 @@ function AllProducts() {
     <Grid container className={classes.grid}>
       {isFetching === "pending"
         ? "Loading..."
-        : products.map((product) => (
+        : products &&
+          products.map((product) => (
             <Grid item sm={6} md={4}>
               <ProductCard key={product._id} product={product} />
             </Grid>

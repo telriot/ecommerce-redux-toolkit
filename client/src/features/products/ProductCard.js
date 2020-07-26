@@ -1,6 +1,8 @@
 import React from "react";
 import { Button, Card, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch } from "react-redux";
+import { productAdded } from "../cart/cartSlice";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -13,9 +15,10 @@ const useStyles = makeStyles((theme) => ({
 function ProductCard({ product }) {
   const { name, brand, description, quantity, price, weight } = product;
   const classes = useStyles();
+  const dispatch = useDispatch();
   const maxLength = 80;
   const handleClick = () => {
-    console.log("add to cart");
+    dispatch(productAdded({ ...product, quantity: 1 }));
   };
   return (
     <Card className={classes.card}>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   selectBillingInfo,
   selectDashboardStatus,
@@ -24,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function AddressForm() {
   const classes = useStyles();
-
   const billingInfo = useSelector(selectBillingInfo);
   const { firstName, lastName, email, address, phone } = billingInfo;
   const dashboardStatus = useSelector(selectDashboardStatus);
@@ -49,22 +48,17 @@ export default function AddressForm() {
               setSubmitting(false);
             }}
           >
-            {({ errors, touched, submitForm, isSubmitting }) => (
+            {() => (
               <Form className={classes.form}>
                 <CustomTextField label="First Name" name="firstName" />
-
                 <CustomTextField
                   type="text"
                   label="Last Name"
                   name="lastName"
                 />
-
                 <CustomTextField name="email" type="email" label="Email" />
-
                 <CustomTextField label="Address" name="address" />
-
                 <CustomTextField label="Phone Number" name="phone" />
-
                 <FormControlLabel
                   control={
                     <Checkbox

@@ -1,6 +1,5 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
 import Navbar from "./layout/Navbar";
 import { fetchAuthState } from "./features/auth/authSlice";
@@ -12,12 +11,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const useStyles = makeStyles((theme) => ({
-  container: {},
-}));
-
 function App() {
-  const classes = useStyles();
   const dispatch = useDispatch();
 
   React.useEffect(() => {

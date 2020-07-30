@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ProductCard({ product }) {
-  const { name, brand, description, quantity, price, weight } = product;
+  const { name, brand, description, quantity, price } = product;
   const classes = useStyles();
   const dispatch = useDispatch();
   const maxLength = 80;

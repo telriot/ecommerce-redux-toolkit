@@ -2,13 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
-import {
-  Breadcrumbs,
-  Container,
-  Grid,
-  Link,
-  Typography,
-} from "@material-ui/core";
+import { Breadcrumbs, Container, Grid, Link } from "@material-ui/core";
 import MyOrders from "./MyOrders";
 import MyProfile from "./MyProfile";
 import { fetchUser } from "./dashboardSlice";

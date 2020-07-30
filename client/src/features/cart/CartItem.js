@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 function CartItem({ product }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { name, brand, quantity, price, weight } = product;
+  const { name, brand, quantity, price } = product;
 
   const handleAddBtnClick = () => {
     dispatch(productAdded({ ...product, quantity: 1 }));

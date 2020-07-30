@@ -5,8 +5,8 @@ import { selectAuthorizedUser } from "../auth/authSlice";
 import { fetchUser } from "../dashboard/dashboardSlice";
 import {
   createPaymentIntent,
-  selectCheckoutError,
-  selectCheckoutStatus,
+  // selectCheckoutError,
+  // selectCheckoutStatus,
   movedToPrevStep,
 } from "./checkoutSlice";
 import {
@@ -46,8 +46,8 @@ function getStepContent(step) {
 function CheckoutView() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const isProcessing = useSelector(selectCheckoutStatus);
-  const error = useSelector(selectCheckoutError);
+  //const isProcessing = useSelector(selectCheckoutStatus);
+  //const error = useSelector(selectCheckoutError);
   const authUser = useSelector(selectAuthorizedUser);
   const classes = useStyles();
   const activeStep = useSelector((state) => state.checkout.activeStep);

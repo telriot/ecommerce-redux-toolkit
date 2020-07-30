@@ -43,6 +43,7 @@ function Navbar() {
   };
 
   const loggedMenuItems = [
+    { title: "Dashboard", link: "/dashboard", action: null },
     { title: "Logout", link: null, action: handleLogout },
   ];
 

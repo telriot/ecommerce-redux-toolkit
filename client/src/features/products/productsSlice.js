@@ -30,11 +30,11 @@ const productsSlice = createSlice({
       const products = action.payload ? action.payload.data.docs : null;
       state.products = products;
       state.error = action.error;
-      state.status = "idle";
+      state.status = "fulfilled";
     },
     [fetchAllProducts.rejected]: (state, action) => {
       state.error = "Something went wrong with our servers";
-      state.status = "idle";
+      state.status = "rejected";
     },
   },
 });

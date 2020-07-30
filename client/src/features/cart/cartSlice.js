@@ -1,12 +1,26 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { status: "idle", products: {}, count: 0, total: 0 };
+const initialState = {
+  status: "idle",
+  products: {},
+  count: 0,
+  shipping: 0,
+  itemTotal: 0,
+  taxPercent: 8,
+};
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    productsReset: {
+      reducer(state) {
+        state.products = {};
+        state.count = 0;
+        state.shipping = 0;
+        state.itemTotal = 0;
+      },
+    },
     productAdded: {
       reducer(state, action) {
         const { _id, quantity, price } = action.payload;
@@ -17,7 +31,9 @@ const cartSlice = createSlice({
           state.products[_id].quantity += quantity;
         }
         state.count += quantity;
-        state.total += parsedPrice * quantity;
+        state.itemTotal += parsedPrice * quantity;
+        state.total =
+          (state.itemTotal * (100 + state.taxPercent)) / 100 + state.shipping;
       },
     },
     productRemoved: {
@@ -34,7 +50,9 @@ const cartSlice = createSlice({
           state.products[_id].quantity -= removalQuantity;
         }
         state.count -= removalQuantity;
-        state.total -= parsedPrice * removalQuantity;
+        state.itemTotal -= parsedPrice * removalQuantity;
+        state.total =
+          (state.itemTotal * (100 + state.taxPercent)) / 100 + state.shipping;
       },
     },
     productDeleted: {
@@ -55,9 +73,11 @@ const cartSlice = createSlice({
 
 export const selectCartItemCount = (state) => state.cart.count;
 export const selectCartContents = (state) => state.cart.products;
-export const selectCartTotal = (state) => state.cart.total;
-
+export const selectCartShippingCost = (state) => state.cart.shipping;
+export const selectCartItemTotal = (state) => state.cart.itemTotal;
+export const selectTaxPercent = (state) => state.cart.taxPercent;
 export const {
+  productsReset,
   productAdded,
   productRemoved,
   productDeleted,

@@ -19,8 +19,8 @@ function AllProducts() {
   const products = useSelector(selectAllProducts);
   const isFetching = useSelector(selectIsFetchingProducts);
   React.useEffect(() => {
-    dispatch(fetchAllProducts());
-  }, [dispatch]);
+    if (isFetching === "idle") dispatch(fetchAllProducts());
+  }, [dispatch, isFetching]);
 
   return (
     <Grid container className={classes.grid}>

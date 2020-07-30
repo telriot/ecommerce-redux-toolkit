@@ -10,6 +10,7 @@ const passport = require("./passport");
 const authRouter = require("./routes/auth");
 const indexRouter = require("./routes/index");
 const productsRouter = require("./routes/products");
+const stripeRouter = require("./routes/stripe");
 const usersRouter = require("./routes/users");
 const app = express();
 const cors = require("cors");
@@ -59,11 +60,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //Create Routes
-
-app.use("/api", indexRouter);
 app.use("/api/auth", authRouter);
-app.use("/api/users", usersRouter);
+app.use("/api", indexRouter);
 app.use("/api/products", productsRouter);
+app.use("/api/stripe", stripeRouter);
+app.use("/api/users", usersRouter);
+
 // Prepare Production Settings
 
 if (process.env.NODE_ENV === "production") {

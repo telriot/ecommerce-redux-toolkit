@@ -23,13 +23,17 @@ function AllProducts() {
   }, [dispatch, isFetching]);
 
   return (
-    <Grid container className={classes.grid}>
+    <Grid
+      data-testid="component-allproducts"
+      container
+      className={classes.grid}
+    >
       {isFetching === "pending"
         ? "Loading..."
         : products &&
           products.map((product) => (
-            <Grid item sm={6} md={4}>
-              <ProductCard key={product._id} product={product} />
+            <Grid key={product._id} item sm={6} md={4}>
+              <ProductCard product={product} />
             </Grid>
           ))}
     </Grid>

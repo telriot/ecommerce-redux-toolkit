@@ -14,8 +14,7 @@ export const createPaymentIntent = createAsyncThunk(
   "checkout/createPaymentIntent",
   async (_, { getState }) => {
     const intentObj = {
-      amount: getState().cart.itemTotal * 100,
-      currency: "usd",
+      products: getState().cart.products,
     };
     try {
       const response = await axios.post(`/api/stripe/create-intent`, intentObj);

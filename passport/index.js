@@ -1,53 +1,21 @@
-const passport = require("passport")
-const TwitterStrategy = require("passport-twitter").Strategy
-const User = require("../models/User")
+const passport = require("passport");
+const User = require("../models/User");
+const localStrategy = require("./localStrategy");
+const twitterStrategy = require("./twitterStrategy");
 
 passport.serializeUser((user, done) => {
-  done(null, user.id)
-})
+  done(null, user.id);
+});
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (error) {
+    done(new Error("Failed to deserialize an user"));
+  }
+});
 
-// deserialize the cookieUserId to user in the database
-passport.deserializeUser((id, done) => {
-  User.findById(id)
-    .then((user) => {
-      done(null, user)
-    })
-    .catch((e) => {
-      done(new Error("Failed to deserialize an user"))
-    })
-})
+passport.use(twitterStrategy);
+passport.use(localStrategy);
 
-passport.use(
-  new TwitterStrategy(
-    {
-      consumerKey: process.env.TWITTER_API_KEY,
-      consumerSecret: process.env.TWITTER_SECRET_KEY,
-      callbackURL: "/api/auth/twitter/redirect",
-    },
-    async (token, tokenSecret, profile, done) => {
-      // find current user in UserModel
-      try {
-        const currentUser = await User.findOne({
-          twitterId: profile._json.id_str,
-        })
-        // create new user if the database doesn't have this user
-        if (!currentUser) {
-          const newUser = await new User({
-            name: profile._json.name,
-            screenName: profile._json.screen_name,
-            twitterId: profile._json.id_str,
-            profileImageUrl: profile._json.profile_image_url,
-          }).save()
-          if (newUser) {
-            done(null, newUser)
-          }
-        }
-        done(null, currentUser)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  )
-)
-
-module.exports = passport
+module.exports = passport;

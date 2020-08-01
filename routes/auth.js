@@ -1,28 +1,43 @@
-var express = require("express")
-var router = express.Router()
-const { asyncErrorHandler } = require("../middleware")
+var express = require("express");
+var router = express.Router();
+const { asyncErrorHandler } = require("../middleware");
 const {
   getAuth,
   getLoginSuccess,
   getLoginFailed,
   getLogout,
+  createUser,
+  loginUser,
   CLIENT_HOME_PAGE_URL,
-} = require("../controllers/auth")
+} = require("../controllers/auth");
 
-const passport = require("../passport")
+const passport = require("../passport");
 
 /* GET home page. */
-router.get("/", asyncErrorHandler(getAuth))
-router.get("/login/success", asyncErrorHandler(getLoginSuccess))
-router.get("/login/failed", asyncErrorHandler(getLoginFailed))
-router.get("/logout", asyncErrorHandler(getLogout))
-router.get("/twitter", passport.authenticate("twitter"))
+router.get("/", asyncErrorHandler(getAuth));
+router.get("/login/success", asyncErrorHandler(getLoginSuccess));
+router.get("/login/failed", asyncErrorHandler(getLoginFailed));
+router.get("/logout", asyncErrorHandler(getLogout));
+router.get("/twitter", passport.authenticate("twitter"));
 router.get(
   "/twitter/redirect",
   passport.authenticate("twitter", {
     successRedirect: CLIENT_HOME_PAGE_URL,
     failureRedirect: "/api/auth/login/failed",
   })
-)
+);
+router.post(
+  "/signup",
+  //userSignupValidationRules(),
+  //validate,
+  asyncErrorHandler(createUser)
+);
+router.post(
+  "/login",
+  //userLoginValidationRules(),
+  //validate,
+  passport.authenticate("local"),
+  asyncErrorHandler(loginUser)
+);
 
-module.exports = router
+module.exports = router;

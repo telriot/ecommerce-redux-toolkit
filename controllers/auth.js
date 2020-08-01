@@ -30,4 +30,29 @@ module.exports = {
     req.logout();
     res.redirect(module.exports.CLIENT_HOME_PAGE_URL);
   },
+  createUser: async (req, res, next) => {
+    const { username, password, email } = req.body;
+    const user = await User.findOne({ username });
+    if (user) {
+      res
+        .status(401)
+        .json({ error: `The username '${username}' is already in use` });
+    } else {
+      const newUser = await new User({
+        username,
+        password,
+        email,
+      });
+      newUser.save();
+      res.status(200).json({
+        message: "User succesfully registered",
+        user: newUser,
+      });
+    }
+  },
+  loginUser(req, res, next) {
+    const { username, _id } = req.user;
+    const userInfo = { username: username, id: _id };
+    res.send(userInfo);
+  },
 };

@@ -1,0 +1,68 @@
+import React from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import {
+  selectCartContents,
+  selectCartItemTotal,
+  selectCartShippingCost,
+  selectTaxPercent,
+} from "./cartSlice";
+import { Button, Grid, Typography } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles";
+import { selectAuthorizedUser } from "../auth/authSlice";
+
+import CartItem from "./CartItem";
+
+const useStyles = makeStyles((theme) => ({
+  grid: {
+    margin: "2rem 0",
+  },
+  subGridLeft: {},
+  subGridRight: {},
+}));
+function CartDetail() {
+  const classes = useStyles();
+  const history = useHistory();
+  const contents = useSelector(selectCartContents);
+  const itemTotal = useSelector(selectCartItemTotal);
+  const shipping = useSelector(selectCartShippingCost);
+  const taxPercent = useSelector(selectTaxPercent);
+  const taxes = (itemTotal / 100) * taxPercent;
+  const total = itemTotal + shipping + taxes;
+  const authUser = useSelector(selectAuthorizedUser);
+
+  const handleCheckoutClick = () => {
+    if (total && authUser) {
+      history.push("/checkout");
+    }
+  };
+
+  return (
+    <Grid className={classes.grid} container>
+      <Grid className={classes.subGridLeft} xs={12} sm={8}>
+        {Object.keys(contents).length
+          ? Object.values(contents).map((item) => (
+              <CartItem key={item._id} product={item} />
+            ))
+          : "Your cart is empty"}
+      </Grid>
+      <Grid className={classes.subGridRight} xs={0} sm={4}>
+        <Typography variant="h6">Your Order</Typography>
+        <Typography variant="body1">Items: ${itemTotal}</Typography>
+        <Typography variant="body1">Shipping: ${shipping}</Typography>
+        <Typography variant="body1">Taxes: ${taxes}</Typography>
+        <Typography variant="body1">Total: ${total}</Typography>
+        <Button
+          disabled={!total}
+          variant="contained"
+          color="primary"
+          onClick={handleCheckoutClick}
+        >
+          Checkout
+        </Button>
+      </Grid>
+    </Grid>
+  );
+}
+
+export default CartDetail;

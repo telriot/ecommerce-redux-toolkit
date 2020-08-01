@@ -6,11 +6,16 @@ const UserSchema = new Schema({
   screenName: String,
   twitterId: String,
   profileImageUrl: String,
-
+  firstName: String,
+  lastName: String,
+  email: String,
+  address: String,
+  phone: String,
   date: {
     type: Date,
     default: Date.now,
   },
+  username: String,
 });
 
 const User = mongoose.model("User", UserSchema);

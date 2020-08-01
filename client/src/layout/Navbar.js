@@ -12,6 +12,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectAuthorizedUser } from "../features/auth/authSlice";
+import CartIcon from "../features/cart/CartIcon";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +43,7 @@ function Navbar() {
   };
 
   const loggedMenuItems = [
+    { title: "Dashboard", link: "/dashboard", action: null },
     { title: "Logout", link: null, action: handleLogout },
   ];
 
@@ -52,6 +54,7 @@ function Navbar() {
           <Typography variant="h6" className={classes.title}>
             <Link to="/">Shopping Cart</Link>
           </Typography>
+          <CartIcon />
 
           <IconButton
             edge="start"

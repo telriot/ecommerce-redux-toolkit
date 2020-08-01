@@ -8,10 +8,10 @@ export const fetchAllProducts = createAsyncThunk(
   async (_, { getState }) => {
     const { page, limit } = getState().products;
     try {
-      const products = await axios.get("api/products/", {
+      const response = await axios.get("api/products/", {
         params: { page, limit },
       });
-      return products;
+      return response.data.docs;
     } catch (error) {
       console.log(error);
     }
@@ -27,14 +27,14 @@ const productsSlice = createSlice({
       state.status = "pending";
     },
     [fetchAllProducts.fulfilled]: (state, action) => {
-      const products = action.payload ? action.payload.data.docs : null;
+      const products = action.payload ? action.payload : null;
       state.products = products;
       state.error = action.error;
-      state.status = "idle";
+      state.status = "fulfilled";
     },
     [fetchAllProducts.rejected]: (state, action) => {
       state.error = "Something went wrong with our servers";
-      state.status = "idle";
+      state.status = "rejected";
     },
   },
 });

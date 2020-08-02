@@ -38,15 +38,19 @@ function CartDetail() {
   };
 
   return (
-    <Grid className={classes.grid} container>
-      <Grid className={classes.subGridLeft} xs={12} sm={8}>
+    <Grid
+      className={classes.grid}
+      data-testid="component-cart-detail"
+      container
+    >
+      <Grid className={classes.subGridLeft} item={true} xs={12} sm={8}>
         {Object.keys(contents).length
           ? Object.values(contents).map((item) => (
               <CartItem key={item._id} product={item} />
             ))
           : "Your cart is empty"}
       </Grid>
-      <Grid className={classes.subGridRight} xs={0} sm={4}>
+      <Grid className={classes.subGridRight} item={true} sm={4}>
         <Typography variant="h6">Your Order</Typography>
         <Typography variant="body1">Items: ${itemTotal}</Typography>
         <Typography variant="body1">Shipping: ${shipping}</Typography>

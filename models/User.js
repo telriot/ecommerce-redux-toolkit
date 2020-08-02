@@ -19,6 +19,7 @@ const UserSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  cart: Object,
 });
 
 UserSchema.methods = {

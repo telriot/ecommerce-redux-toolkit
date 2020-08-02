@@ -10,6 +10,7 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client "
   },
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.56",
     "bcrypt": "^5.0.0",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "~1.4.4",

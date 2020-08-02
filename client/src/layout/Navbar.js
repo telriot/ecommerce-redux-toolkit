@@ -10,9 +10,13 @@ import {
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectAuthorizedUser } from "../features/auth/authSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectAuthorizedUser,
+  openedAuthDialog,
+} from "../features/auth/authSlice";
 import CartIcon from "../features/cart/CartIcon";
+import AuthDialog from "../features/auth/AuthDialog";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,11 +29,12 @@ const useStyles = makeStyles((theme) => ({
 
 function Navbar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const user = useSelector(selectAuthorizedUser);
   const handleLogin = async () => {
-    window.open("http://localhost:5000/api/auth/twitter", "_self");
+    dispatch(openedAuthDialog());
   };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -80,6 +85,7 @@ function Navbar() {
             }}
             open={open}
             onClose={handleClose}
+            onClick={handleClose}
           >
             {Boolean(user) ? (
               loggedMenuItems.map((item, index) => (
@@ -97,6 +103,7 @@ function Navbar() {
           </Menu>
         </Toolbar>
       </AppBar>
+      <AuthDialog />
     </div>
   );
 }

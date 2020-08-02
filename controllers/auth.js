@@ -34,17 +34,21 @@ module.exports = {
     const { username, password, email } = req.body;
     const user = await User.findOne({ username });
     if (user) {
-      res
-        .status(401)
-        .json({ error: `The username '${username}' is already in use` });
+      res.status(401).json({
+        success: false,
+        error: `The username '${username}' is already in use`,
+      });
     } else {
       const newUser = await new User({
+        firstName: "",
+        lastName: "",
         username,
         password,
         email,
       });
       newUser.save();
       res.status(200).json({
+        success: true,
         message: "User succesfully registered",
         user: newUser,
       });
@@ -52,7 +56,7 @@ module.exports = {
   },
   loginUser(req, res, next) {
     const { username, _id } = req.user;
-    const userInfo = { username: username, id: _id };
-    res.send(userInfo);
+    const user = { username: username, id: _id };
+    res.send({ success: true, user });
   },
 };

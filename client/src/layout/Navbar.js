@@ -87,7 +87,7 @@ function Navbar() {
             onClose={handleClose}
             onClick={handleClose}
           >
-            {Boolean(user) ? (
+            {Boolean(user._id) ? (
               loggedMenuItems.map((item, index) => (
                 <MenuItem key={`menuitem-${index}`} onClick={item.action}>
                   {item.link ? (

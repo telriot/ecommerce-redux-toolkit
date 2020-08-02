@@ -3,7 +3,7 @@ import axios from "axios";
 
 const initialState = {
   status: "idle",
-  user: null,
+  user: { _id: null },
   isAuth: null,
   error: null,
   successMessage: null,
@@ -19,7 +19,7 @@ export const fetchAuthState = createAsyncThunk(
       const { success, user } = response.data;
       return { success, user, error: null };
     } catch (error) {
-      return { success: false, user: null, error: error.message };
+      return { success: false, user: initialState.user, error: error.message };
     }
   }
 );
@@ -37,7 +37,7 @@ export const attemptLogin = createAsyncThunk(
       const { success, user } = response.data;
       return { success, user, error: null };
     } catch (error) {
-      return { success: false, user: null, error: error.message };
+      return { success: false, user: initialState.user, error: error.message };
     }
   }
 );
@@ -56,7 +56,7 @@ export const attemptSignup = createAsyncThunk(
       const { success, user } = response.data;
       return { success, user, error: null };
     } catch (error) {
-      return { success: false, user: null, error: error.message };
+      return { success: false, user: initialState.user, error: error.message };
     }
   }
 );
@@ -92,16 +92,16 @@ const authSlice = createSlice({
     [fetchAuthState.fulfilled]: (state, action) => {
       const { success, user, error } = action.payload;
       state.isAuth = success;
-      state.user = user;
+      state.user = user ? user : initialState.user;
       state.error = error;
     },
     [fetchAuthState.rejected]: (state, action) => {
       state.isAuth = null;
-      state.user = null;
+      state.user = initialState.user;
       state.error = "Something went wrong with our servers";
     },
     [attemptLogin.fulfilled]: (state, action) => {
-      const { success, user, error } = action.payload;
+      const { success, user } = action.payload;
       if (success) {
         state.authDialogIsOpen = false;
         state.error = null;
@@ -109,7 +109,7 @@ const authSlice = createSlice({
         state.error = "Invalid Credentials";
       }
       state.isAuth = success;
-      state.user = user;
+      state.user = user ? user : initialState.user;
 
       state.status = "idle";
     },
@@ -119,12 +119,12 @@ const authSlice = createSlice({
     },
     [attemptLogin.rejected]: (state) => {
       state.isAuth = null;
-      state.user = null;
+      state.user = initialState.user;
       state.error = "Something went wrong with our servers";
       state.status = "idle";
     },
     [attemptSignup.fulfilled]: (state, action) => {
-      const { success, error } = action.payload;
+      const { success } = action.payload;
       if (success) {
         state.authDialogActiveTab = 0;
         state.successMessage = "Signup successful. You can now login";
@@ -140,7 +140,7 @@ const authSlice = createSlice({
     },
     [attemptSignup.rejected]: (state) => {
       state.isAuth = null;
-      state.user = null;
+      state.user = initialState.user;
       state.error = "Something went wrong with our servers";
       state.status = "idle";
     },

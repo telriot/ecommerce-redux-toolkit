@@ -4,7 +4,12 @@ import { Button, IconButton, Card, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
-import { productAdded, productDeleted, productRemoved } from "./cartSlice";
+import {
+  productAdded,
+  productDeleted,
+  productRemoved,
+  updateCart,
+} from "./cartSlice";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -29,12 +34,15 @@ function CartItem({ product }) {
 
   const handleAddBtnClick = () => {
     dispatch(productAdded({ ...product, quantity: 1 }));
+    dispatch(updateCart());
   };
   const handleRemoveBtnClick = () => {
     dispatch(productRemoved({ ...product, quantity: 1 }));
+    dispatch(updateCart());
   };
   const handleDeleteBtnClick = () => {
     dispatch(productDeleted(product));
+    dispatch(updateCart());
   };
 
   return (
@@ -48,11 +56,13 @@ function CartItem({ product }) {
         </Button>
       </div>
       <div className={classes.quantityDiv}>
-        <IconButton onClick={handleAddBtnClick} aria-label="delete">
+        <IconButton onClick={handleAddBtnClick} aria-label="increase">
           <AddIcon />
         </IconButton>
-        <Typography variant="body1">{quantity}</Typography>
-        <IconButton onClick={handleRemoveBtnClick} aria-label="delete">
+        <Typography aria-label="quantity" variant="body1">
+          {quantity}
+        </Typography>
+        <IconButton onClick={handleRemoveBtnClick} aria-label="decrease">
           <RemoveIcon />
         </IconButton>
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";
-import { productAdded } from "../cart/cartSlice";
+import { productAdded, updateCart } from "../cart/cartSlice";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -19,6 +19,7 @@ function ProductCard({ product }) {
   const maxLength = 80;
   const handleClick = () => {
     dispatch(productAdded({ ...product, quantity: 1 }));
+    dispatch(updateCart());
   };
   return (
     <Card className={classes.card}>

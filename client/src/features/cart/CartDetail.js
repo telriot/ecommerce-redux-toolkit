@@ -1,11 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
   selectCartContents,
   selectCartItemTotal,
   selectCartShippingCost,
   selectTaxPercent,
+  productsReset,
+  updateCart,
 } from "./cartSlice";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
@@ -23,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 function CartDetail() {
   const classes = useStyles();
   const history = useHistory();
+  const dispatch = useDispatch();
   const contents = useSelector(selectCartContents);
   const itemTotal = useSelector(selectCartItemTotal);
   const shipping = useSelector(selectCartShippingCost);
@@ -35,6 +38,10 @@ function CartDetail() {
     if (total && authUser) {
       history.push("/checkout");
     }
+  };
+  const handleCartReset = () => {
+    dispatch(productsReset());
+    dispatch(updateCart());
   };
 
   return (
@@ -63,6 +70,9 @@ function CartDetail() {
           onClick={handleCheckoutClick}
         >
           Checkout
+        </Button>
+        <Button variant="contained" color="secondary" onClick={handleCartReset}>
+          Reset
         </Button>
       </Grid>
     </Grid>

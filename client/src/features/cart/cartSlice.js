@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 const initialState = {
   status: "idle",
   products: {},
@@ -7,7 +7,46 @@ const initialState = {
   shipping: 0,
   itemTotal: 0,
   taxPercent: 8,
+  total: 0,
 };
+
+export const fetchCart = createAsyncThunk(
+  "cart/fetchCart",
+  async (_, { getState }) => {
+    const id = getState().auth.user._id;
+    if (id === null) {
+      let cart;
+      cart = JSON.parse(localStorage.getItem("cart")) || initialState;
+      return { cart, error: null };
+    } else {
+      try {
+        const response = await axios.get(`/api/users/cart/${id}`);
+        return { cart: response.data, error: null };
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+);
+export const updateCart = createAsyncThunk(
+  "cart/updateCart",
+  async (_, { getState }) => {
+    const id = getState().auth.user._id;
+    const cart = getState().cart;
+    if (id === null) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    } else {
+      try {
+        const updateObj = { cart };
+        const response = await axios.put(`/api/users/cart/${id}`, updateObj);
+        console.log(response.data);
+        return { cart: response.data, error: null };
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+);
 
 const cartSlice = createSlice({
   name: "cart",
@@ -19,6 +58,7 @@ const cartSlice = createSlice({
         state.count = 0;
         state.shipping = 0;
         state.itemTotal = 0;
+        state.total = 0;
       },
     },
     productAdded: {
@@ -57,7 +97,6 @@ const cartSlice = createSlice({
     },
     productDeleted: {
       reducer(state, action) {
-        console.log(action);
         const { _id } = action.payload;
         if (!state.products[_id]) {
           console.log("No product to remove");
@@ -68,7 +107,24 @@ const cartSlice = createSlice({
       },
     },
   },
-  extraReducers: {},
+  extraReducers: {
+    [fetchCart.fulfilled]: (state, action) => {
+      const { cart, error } = action.payload;
+      if (!error) {
+        state.status = "idle";
+        state.products = cart.products;
+        state.count = cart.count;
+        state.shipping = cart.shipping;
+        state.itemTotal = cart.itemTotal;
+      } else {
+        state.error = error;
+      }
+    },
+
+    [fetchCart.rejected]: (state, action) => {
+      state.error = "Something went wrong with our servers";
+    },
+  },
 });
 
 export const selectCartItemCount = (state) => state.cart.count;

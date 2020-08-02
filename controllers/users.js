@@ -11,7 +11,17 @@ module.exports = {
     const { firstName, lastName, email, address, phone } = req.body;
     const updateObj = { firstName, lastName, email, address, phone };
     const user = await User.findByIdAndUpdate(req.params.id, updateObj);
-    const updatedUser = await User.findByIdAndUpdate(req.params.id);
-    res.send(updatedUser);
+    await user.save();
+    res.send(user);
+  },
+  getCart: async (req, res, next) => {
+    const user = await User.findById(req.params.id);
+    res.status(200).json(user.cart);
+  },
+  updateCart: async (req, res, next) => {
+    const { cart } = req.body;
+    const user = await User.findByIdAndUpdate(req.params.id, { cart: cart });
+    await user.save();
+    res.status(200).json(user.cart);
   },
 };

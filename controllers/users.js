@@ -12,7 +12,8 @@ module.exports = {
     const updateObj = { firstName, lastName, email, address, phone };
     const user = await User.findByIdAndUpdate(req.params.id, updateObj);
     await user.save();
-    res.send(user);
+    const updatedUser = await User.findById(req.params.id);
+    res.send(updatedUser);
   },
   getCart: async (req, res, next) => {
     const user = await User.findById(req.params.id);

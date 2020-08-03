@@ -28,7 +28,7 @@ function Dashboard() {
     setActiveTab(e.target.name);
   };
   React.useEffect(() => {
-    authUser && dispatch(fetchUser());
+    authUser._id && dispatch(fetchUser());
   }, [dispatch, authUser]);
   return (
     <Grid container className={classes.grid}>

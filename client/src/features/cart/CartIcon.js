@@ -5,9 +5,7 @@ import { Link } from "react-router-dom";
 
 function CartIcon() {
   const count = useSelector(selectCartItemCount);
-  const handleCartClick = () => {
-    console.log("clicked");
-  };
+  const handleCartClick = () => {};
   return (
     <Link to="/cart">
       <div onClick={handleCartClick}>Items in Cart: {count}</div>

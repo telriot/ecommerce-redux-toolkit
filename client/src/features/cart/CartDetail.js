@@ -11,7 +11,7 @@ import {
 } from "./cartSlice";
 import { Button, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
-import { selectAuthorizedUser } from "../auth/authSlice";
+import { selectAuthorizedUser, openedAuthDialog } from "../auth/authSlice";
 
 import CartItem from "./CartItem";
 
@@ -35,8 +35,10 @@ function CartDetail() {
   const authUser = useSelector(selectAuthorizedUser);
 
   const handleCheckoutClick = () => {
-    if (total && authUser) {
+    if (total && authUser._id) {
       history.push("/checkout");
+    } else if (total && !authUser._id) {
+      dispatch(openedAuthDialog());
     }
   };
   const handleCartReset = () => {

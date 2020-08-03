@@ -49,11 +49,12 @@ function BillingInfo() {
       }}
       validationSchema={profileSchema}
       onSubmit={(values, { setSubmitting }) => {
+        console.log("subbbaaa");
         dispatch(updateUser(values));
         setSubmitting(false);
       }}
     >
-      {({ errors, touched, submitForm, isSubmitting }) => (
+      {({ values, submitForm, isSubmitting }) => (
         <Form>
           <div className={classes.formItems}>
             <CustomTextField
@@ -109,7 +110,7 @@ function BillingInfo() {
                   variant="contained"
                   color="secondary"
                   disabled={isSubmitting}
-                  onClick={submitForm}
+                  onClick={() => submitForm(values)}
                 >
                   Update
                 </Button>

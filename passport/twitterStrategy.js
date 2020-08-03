@@ -20,6 +20,15 @@ const twitterStrategy = new TwitterStrategy(
           screenName: profile._json.screen_name,
           twitterId: profile._json.id_str,
           profileImageUrl: profile._json.profile_image_url,
+          cart: {
+            products: {},
+            count: 0,
+            shipping: 0,
+            itemTotal: 0,
+            taxPercent: 0,
+            total: 0,
+          },
+          orders: [],
         }).save();
         if (newUser) {
           done(null, newUser);

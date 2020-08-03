@@ -5,7 +5,7 @@ import axios from "axios";
 const initialState = {
   activeStep: 0,
   clientSecret: "",
-  completedTransaction: {},
+  transactionDetails: {},
   error: "",
   status: "idle",
 };
@@ -30,16 +30,37 @@ export const confirmCardPayment = createAsyncThunk(
   async (payload, { getState, dispatch }) => {
     const { payment_method, stripe } = payload;
     const clientSecret = getState().checkout.clientSecret;
+    console.log("test");
+    const products = getState().cart.products;
+    const total = getState().cart.total;
+    const itemTotal = getState().cart.itemTotal;
+    const taxPercent = getState().cart.taxPercent;
+    const shipping = getState().cart.shipping;
+    const userId = getState().auth.user._id;
     const transactionDetails = {
-      products: getState().cart.products,
-      total: getState().cart.total,
+      products,
+      total,
     };
-    const response = await stripe.confirmCardPayment(clientSecret, {
-      payment_method,
-    });
-    dispatch(checkoutSlice.actions.completedTransaction(transactionDetails));
-    dispatch(productsReset());
-    console.log(response);
+    try {
+      await stripe.confirmCardPayment(clientSecret, {
+        payment_method,
+      });
+      dispatch(checkoutSlice.actions.completedTransaction(transactionDetails));
+      await axios.post("/api/orders/", {
+        orderObj: {
+          products,
+          total,
+          itemTotal,
+          taxPercent,
+          shipping,
+        },
+        userId,
+      });
+      dispatch(productsReset());
+    } catch (error) {
+      console.log(error);
+      return { error };
+    }
   }
 );
 const checkoutSlice = createSlice({

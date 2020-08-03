@@ -45,6 +45,15 @@ module.exports = {
         username,
         password,
         email,
+        cart: {
+          products: {},
+          count: 0,
+          shipping: 0,
+          itemTotal: 0,
+          taxPercent: 0,
+          total: 0,
+        },
+        orders: [],
       });
       newUser.save();
       res.status(200).json({

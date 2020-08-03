@@ -11,7 +11,9 @@ const authRouter = require("./routes/auth");
 const indexRouter = require("./routes/index");
 const productsRouter = require("./routes/products");
 const stripeRouter = require("./routes/stripe");
+const ordersRouter = require("./routes/orders");
 const usersRouter = require("./routes/users");
+
 const app = express();
 const cors = require("cors");
 
@@ -65,6 +67,7 @@ app.use("/api", indexRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/stripe", stripeRouter);
 app.use("/api/users", usersRouter);
+app.use("/api/orders", ordersRouter);
 
 // Prepare Production Settings
 

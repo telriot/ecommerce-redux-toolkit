@@ -16,11 +16,16 @@ export const fetchUser = createAsyncThunk(
   "dashboard/fetchUser",
   async (_, { getState }) => {
     const id = getState().auth.user._id;
-    try {
-      const response = await axios.get(`/api/users/${id}`);
-      return response.data;
-    } catch (error) {
-      console.error(error);
+    if (id !== null) {
+      try {
+        const response = await axios.get(`/api/users/${id}`);
+        return { success: true, user: response.data };
+      } catch (error) {
+        console.error(error);
+        return { success: false, error };
+      }
+    } else {
+      return { success: false, error: null };
     }
   }
 );
@@ -38,9 +43,10 @@ export const updateUser = createAsyncThunk(
     };
     try {
       const response = await axios.put(`/api/users/${id}`, updateObj);
-      return response.data;
+      return { success: true, user: response.data };
     } catch (error) {
       console.error(error);
+      return { success: false, error };
     }
   }
 );
@@ -53,9 +59,18 @@ const dashboardSlice = createSlice({
       state.status = "pending";
     },
     [fetchUser.fulfilled]: (state, action) => {
-      const { firstName, lastName, email, address, phone } = action.payload;
-      state.billingInfo = { firstName, lastName, email, address, phone };
-      state.error = action.error;
+      if (action.payload.success) {
+        const {
+          firstName,
+          lastName,
+          email,
+          address,
+          phone,
+        } = action.payload.user;
+        state.billingInfo = { firstName, lastName, email, address, phone };
+      } else {
+        state.error = action.error;
+      }
       state.status = "fulfilled";
     },
     [fetchUser.rejected]: (state, action) => {
@@ -66,9 +81,19 @@ const dashboardSlice = createSlice({
       state.status = "pending";
     },
     [updateUser.fulfilled]: (state, action) => {
-      const { firstName, lastName, email, address, phone } = action.payload;
-      state.billingInfo = { firstName, lastName, email, address, phone };
-      state.error = action.error;
+      if (action.payload.success) {
+        const {
+          firstName,
+          lastName,
+          email,
+          address,
+          phone,
+        } = action.payload.user;
+        state.billingInfo = { firstName, lastName, email, address, phone };
+        state.status = "fulfilled";
+      } else {
+        state.error = action.error;
+      }
       state.status = "fulfilled";
     },
     [updateUser.rejected]: (state, action) => {

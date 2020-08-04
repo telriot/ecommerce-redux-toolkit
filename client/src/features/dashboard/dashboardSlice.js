@@ -10,6 +10,7 @@ const initialState = {
     address: "",
     phone: "",
   },
+  orders: [],
 };
 
 export const fetchUser = createAsyncThunk(
@@ -47,6 +48,23 @@ export const updateUser = createAsyncThunk(
     } catch (error) {
       console.error(error);
       return { success: false, error };
+    }
+  }
+);
+export const fetchOrders = createAsyncThunk(
+  "dashboard/fetchOrders",
+  async (_, { getState }) => {
+    const id = getState().auth.user._id;
+    if (id !== null) {
+      try {
+        const response = await axios.get(`/api/users/orders/${id}`);
+        return { success: true, orders: response.data };
+      } catch (error) {
+        console.error(error);
+        return { success: false, error };
+      }
+    } else {
+      return { success: false, error: null };
     }
   }
 );
@@ -97,6 +115,22 @@ const dashboardSlice = createSlice({
       state.status = "fulfilled";
     },
     [updateUser.rejected]: (state, action) => {
+      state.error = "Something went wrong with our servers";
+      state.status = "rejected";
+    },
+    [fetchOrders.pending]: (state, action) => {
+      state.status = "pending";
+    },
+    [fetchOrders.fulfilled]: (state, action) => {
+      if (action.payload.success) {
+        const { orders } = action.payload;
+        state.orders = orders;
+      } else {
+        state.error = action.error;
+      }
+      state.status = "fulfilled";
+    },
+    [fetchOrders.rejected]: (state, action) => {
       state.error = "Something went wrong with our servers";
       state.status = "rejected";
     },

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { productsReset } from "../cart/cartSlice";
+import { productsReset, updateCart } from "../cart/cartSlice";
 import axios from "axios";
 
 const initialState = {
@@ -45,7 +45,9 @@ export const confirmCardPayment = createAsyncThunk(
       await stripe.confirmCardPayment(clientSecret, {
         payment_method,
       });
-      dispatch(checkoutSlice.actions.completedTransaction(transactionDetails));
+      await dispatch(
+        checkoutSlice.actions.completedTransaction(transactionDetails)
+      );
       await axios.post("/api/orders/", {
         orderObj: {
           products,
@@ -57,6 +59,7 @@ export const confirmCardPayment = createAsyncThunk(
         userId,
       });
       dispatch(productsReset());
+      await dispatch(updateCart());
     } catch (error) {
       console.log(error);
       return { error };
@@ -69,7 +72,8 @@ const checkoutSlice = createSlice({
   reducers: {
     completedTransaction: {
       reducer(state, action) {
-        state.transactionDetails = action.payload;
+        const { products, total } = action.payload;
+        state.transactionDetails = { products, total };
       },
     },
     movedToNextStep: {

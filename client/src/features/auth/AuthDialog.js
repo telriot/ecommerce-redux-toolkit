@@ -34,10 +34,6 @@ function AuthDialog() {
     dispatch(setAuthDialogTab(newValue));
   };
 
-  const handleClickOpen = () => {
-    dispatch(openedAuthDialog());
-  };
-
   const handleClose = () => {
     dispatch(closedAuthDialog());
   };

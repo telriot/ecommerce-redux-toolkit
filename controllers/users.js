@@ -25,4 +25,8 @@ module.exports = {
     await user.save();
     res.status(200).json(user.cart);
   },
+  getOrders: async (req, res, next) => {
+    const user = await User.findById(req.params.id).populate("orders").exec();
+    res.status(200).json(user.orders);
+  },
 };

@@ -116,6 +116,8 @@ const cartSlice = createSlice({
         state.count = cart.count;
         state.shipping = cart.shipping;
         state.itemTotal = cart.itemTotal;
+        state.total =
+          (state.itemTotal * (100 + state.taxPercent)) / 100 + state.shipping;
       } else {
         state.error = error;
       }

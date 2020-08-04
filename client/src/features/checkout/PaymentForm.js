@@ -1,14 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { confirmCardPayment, movedToPrevStep } from "./checkoutSlice";
-import {
-  Button,
-  Checkbox,
-  FormControlLabel,
-  Grid,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   CardNumberElement,
@@ -113,12 +106,6 @@ export default function PaymentForm() {
                 placeholder: "",
               },
             }}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-            label="Remember credit card details for next time"
           />
         </Grid>
       </Grid>

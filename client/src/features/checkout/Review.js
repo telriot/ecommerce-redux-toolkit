@@ -11,16 +11,6 @@ import {
   Typography,
 } from "@material-ui/core";
 
-//products: name, brand, description, quantity, price, weight
-//user: firstName, lastName, address, phone
-
-// const payments = [
-//   { name: "Card type", detail: "Visa" },
-//   { name: "Card holder", detail: "Mr John Smith" },
-//   { name: "Card number", detail: "xxxx-xxxx-xxxx-1234" },
-//   { name: "Expiry date", detail: "04/2024" },
-// ];
-
 const useStyles = makeStyles((theme) => ({
   listItem: {
     padding: theme.spacing(1, 0),
@@ -77,18 +67,6 @@ export default function Review() {
           <Typography variant="h6" gutterBottom className={classes.title}>
             Payment details
           </Typography>
-          {/*<Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
-                </Grid>
-              </React.Fragment>
-            ))}
-            </Grid>*/}
         </Grid>
       </Grid>
     </React.Fragment>

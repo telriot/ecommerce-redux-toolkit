@@ -4,12 +4,7 @@ import {
   selectBillingInfo,
   selectDashboardStatus,
 } from "../dashboard/dashboardSlice";
-import {
-  Checkbox,
-  FormControlLabel,
-  Typography,
-  Grid,
-} from "@material-ui/core";
+import { Typography, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Formik, Form } from "formik";
 import { profileSchema } from "../../validators";
@@ -59,16 +54,6 @@ export default function AddressForm() {
                 <CustomTextField name="email" type="email" label="Email" />
                 <CustomTextField label="Address" name="address" />
                 <CustomTextField label="Phone Number" name="phone" />
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      color="secondary"
-                      name="saveAddress"
-                      value="yes"
-                    />
-                  }
-                  label="Use this address for payment details"
-                />
               </Form>
             )}
           </Formik>

@@ -28,7 +28,7 @@ describe("AllProducts tests", () => {
   });
   test("The right number of products is rendered", async () => {
     await waitFor(() => {
-      expect(getAllByText(/testProduct/)).toHaveLength(2);
+      expect(getAllByText(/testProduct/)).toHaveLength(3);
     });
   });
   test("Clicking on Add to Cart updates CartIcon", async () => {

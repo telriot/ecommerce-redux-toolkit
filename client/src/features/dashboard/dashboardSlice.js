@@ -61,6 +61,8 @@ export const fetchOrders = createAsyncThunk(
     if (id !== null) {
       try {
         const response = await axios.get(`/api/users/orders/${id}`);
+        console.log(response.data);
+
         return { success: true, orders: response.data };
       } catch (error) {
         console.error(error);

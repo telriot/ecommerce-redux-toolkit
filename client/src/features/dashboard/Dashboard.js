@@ -31,7 +31,7 @@ function Dashboard() {
     authUser._id && dispatch(fetchUser());
   }, [dispatch, authUser]);
   return (
-    <Grid container className={classes.grid}>
+    <Grid data-testid="component-dashboard" container className={classes.grid}>
       <Container className={classes.container}>
         <Breadcrumbs className={classes.breadcrumbs} aria-label="breadcrumb">
           <Link

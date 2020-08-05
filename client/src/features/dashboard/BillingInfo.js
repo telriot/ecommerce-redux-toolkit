@@ -54,7 +54,7 @@ function BillingInfo() {
       }}
     >
       {({ values, submitForm, isSubmitting }) => (
-        <Form>
+        <Form aria-label="billing-info-form">
           <div className={classes.formItems}>
             <CustomTextField
               disabled={!isEditing}

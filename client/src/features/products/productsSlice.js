@@ -1,7 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const initialState = { page: 1, limit: 10, products: [], status: "idle" };
+const initialState = {
+  page: 1,
+  hasNextPage: false,
+  hasPrevPage: false,
+  totalPages: 1,
+  limit: 10,
+  products: [],
+  status: "idle",
+};
 
 export const fetchAllProducts = createAsyncThunk(
   "products/fetchAllProducts",
@@ -11,9 +19,34 @@ export const fetchAllProducts = createAsyncThunk(
       const response = await axios.get("api/products/", {
         params: { page, limit },
       });
-      return response.data.docs;
+      return {
+        products: response.data.docs,
+        totalPages: response.data.totalPages,
+        page: response.data.page,
+      };
     } catch (error) {
       console.log(error);
+      return error;
+    }
+  }
+);
+export const removePurchasedItems = createAsyncThunk(
+  "products/removePurchasedItems",
+  async (products, { getState }) => {
+    let purchasedItems = [];
+    for (let product of Object.values(products)) {
+      console.log(product);
+      purchasedItems.push({ _id: product._id, quantity: product.quantity });
+    }
+    try {
+      const response = await axios.put("api/products/", {
+        products: purchasedItems,
+        action: "remove",
+      });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return error;
     }
   }
 );
@@ -21,15 +54,23 @@ export const fetchAllProducts = createAsyncThunk(
 const productsSlice = createSlice({
   name: "products",
   initialState,
-  reducers: {},
+  reducers: {
+    pageChanged: {
+      reducer(state, action) {
+        console.log(action.payload);
+        state.page = action.payload;
+      },
+    },
+  },
   extraReducers: {
     [fetchAllProducts.pending]: (state, action) => {
       state.status = "pending";
     },
     [fetchAllProducts.fulfilled]: (state, action) => {
-      const products = action.payload ? action.payload : null;
+      const { products, totalPages } = action.payload;
       state.products = products;
-      state.error = action.error;
+      state.totalPages = totalPages;
+      state.error = action.payload.error;
       state.status = "fulfilled";
     },
     [fetchAllProducts.rejected]: (state, action) => {
@@ -41,5 +82,6 @@ const productsSlice = createSlice({
 
 export const selectAllProducts = (state) => state.products.products;
 export const selectIsFetchingProducts = (state) => state.products.status;
+export const { pageChanged } = productsSlice.actions;
 
 export default productsSlice.reducer;

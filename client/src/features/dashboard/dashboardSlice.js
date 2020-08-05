@@ -11,6 +11,9 @@ const initialState = {
     phone: "",
   },
   orders: [],
+  ordersPage: 1,
+  ordersTotalPages: 1,
+  ordersPerPage: 10,
 };
 
 export const fetchUser = createAsyncThunk(
@@ -71,11 +74,18 @@ export const fetchOrders = createAsyncThunk(
 const dashboardSlice = createSlice({
   name: "dashboard",
   initialState,
-  reducers: {},
+  reducers: {
+    pageChanged: {
+      reducer(state, action) {
+        state.ordersPage = action.payload;
+      },
+    },
+  },
   extraReducers: {
     [fetchUser.pending]: (state, action) => {
       state.status = "pending";
     },
+
     [fetchUser.fulfilled]: (state, action) => {
       if (action.payload.success) {
         const {
@@ -124,7 +134,9 @@ const dashboardSlice = createSlice({
     [fetchOrders.fulfilled]: (state, action) => {
       if (action.payload.success) {
         const { orders } = action.payload;
+        console.log(orders);
         state.orders = orders;
+        state.ordersTotalPages = Math.ceil(orders.length / state.ordersPerPage);
       } else {
         state.error = action.error;
       }
@@ -139,5 +151,5 @@ const dashboardSlice = createSlice({
 
 export const selectBillingInfo = (state) => state.dashboard.billingInfo;
 export const selectDashboardStatus = (state) => state.dashboard.status;
-//export const {} = dashboardSlice.actions;
+export const { pageChanged } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

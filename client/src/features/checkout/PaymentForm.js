@@ -1,6 +1,10 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { confirmCardPayment, movedToPrevStep } from "./checkoutSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  confirmCardPayment,
+  movedToPrevStep,
+  selectCheckoutStatus,
+} from "./checkoutSlice";
 import { Button, Grid, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -22,6 +26,7 @@ export default function PaymentForm() {
   const elements = useElements();
   const stripe = useStripe();
   const [cardOwnerName, setCardOwnerName] = React.useState("");
+  const isValidating = useSelector(selectCheckoutStatus);
   const handleCardOwnerNameChange = (e) => {
     setCardOwnerName(e.target.value);
   };
@@ -41,6 +46,7 @@ export default function PaymentForm() {
     dispatch(confirmCardPayment(payload));
   };
 
+  const isDisabled = Boolean(isValidating === "pending");
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -118,6 +124,7 @@ export default function PaymentForm() {
           color="primary"
           onClick={handleNext}
           className={classes.button}
+          disabled={isDisabled}
         >
           Pay
         </Button>

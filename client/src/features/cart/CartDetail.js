@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/styles";
 import { selectAuthorizedUser, openedAuthDialog } from "../auth/authSlice";
 
 import CartItem from "./CartItem";
+import { resetCheckoutSteps } from "../checkout/checkoutSlice";
 
 const useStyles = makeStyles((theme) => ({
   grid: {
@@ -35,6 +36,7 @@ function CartDetail() {
   const authUser = useSelector(selectAuthorizedUser);
 
   const handleCheckoutClick = () => {
+    dispatch(resetCheckoutSteps());
     if (total && authUser._id) {
       history.push("/checkout");
     } else if (total && !authUser._id) {

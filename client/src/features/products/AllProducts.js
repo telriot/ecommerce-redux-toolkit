@@ -4,10 +4,12 @@ import {
   fetchAllProducts,
   selectAllProducts,
   selectIsFetchingProducts,
+  pageChanged,
 } from "./productsSlice";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import ProductCard from "./ProductCard";
+import CustomPagination from "../shared/CustomPagination";
 const useStyles = makeStyles((theme) => ({
   grid: {
     margin: "2rem 0",
@@ -18,25 +20,37 @@ function AllProducts() {
   const dispatch = useDispatch();
   const products = useSelector(selectAllProducts);
   const isFetching = useSelector(selectIsFetchingProducts);
+  const totalPages = useSelector((state) => state.products.totalPages);
+  const currentPage = useSelector((state) => state.products.page);
+  const handlePageChange = (e, page) => {
+    dispatch(pageChanged(page));
+  };
   React.useEffect(() => {
-    if (isFetching === "idle") dispatch(fetchAllProducts());
-  }, [dispatch, isFetching]);
+    dispatch(fetchAllProducts());
+  }, [dispatch, currentPage]);
 
   return (
-    <Grid
-      data-testid="component-allproducts"
-      container
-      className={classes.grid}
-    >
-      {isFetching === "pending"
-        ? "Loading..."
-        : products &&
-          products.map((product) => (
-            <Grid key={product._id} item sm={6} md={4}>
-              <ProductCard product={product} />
-            </Grid>
-          ))}
-    </Grid>
+    <>
+      <Grid
+        data-testid="component-allproducts"
+        container
+        className={classes.grid}
+      >
+        {isFetching === "pending"
+          ? "Loading..."
+          : products &&
+            products.map((product) => (
+              <Grid key={product._id} item sm={6} md={4}>
+                <ProductCard product={product} />
+              </Grid>
+            ))}
+      </Grid>
+      <CustomPagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        handleChange={handlePageChange}
+      />
+    </>
   );
 }
 

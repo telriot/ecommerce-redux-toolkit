@@ -14,7 +14,6 @@ module.exports = {
   },
   postOrder: async (req, res, next) => {
     const { orderObj, userId } = req.body;
-    console.log(req.body);
     const user = await User.findById(userId);
     if (!user) {
       res.status(401).json({ message: "No authenticated user" });

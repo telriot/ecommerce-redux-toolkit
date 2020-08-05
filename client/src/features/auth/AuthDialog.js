@@ -9,7 +9,6 @@ import {
 } from "@material-ui/core";
 import {
   selectAuthDialogIsOpen,
-  openedAuthDialog,
   closedAuthDialog,
   selectAuthDialogActiveTab,
   setAuthDialogTab,

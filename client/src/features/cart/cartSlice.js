@@ -39,7 +39,6 @@ export const updateCart = createAsyncThunk(
       try {
         const updateObj = { cart };
         const response = await axios.put(`/api/users/cart/${id}`, updateObj);
-        console.log(response.data);
         return { cart: response.data, error: null };
       } catch (error) {
         console.log(error);

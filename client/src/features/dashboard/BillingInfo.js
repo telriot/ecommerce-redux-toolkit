@@ -49,7 +49,6 @@ function BillingInfo() {
       }}
       validationSchema={profileSchema}
       onSubmit={(values, { setSubmitting }) => {
-        console.log("subbbaaa");
         dispatch(updateUser(values));
         setSubmitting(false);
       }}

@@ -29,6 +29,7 @@ const twitterStrategy = new TwitterStrategy(
             total: 0,
           },
           orders: [],
+          wishlist: [],
         }).save();
         if (newUser) {
           done(null, newUser);

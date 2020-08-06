@@ -8,6 +8,8 @@ const {
   getCart,
   updateCart,
   getOrders,
+  getWishlistItems,
+  updateWishlist,
 } = require("../controllers/users");
 /* GET home page. */
 router.get("/", asyncErrorHandler(getAllUsers));
@@ -16,4 +18,7 @@ router.put("/:id", asyncErrorHandler(updateUser));
 router.get("/cart/:id", asyncErrorHandler(getCart));
 router.put("/cart/:id", asyncErrorHandler(updateCart));
 router.get("/orders/:id", asyncErrorHandler(getOrders));
+router.get("/wishlist/:id", asyncErrorHandler(getWishlistItems));
+router.put("/wishlist/:id", asyncErrorHandler(updateWishlist));
+
 module.exports = router;

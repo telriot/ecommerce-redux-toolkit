@@ -7,6 +7,7 @@ import MyOrders from "./MyOrders";
 import MyProfile from "./MyProfile";
 import { fetchUser } from "./dashboardSlice";
 import { selectAuthorizedUser } from "../auth/authSlice";
+import Wishlist from "./Wishlist";
 const useStyles = makeStyles((theme) => ({
   grid: {},
   container: {
@@ -50,19 +51,16 @@ function Dashboard() {
           >
             My Orders
           </Link>
-          <Link
-            color="inherit"
-            href="#0"
-            name="something-else"
-            onClick={handleClick}
-          >
-            Something else
+          <Link color="inherit" href="#0" name="wishlist" onClick={handleClick}>
+            Wishlist
           </Link>
         </Breadcrumbs>
         {activeTab === "my-profile" ? (
           <MyProfile />
         ) : activeTab === "my-orders" ? (
           <MyOrders />
+        ) : activeTab === "wishlist" ? (
+          <Wishlist />
         ) : null}
       </Container>
     </Grid>

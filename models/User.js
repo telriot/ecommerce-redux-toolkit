@@ -24,6 +24,7 @@ const UserSchema = new Schema(
       taxPercent: Number,
       total: Number,
     },
+    wishlist: [{ type: Schema.Types.ObjectId, ref: "Product" }],
     orders: [{ type: Schema.Types.ObjectId, ref: "Order" }],
     date: {
       type: Date,

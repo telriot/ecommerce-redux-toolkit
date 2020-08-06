@@ -54,6 +54,7 @@ module.exports = {
           total: 0,
         },
         orders: [],
+        wishlist: [],
       });
       newUser.save();
       res.status(200).json({

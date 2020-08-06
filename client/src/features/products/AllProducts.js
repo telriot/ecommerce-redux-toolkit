@@ -6,10 +6,12 @@ import {
   selectIsFetchingProducts,
   pageChanged,
 } from "./productsSlice";
+import { selectAuthorizedUser } from "../auth/authSlice";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import ProductCard from "./ProductCard";
 import CustomPagination from "../shared/CustomPagination";
+import { fetchWishlistItems } from "../dashboard/dashboardSlice";
 const useStyles = makeStyles((theme) => ({
   grid: {
     margin: "2rem 0",
@@ -22,12 +24,17 @@ function AllProducts() {
   const isFetching = useSelector(selectIsFetchingProducts);
   const totalPages = useSelector((state) => state.products.totalPages);
   const currentPage = useSelector((state) => state.products.page);
+  const user = useSelector(selectAuthorizedUser);
+
   const handlePageChange = (e, page) => {
     dispatch(pageChanged(page));
   };
   React.useEffect(() => {
     dispatch(fetchAllProducts());
   }, [dispatch, currentPage]);
+  React.useEffect(() => {
+    user._id && dispatch(fetchWishlistItems(user._id));
+  }, [user._id, dispatch]);
 
   return (
     <>

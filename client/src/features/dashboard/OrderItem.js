@@ -38,14 +38,14 @@ function OrderItem({ order, index }) {
   return (
     <>
       {index !== 0 ? <Divider variant="middle" /> : null}
-      <div className={classes.item}>
+      <div data-testid="order-item" className={classes.item}>
         <div className={classes.details}>
           <Typography>{parsedDate}</Typography>
 
           <div>
             {isOpen ? (
-              parsedProducts.map((product) => (
-                <Typography>
+              parsedProducts.map((product, index) => (
+                <Typography key={`typo-${index}`}>
                   {product.quantity} x {product.name}@ {product.price}$
                 </Typography>
               ))
@@ -63,7 +63,11 @@ function OrderItem({ order, index }) {
           </div>
           <Typography>Total: {order.total}$</Typography>
         </div>
-        <IconButton className={classes.iconButton} onClick={handleOpenClick}>
+        <IconButton
+          data-testid="order-expand-button"
+          className={classes.iconButton}
+          onClick={handleOpenClick}
+        >
           <ExpandMoreIcon
             className={isOpen ? classes.iconRotated : classes.icon}
           />

@@ -61,8 +61,6 @@ export const fetchOrders = createAsyncThunk(
     if (id !== null) {
       try {
         const response = await axios.get(`/api/users/orders/${id}`);
-        console.log(response.data);
-
         return { success: true, orders: response.data };
       } catch (error) {
         console.error(error);
@@ -136,7 +134,6 @@ const dashboardSlice = createSlice({
     [fetchOrders.fulfilled]: (state, action) => {
       if (action.payload.success) {
         const { orders } = action.payload;
-        console.log(orders);
         state.orders = orders;
         state.ordersTotalPages = Math.ceil(orders.length / state.ordersPerPage);
       } else {

@@ -19,6 +19,7 @@ function CustomTextField({ disabled, label, name, type }) {
         classes: {
           disabled: classes.disabled,
         },
+        "data-testid": `testid-${name}`,
       }}
       InputLabelProps={{
         classes: {

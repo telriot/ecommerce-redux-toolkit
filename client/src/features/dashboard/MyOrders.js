@@ -29,21 +29,20 @@ function MyOrders() {
     dispatch(fetchOrders());
   }, [dispatch]);
   React.useEffect(() => {
-    console.log(page);
     const paginateOrders = (orders) =>
       orders
         .filter(
           (order, index) =>
-            index <= page * ordersPerPage &&
-            index > page * ordersPerPage - ordersPerPage
+            index < page * ordersPerPage &&
+            index >= page * ordersPerPage - ordersPerPage
         )
         .map((order, index) => (
-          <OrderItem key={`order${index}`} order={order} index={index} />
+          <OrderItem key={`order-${order._id}`} order={order} index={index} />
         ));
     setOrdersToRender(paginateOrders(orders));
   }, [orders, page, ordersPerPage]);
   return (
-    <Grid container>
+    <Grid container data-testid="my-orders-component">
       <Grid item xs={9}>
         <Typography variant="h5">Order history</Typography>
         <Typography variant="subtitle1">

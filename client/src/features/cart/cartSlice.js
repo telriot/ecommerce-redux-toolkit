@@ -9,21 +9,72 @@ const initialState = {
   taxPercent: 8,
   total: 0,
 };
+const joinCarts = (cart1, cart2, getState) => {
+  let newCart = {
+    count: cart2.count,
+    itemTotal: cart2.itemTotal,
+    products: cart2.products,
+    shipping: cart2.shipping,
+    taxPercent: getState().cart.taxPercent,
+    total: cart2.total,
+  };
+  for (let [id, product] of Object.entries(cart1.products)) {
+    let product1 = cart1.products[id];
+    let product2 = cart2.products[id];
+    let product1Price = parseInt(product1.price.slice(1, -1));
+    if (
+      cart2.products.hasOwnProperty(id) &&
+      product2.quantity < product1.quantity
+    ) {
+      newCart.products[id] = product1;
+      newCart.count += product1.quantity - product2.quantity;
+      newCart.itemTotal +=
+        (product1.quantity - product2.quantity) * product1Price;
+    } else if (!cart2.products.hasOwnProperty(id)) {
+      newCart.products[id] = product1;
+      newCart.itemTotal += product1.quantity * product1Price;
+      newCart.count += product1.quantity;
+    }
+  }
+  return newCart;
+};
 
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
+
   async (_, { getState }) => {
     const id = getState().auth.user._id;
+    let cart = JSON.parse(localStorage.getItem("cart")) || initialState;
+
     if (id === null) {
-      let cart;
-      cart = JSON.parse(localStorage.getItem("cart")) || initialState;
+      console.log("noid");
       return { cart, error: null };
     } else {
-      try {
-        const response = await axios.get(`/api/users/cart/${id}`);
-        return { cart: response.data, error: null };
-      } catch (error) {
-        console.log(error);
+      if (cart && cart.count) {
+        try {
+          const response = await axios.get(`/api/users/cart/${id}`);
+
+          const joinedCart = joinCarts(cart, response.data, getState);
+
+          const update = await axios.put(`/api/users/cart/${id}`, {
+            cart: joinedCart,
+          });
+          localStorage.clear();
+          console.log(update);
+          return { cart: update.data, error: null };
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        console.log("nocount");
+
+        try {
+          const response = await axios.get(`/api/users/cart/${id}`);
+          console.log(response);
+          return { cart: response.data, error: null };
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   }

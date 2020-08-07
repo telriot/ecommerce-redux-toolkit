@@ -21,9 +21,9 @@ module.exports = {
   },
   updateCart: async (req, res, next) => {
     const { cart } = req.body;
-    const user = await User.findByIdAndUpdate(req.params.id, { cart });
-    await user.save();
-    res.status(200).json(user.cart);
+    await User.findByIdAndUpdate(req.params.id, { cart });
+    const updatedUser = await User.findById(req.params.id);
+    res.status(200).json(updatedUser.cart);
   },
   getOrders: async (req, res, next) => {
     const user = await User.findById(req.params.id).populate("orders").exec();

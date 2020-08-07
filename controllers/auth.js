@@ -66,7 +66,7 @@ module.exports = {
   },
   loginUser(req, res, next) {
     const { username, _id } = req.user;
-    const user = { username: username, id: _id };
+    const user = { username: username, _id: _id };
     res.send({ success: true, user });
   },
 };

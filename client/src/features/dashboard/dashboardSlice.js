@@ -93,7 +93,6 @@ export const updateWishlist = createAsyncThunk(
   async (_, { getState }) => {
     const id = getState().auth.user._id;
     const wishlistItems = getState().dashboard.wishlistItems;
-    console.log(wishlistItems);
     try {
       const response = await axios.put(`/api/users/wishlist/${id}`, {
         wishlist: wishlistItems,

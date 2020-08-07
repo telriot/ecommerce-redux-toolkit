@@ -41,36 +41,27 @@ const joinCarts = (cart1, cart2, getState) => {
 
 export const fetchCart = createAsyncThunk(
   "cart/fetchCart",
-
   async (_, { getState }) => {
     const id = getState().auth.user._id;
     let cart = JSON.parse(localStorage.getItem("cart")) || initialState;
-
     if (id === null) {
-      console.log("noid");
       return { cart, error: null };
     } else {
       if (cart && cart.count) {
         try {
           const response = await axios.get(`/api/users/cart/${id}`);
-
           const joinedCart = joinCarts(cart, response.data, getState);
-
           const update = await axios.put(`/api/users/cart/${id}`, {
             cart: joinedCart,
           });
           localStorage.clear();
-          console.log(update);
           return { cart: update.data, error: null };
         } catch (error) {
           console.log(error);
         }
       } else {
-        console.log("nocount");
-
         try {
           const response = await axios.get(`/api/users/cart/${id}`);
-          console.log(response);
           return { cart: response.data, error: null };
         } catch (error) {
           console.log(error);

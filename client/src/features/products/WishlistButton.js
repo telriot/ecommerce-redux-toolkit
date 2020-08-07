@@ -1,5 +1,8 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import { makeStyles } from "@material-ui/core/styles";
 
 import {
   wishlistItemAdded,
@@ -7,8 +10,13 @@ import {
   updateWishlist,
 } from "../dashboard/dashboardSlice";
 import { useDispatch, useSelector } from "react-redux";
+import DeleteIcon from "@material-ui/icons/Delete";
 
-function WishlistButton({ product }) {
+const useStyles = makeStyles((theme) => ({}));
+
+function WishlistButton({ product, deleteIcon }) {
+  const classes = useStyles();
+
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.dashboard.wishlistItems);
   const handleAddToWishlist = () => {
@@ -19,10 +27,19 @@ function WishlistButton({ product }) {
     dispatch(wishlistItemRemoved(product));
     dispatch(updateWishlist());
   };
+
   return wishlist.some((element) => element._id === product._id) ? (
-    <Button onClick={handleRemoveFromWishlist}>Remove from Wishlist</Button>
+    <IconButton onClick={handleRemoveFromWishlist}>
+      {deleteIcon ? (
+        <DeleteIcon color="disabled" />
+      ) : (
+        <FavoriteIcon color="secondary" />
+      )}
+    </IconButton>
   ) : (
-    <Button onClick={handleAddToWishlist}>Add to Wishlist</Button>
+    <IconButton onClick={handleAddToWishlist}>
+      <FavoriteBorderIcon color="disabled" />
+    </IconButton>
   );
 }
 

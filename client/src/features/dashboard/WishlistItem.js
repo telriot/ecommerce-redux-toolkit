@@ -3,6 +3,7 @@ import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import WishlistButton from "../products/WishlistButton";
+
 const useStyles = makeStyles((theme) => ({
   item: {
     display: "flex",
@@ -35,7 +36,7 @@ function WishlistItem({ product, index }) {
           <Typography>{product.name}</Typography>
         </div>
 
-        <WishlistButton product={product} />
+        <WishlistButton product={product} deleteIcon={true} />
       </div>
     </>
   );

@@ -35,7 +35,6 @@ module.exports = {
   },
   updateWishlist: async (req, res, next) => {
     const { wishlist } = req.body;
-    console.log(wishlist);
     const user = await User.findByIdAndUpdate(req.params.id, { wishlist });
     await user.save();
     res.status(200).json(user.wishlist);

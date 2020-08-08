@@ -7,12 +7,13 @@ import {
   pageChanged,
 } from "./productsSlice";
 import { selectAuthorizedUser } from "../auth/authSlice";
-import { Grid } from "@material-ui/core";
+import { Grid, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import ProductCard from "./ProductCard";
 import CustomPagination from "../shared/CustomPagination";
 import { fetchWishlistItems } from "../dashboard/dashboardSlice";
 const useStyles = makeStyles((theme) => ({
+  container: { display: "flex", flexDirection: "column" },
   grid: {
     margin: "2rem 0",
   },
@@ -37,7 +38,7 @@ function AllProducts() {
   }, [user._id, dispatch]);
 
   return (
-    <>
+    <Container className={classes.container}>
       <Grid
         data-testid="component-allproducts"
         container
@@ -57,7 +58,7 @@ function AllProducts() {
         currentPage={currentPage}
         handleChange={handlePageChange}
       />
-    </>
+    </Container>
   );
 }
 

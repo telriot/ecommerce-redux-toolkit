@@ -4,6 +4,7 @@ import cartReducer from "../features/cart/cartSlice";
 import dashboardReducer from "../features/dashboard/dashboardSlice";
 import productsReducer from "../features/products/productsSlice";
 import checkoutReducer from "../features/checkout/checkoutSlice";
+import filtersReducer from "../features/filters/filtersSlice";
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     dashboard: dashboardReducer,
     products: productsReducer,
     checkout: checkoutReducer,
+    filters: filtersReducer,
   },
 });

@@ -1,15 +1,12 @@
 import React from "react";
-import { Button, Card, Typography, CardMedia } from "@material-ui/core";
+import { Card, Typography, CardMedia } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  productAdded,
-  updateCart,
-  selectCartContents,
-} from "../cart/cartSlice";
+import { useSelector } from "react-redux";
 import { selectAuthorizedUser } from "../auth/authSlice";
-import { isStockAvailable } from "../products/productsSlice";
 import WishlistButton from "./WishlistButton";
+import AvailabilityInfo from "../shared/AvailabilityInfo";
+import AddToCartButton from "../shared/AddToCartButton";
+import DescriptionText from "../shared/DescriptionText";
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -18,53 +15,52 @@ const useStyles = makeStyles((theme) => ({
     height: "24rem",
   },
   media: {
-    margin: theme.spacing(1),
     height: 150,
-    width: 150,
+    width: "100%",
+    marginBottom: theme.spacing(1),
+  },
+  nameDiv: { marginBottom: theme.spacing(2) },
+  bottomDiv: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  priceDiv: {
+    display: "flex",
+    flexDirection: "column",
   },
 }));
 
 function ProductCard({ product }) {
   const { name, brand, description, availability, price } = product;
   const classes = useStyles();
-  const dispatch = useDispatch();
   const user = useSelector(selectAuthorizedUser);
-  const cartProducts = useSelector(selectCartContents);
-  const maxLength = 80;
-
-  const handleAddToCart = () => {
-    if (isStockAvailable(cartProducts, product)) {
-      dispatch(productAdded({ ...product, quantity: 1 }));
-      dispatch(updateCart());
-    }
-  };
-  console.log(product.image);
 
   return (
     <Card className={classes.card}>
-      <Typography variant="h6">{name}</Typography>
-      <Typography variant="subtitle1">{brand}</Typography>
-      <br />
       <CardMedia className={classes.media} image={product.image} />
-      <Typography variant="body2">{`${
-        description.length > maxLength
-          ? description.slice(0, maxLength).trim() + "..."
-          : description
-      }`}</Typography>
+      <div className={classes.nameDiv}>
+        <Typography className={classes.productName} variant="h6">
+          {name}
+        </Typography>
+        <Typography className={classes.productBrand} variant="caption">
+          {brand}
+        </Typography>
+      </div>
+
+      <DescriptionText description={description} maxLength={80} />
       <br />
-      <Typography variant="body1">{price}</Typography>
-      <Typography variant="caption">
-        {availability ? "In stock: " + availability : "Out of stock"}
-      </Typography>
-      <br />
-      <Button
-        onClick={handleAddToCart}
-        disabled={!isStockAvailable(cartProducts, product)}
-        variant="contained"
-      >
-        Add to cart
-      </Button>
-      {user._id !== null && <WishlistButton product={product} />}
+      <div className={classes.bottomDiv}>
+        <div className={classes.priceDiv}>
+          <Typography variant="body1">{price}</Typography>
+          <AvailabilityInfo availability={availability} />
+        </div>
+
+        <div className={classes.buttonDiv}>
+          <AddToCartButton product={product} />
+          {user._id !== null && <WishlistButton product={product} />}
+        </div>
+      </div>
     </Card>
   );
 }

@@ -13,6 +13,7 @@ import Dashboard from "./features/dashboard/Dashboard";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { fetchCart } from "./features/cart/cartSlice";
+import MainView from "./features/products/MainView";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
@@ -31,7 +32,7 @@ function App() {
       <Elements stripe={stripePromise}>
         <Route exact path="/*" component={Navbar}></Route>
         <Switch>
-          <Route exact path="/" component={AllProducts}></Route>
+          <Route exact path="/" component={MainView}></Route>
           <Route exact path="/cart" component={CartDetail}></Route>
 
           <Route exact path="/checkout" component={CheckoutView}></Route>

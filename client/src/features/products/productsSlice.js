@@ -10,7 +10,10 @@ const initialState = {
   products: [],
   status: "idle",
 };
-
+export const isStockAvailable = (cartProducts, product) =>
+  !cartProducts.hasOwnProperty(product._id) ||
+  (cartProducts.hasOwnProperty(product._id) &&
+    cartProducts[product._id].quantity < product.quantity);
 export const fetchAllProducts = createAsyncThunk(
   "products/fetchAllProducts",
   async (_, { getState }) => {

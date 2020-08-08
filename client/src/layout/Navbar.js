@@ -56,11 +56,6 @@ function Navbar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            <Link to="/">Shopping Cart</Link>
-          </Typography>
-          <CartIcon />
-
           <IconButton
             edge="start"
             className={classes.menuButton}
@@ -71,6 +66,11 @@ function Navbar() {
           >
             <MenuIcon />
           </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            <Link to="/">Shopping Cart</Link>
+          </Typography>
+          <CartIcon />
+
           <Menu
             id="menu-appbar"
             anchorEl={anchorEl}

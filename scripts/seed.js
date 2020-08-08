@@ -24,6 +24,7 @@ const seedProducts = async () => {
       const description = faker.lorem.paragraph(1);
       const quantity = Math.ceil(Math.random() * 20);
       const weight = (Math.random() * 10).toFixed(1);
+      const image = faker.image.imageUrl(400, 400, "business");
 
       let newProduct = {
         name,
@@ -32,6 +33,7 @@ const seedProducts = async () => {
         description,
         quantity,
         weight,
+        image,
       };
       const product = new Product(newProduct);
       await product.save();

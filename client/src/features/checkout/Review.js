@@ -37,11 +37,11 @@ export default function Review() {
           Object.values(products).map((product) => (
             <ListItem className={classes.listItem} key={product.name}>
               <ListItemText
-                primary={`${product.quantity} ${product.name}`}
+                primary={`${product.itemsInCart} ${product.name}`}
                 secondary={product.description}
               />
               <Typography variant="body2">{`${
-                product.quantity *
+                product.itemsInCart *
                 parseFloat(product.price.slice(1, -1)).toFixed(2)
               }$`}</Typography>
             </ListItem>

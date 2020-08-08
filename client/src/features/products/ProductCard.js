@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ProductCard({ product }) {
-  const { name, brand, description, quantity, price } = product;
+  const { name, brand, description, availability, price } = product;
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector(selectAuthorizedUser);
@@ -54,7 +54,7 @@ function ProductCard({ product }) {
       <br />
       <Typography variant="body1">{price}</Typography>
       <Typography variant="caption">
-        {quantity ? "In stock: " + quantity : "Out of stock"}
+        {availability ? "In stock: " + availability : "Out of stock"}
       </Typography>
       <br />
       <Button

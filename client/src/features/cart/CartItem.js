@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     height: "8rem",
   },
   product: {},
-  quantityDiv: {
+  itemsInCartDiv: {
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 function CartItem({ product }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { name, brand, quantity, price } = product;
+  const { name, brand, itemsInCart, price } = product;
   const cartProducts = useSelector(selectCartContents);
   const handleAddBtnClick = () => {
     if (isStockAvailable(cartProducts, product)) {
@@ -48,8 +48,6 @@ function CartItem({ product }) {
     dispatch(productDeleted(product));
     dispatch(updateCart());
   };
-  console.log(cartProducts, product);
-  console.log(product);
 
   return (
     <Card className={classes.card}>
@@ -61,7 +59,7 @@ function CartItem({ product }) {
           Remove from cart
         </Button>
       </div>
-      <div className={classes.quantityDiv}>
+      <div className={classes.itemsInCartDiv}>
         <IconButton
           disabled={!isStockAvailable(cartProducts, product)}
           onClick={handleAddBtnClick}
@@ -69,8 +67,8 @@ function CartItem({ product }) {
         >
           <AddIcon />
         </IconButton>
-        <Typography aria-label="quantity" variant="body1">
-          {quantity}
+        <Typography aria-label="items-in-cart" variant="body1">
+          {itemsInCart}
         </Typography>
         <IconButton onClick={handleRemoveBtnClick} aria-label="decrease">
           <RemoveIcon />

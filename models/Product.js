@@ -7,11 +7,11 @@ const ProductSchema = new Schema({
   name: String,
   brand: String,
   description: String,
-  quantity: Number,
+  itemsInCart: Number,
   price: String,
   weight: Number,
   image: String,
-
+  availability: Number,
   date: {
     type: Date,
     default: Date.now,

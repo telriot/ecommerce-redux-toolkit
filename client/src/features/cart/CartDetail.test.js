@@ -38,10 +38,12 @@ describe("AllProducts tests", () => {
           name: "testProduct1",
           price: "$100",
           description: "test product 1",
-          quantity: 1,
+          availability: 5,
+          itemsInCart: 0,
           brand: "test brand 1",
           weight: 10,
           _id: "testid1",
+          quantity: 1,
         })
       );
       store.dispatch(
@@ -49,10 +51,11 @@ describe("AllProducts tests", () => {
           name: "testProduct2",
           price: "$200",
           description: "test product 2",
-          quantity: 1,
+          availability: 5,
           brand: "test brand 2",
           weight: 10,
           _id: "testid2",
+          quantity: 1,
         })
       );
       return ({
@@ -74,11 +77,11 @@ describe("AllProducts tests", () => {
     });
     test("Clicking on the add symbol increases the quantity by 1", () => {
       fireEvent.click(getAllByLabelText("increase")[0]);
-      expect(getAllByLabelText("quantity")[0]).toHaveTextContent(2);
+      expect(getAllByLabelText("items-in-cart")[0]).toHaveTextContent(2);
     });
     test("Clicking on the minus symbol decreases the quantity by 1", () => {
       fireEvent.click(getAllByLabelText("decrease")[0]);
-      expect(getAllByLabelText("quantity")[0]).toHaveTextContent(0);
+      expect(getAllByLabelText("items-in-cart")[0]).toHaveTextContent(0);
     });
     test("Remove button removes product", async () => {
       const removeBtn = getAllByText(/remove/gi)[0];

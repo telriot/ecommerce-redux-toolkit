@@ -11,9 +11,10 @@ const initialState = {
   status: "idle",
 };
 export const isStockAvailable = (cartProducts, product) =>
-  !cartProducts.hasOwnProperty(product._id) ||
-  (cartProducts.hasOwnProperty(product._id) &&
-    cartProducts[product._id].quantity < product.quantity);
+  product.availability &&
+  (!cartProducts.hasOwnProperty(product._id) ||
+    (cartProducts.hasOwnProperty(product._id) &&
+      cartProducts[product._id].itemsInCart < product.availability));
 export const fetchAllProducts = createAsyncThunk(
   "products/fetchAllProducts",
   async (_, { getState }) => {
@@ -38,8 +39,7 @@ export const removePurchasedItems = createAsyncThunk(
   async (products, { getState }) => {
     let purchasedItems = [];
     for (let product of Object.values(products)) {
-      console.log(product);
-      purchasedItems.push({ _id: product._id, quantity: product.quantity });
+      purchasedItems.push({ _id: product._id, quantity: product.itemsInCart });
     }
     try {
       const response = await axios.put("api/products/", {

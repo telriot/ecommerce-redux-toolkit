@@ -12,16 +12,16 @@ module.exports = {
   },
   updateProducts: async (req, res, next) => {
     const { products, action } = req.body;
-    console.log("updated");
     for (let product of products) {
       const productToUpdate = await Product.findById(product._id);
-      let updatedQuantity;
+      let updatedAvailability;
       if (action === "remove") {
-        updatedQuantity = productToUpdate.quantity - product.quantity;
+        updatedAvailability = productToUpdate.availability - product.quantity;
       }
-      await productToUpdate.update({ quantity: updatedQuantity });
+      await productToUpdate.update({ availability: updatedAvailability });
       await productToUpdate.save();
     }
     res.status(200).send("Items succesfully removed");
   },
+  getSelectedProducts: async (req, res, next) => {},
 };

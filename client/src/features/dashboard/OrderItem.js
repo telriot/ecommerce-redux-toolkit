@@ -46,13 +46,13 @@ function OrderItem({ order, index }) {
             {isOpen ? (
               parsedProducts.map((product, index) => (
                 <Typography key={`typo-${index}`}>
-                  {product.quantity} x {product.name}@ {product.price}$
+                  {product.itemsInCart} x {product.name}@ {product.price}$
                 </Typography>
               ))
             ) : (
               <>
                 <Typography>
-                  {parsedProducts[0].quantity} x {parsedProducts[0].name} @{" "}
+                  {parsedProducts[0].itemsInCart} x {parsedProducts[0].name} @{" "}
                   {parsedProducts[0].price}$
                 </Typography>
                 {parsedProducts.length > 1 ? (

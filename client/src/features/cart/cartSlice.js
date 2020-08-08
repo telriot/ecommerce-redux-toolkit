@@ -24,16 +24,16 @@ const joinCarts = (cart1, cart2, getState) => {
     let product1Price = parseInt(product1.price.slice(1, -1));
     if (
       cart2.products.hasOwnProperty(id) &&
-      product2.quantity < product1.quantity
+      product2.itemsInCart < product1.itemsInCart
     ) {
       newCart.products[id] = product1;
-      newCart.count += product1.quantity - product2.quantity;
+      newCart.count += product1.itemsInCart - product2.itemsInCart;
       newCart.itemTotal +=
-        (product1.quantity - product2.quantity) * product1Price;
+        (product1.itemsInCart - product2.itemsInCart) * product1Price;
     } else if (!cart2.products.hasOwnProperty(id)) {
       newCart.products[id] = product1;
-      newCart.itemTotal += product1.quantity * product1Price;
-      newCart.count += product1.quantity;
+      newCart.itemTotal += product1.itemsInCart * product1Price;
+      newCart.count += product1.itemsInCart;
     }
   }
   return newCart;
@@ -104,13 +104,14 @@ const cartSlice = createSlice({
     },
     productAdded: {
       reducer(state, action) {
-        const { _id, quantity, price } = action.payload;
+        const { _id, price, quantity } = action.payload;
+        console.log(action.payload);
         const parsedPrice = parseFloat(price.slice(1, -1)).toFixed(2);
         if (!state.products[_id]) {
-          state.products[_id] = action.payload;
-        } else {
-          state.products[_id].quantity += quantity;
+          let { quantity, ...rest } = action.payload;
+          state.products[_id] = rest;
         }
+        state.products[_id].itemsInCart += quantity;
         state.count += quantity;
         state.itemTotal += parsedPrice * quantity;
         state.total =
@@ -119,16 +120,16 @@ const cartSlice = createSlice({
     },
     productRemoved: {
       reducer(state, action) {
-        const { _id, quantity, price } = action.payload;
+        const { _id, price, quantity } = action.payload;
         const parsedPrice = parseFloat(price.slice(1, -1)).toFixed(2);
         const removalQuantity =
-          state.products[_id].quantity < quantity
-            ? state.products[_id].quantity
+          state.products[_id].itemsInCart < quantity
+            ? state.products[_id].itemsInCart
             : quantity;
         if (!state.products[_id]) {
           console.log("No product to remove");
         } else {
-          state.products[_id].quantity -= removalQuantity;
+          state.products[_id].itemsInCart -= removalQuantity;
         }
         state.count -= removalQuantity;
         state.itemTotal -= parsedPrice * removalQuantity;
@@ -142,7 +143,7 @@ const cartSlice = createSlice({
         if (!state.products[_id]) {
           console.log("No product to remove");
         } else {
-          state.count -= state.products[_id].quantity;
+          state.count -= state.products[_id].itemsInCart;
           delete state.products[_id];
         }
       },

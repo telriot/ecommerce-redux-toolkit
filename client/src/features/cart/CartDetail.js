@@ -27,7 +27,7 @@ function CartDetail() {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const contents = useSelector(selectCartContents);
+  const cartItems = useSelector(selectCartContents);
   const itemTotal = useSelector(selectCartItemTotal);
   const shipping = useSelector(selectCartShippingCost);
   const taxPercent = useSelector(selectTaxPercent);
@@ -55,8 +55,8 @@ function CartDetail() {
       container
     >
       <Grid className={classes.subGridLeft} item={true} xs={12} sm={8}>
-        {Object.keys(contents).length
-          ? Object.values(contents).map((item) => (
+        {Object.keys(cartItems).length
+          ? Object.values(cartItems).map((item) => (
               <CartItem key={item._id} product={item} />
             ))
           : "Your cart is empty"}

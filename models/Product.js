@@ -12,6 +12,7 @@ const ProductSchema = new Schema({
   weight: Number,
   image: String,
   availability: Number,
+  department: String,
   date: {
     type: Date,
     default: Date.now,

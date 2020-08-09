@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { createElement } from "react";
 
 const initialState = {
   textFilter: "",
   brands: [],
+  brandFilter: [],
   minPriceFilter: "",
   maxPriceFilter: "",
 };
@@ -39,6 +39,17 @@ const filtersSlice = createSlice({
         state.maxPriceFilter = action.payload;
       },
     },
+    brandFilterSet: {
+      reducer(state, action) {
+        if (state.brandFilter.includes(action.payload)) {
+          state.brandFilter = state.brandFilter.filter(
+            (item) => item !== action.payload
+          );
+        } else {
+          state.brandFilter.push(action.payload);
+        }
+      },
+    },
     filtersReset: {
       reducer(state) {
         state = initialState;
@@ -51,6 +62,7 @@ const filtersSlice = createSlice({
     },
     [fetchBrandsList.fulfilled]: (state, action) => {
       const { brandsList, error, success } = action.payload;
+
       if (success) {
         state.brands = brandsList;
       } else {
@@ -71,6 +83,7 @@ export const {
   textFilterSet,
   minPriceFilterSet,
   maxPriceFilterSet,
+  brandFilterSet,
   filtersReset,
 } = filtersSlice.actions;
 export const selectTextFilter = (state) => state.filters.textFilter;

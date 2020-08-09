@@ -7,6 +7,8 @@ const initialState = {
   brandFilter: [],
   minPriceFilter: "",
   maxPriceFilter: "",
+  departments: [],
+  departmentFilter: "",
 };
 export const fetchBrandsList = createAsyncThunk(
   "filters/fetchBrandsList",
@@ -14,6 +16,18 @@ export const fetchBrandsList = createAsyncThunk(
     try {
       const response = await axios.get("/api/brands/list");
       return { success: true, brandsList: response.data };
+    } catch (error) {
+      console.log(error);
+      return { success: false, error };
+    }
+  }
+);
+export const fetchDepartmentsList = createAsyncThunk(
+  "filters/fetchDepartmentsList",
+  async () => {
+    try {
+      const response = await axios.get("/api/departments/list");
+      return { success: true, departmentsList: response.data };
     } catch (error) {
       console.log(error);
       return { success: false, error };
@@ -37,6 +51,11 @@ const filtersSlice = createSlice({
     maxPriceFilterSet: {
       reducer(state, action) {
         state.maxPriceFilter = action.payload;
+      },
+    },
+    departmentFilterSet: {
+      reducer(state, action) {
+        state.departmentFilter = action.payload;
       },
     },
     brandFilterSet: {
@@ -76,6 +95,25 @@ const filtersSlice = createSlice({
       state.error = "Something went wrong with our servers";
       state.status = "rejected";
     },
+    [fetchDepartmentsList.pending]: (state, action) => {
+      state.status = "pending";
+    },
+    [fetchDepartmentsList.fulfilled]: (state, action) => {
+      const { departmentsList, error, success } = action.payload;
+
+      if (success) {
+        state.departments = departmentsList;
+      } else {
+        state.departments = [];
+        state.error = error;
+      }
+
+      state.status = "fulfilled";
+    },
+    [fetchDepartmentsList.rejected]: (state, action) => {
+      state.error = "Something went wrong with our servers";
+      state.status = "rejected";
+    },
   },
 });
 
@@ -84,6 +122,7 @@ export const {
   minPriceFilterSet,
   maxPriceFilterSet,
   brandFilterSet,
+  departmentFilterSet,
   filtersReset,
 } = filtersSlice.actions;
 export const selectTextFilter = (state) => state.filters.textFilter;

@@ -2,7 +2,13 @@ const Product = require("../models/Product");
 
 module.exports = {
   getAllProducts: async (req, res, next) => {
-    const { page, limit, textFilter, brandFilter } = req.query;
+    const {
+      page,
+      limit,
+      textFilter,
+      brandFilter,
+      departmentFilter,
+    } = req.query;
     const options = {
       page,
       limit,
@@ -11,6 +17,9 @@ module.exports = {
 
     const filterOptions = {
       name: { $regex: textSearchRegex, $options: "gi" },
+      department: departmentFilter
+        ? departmentFilter
+        : { $regex: "", $options: "gi" },
       brand:
         brandFilter && brandFilter.length
           ? { $in: brandFilter }

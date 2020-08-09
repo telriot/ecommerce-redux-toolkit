@@ -2,18 +2,13 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { fetchBrandsList, brandFilterSet } from "./filtersSlice";
-import {
-  Container,
-  Link,
-  FormControlLabel,
-  Checkbox,
-  Typography,
-} from "@material-ui/core";
+import { FormControlLabel, Checkbox, Typography } from "@material-ui/core";
 import { fetchAllProducts } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
   brandLink: {
     cursor: "pointer",
+    marginBottom: theme.spacing(0.25),
   },
   brandsDiv: {
     display: "flex",
@@ -25,7 +20,9 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "transparent",
     },
   },
-  label: { fontSize: theme.typography.caption.fontSize },
+  label: {
+    fontSize: theme.typography.caption.fontSize,
+  },
 }));
 function BrandsFilter() {
   const classes = useStyles();
@@ -57,19 +54,10 @@ function BrandsFilter() {
           />
         }
         label={brandName}
-        classes={{ label: classes.label }}
+        classes={{ root: classes.brandLink, label: classes.label }}
       />
     );
   };
-
-  {
-    /*}
-    <Link underline="none" onClick={handleBrandClick}>
-      <Typography variant="caption" className={classes.brandLink}>
-        {brandName}
-      </Typography>
-  </Link>*/
-  }
 
   return (
     <div>

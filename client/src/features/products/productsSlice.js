@@ -19,11 +19,10 @@ export const fetchAllProducts = createAsyncThunk(
   "products/fetchAllProducts",
   async (_, { getState }) => {
     const { page, limit } = getState().products;
-    const { textFilter, brandFilter } = getState().filters;
-    console.log(brandFilter);
+    const { textFilter, brandFilter, departmentFilter } = getState().filters;
     try {
       const response = await axios.get("api/products/", {
-        params: { page, limit, textFilter, brandFilter },
+        params: { page, limit, textFilter, brandFilter, departmentFilter },
       });
       return {
         products: response.data.docs,

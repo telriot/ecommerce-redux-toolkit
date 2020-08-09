@@ -9,6 +9,7 @@ const MongoStore = require("connect-mongo")(session);
 const passport = require("./passport");
 const authRouter = require("./routes/auth");
 const brandsRouter = require("./routes/brands");
+const departmentsRouter = require("./routes/departments");
 const indexRouter = require("./routes/index");
 const productsRouter = require("./routes/products");
 const stripeRouter = require("./routes/stripe");
@@ -65,6 +66,7 @@ app.use(passport.session());
 //Create Routes
 app.use("/api/auth", authRouter);
 app.use("/api/brands", brandsRouter);
+app.use("/api/departments", departmentsRouter);
 app.use("/api", indexRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/stripe", stripeRouter);

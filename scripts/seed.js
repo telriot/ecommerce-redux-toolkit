@@ -4,7 +4,7 @@ const faker = require("faker");
 const mongoose = require("mongoose");
 const Product = require("../models/Product");
 const Brand = require("../models/Brand");
-const { findOne } = require("../models/Product");
+const Department = require("../models/Department");
 const seedProducts = async () => {
   mongoose.connect(`mongodb://127.0.0.1:27017/shopping-cart`, {
     useNewUrlParser: true,
@@ -23,7 +23,7 @@ const seedProducts = async () => {
       const name = faker.commerce.productName();
       const brand = faker.company.companyName();
       const price = faker.commerce.price(5, 2000, 2, "$");
-      const description = faker.commerce.productDescription();
+      const description = faker.lorem.paragraph(1);
       const department = faker.commerce.department();
       const availability = Math.ceil(Math.random() * 20);
       const weight = (Math.random() * 10).toFixed(1);
@@ -54,6 +54,19 @@ const seedProducts = async () => {
         const newBrand = new Brand(brandObj);
         await newBrand.products.push(product);
         await newBrand.save();
+      }
+      const existingDepartment = await Department.findOne({ name: department });
+      if (existingDepartment) {
+        existingDepartment.products.push(product);
+      } else {
+        const departmentObj = {
+          name: department,
+          description: faker.lorem.paragraph(2),
+          products: [],
+        };
+        const newDepartment = new Department(departmentObj);
+        await newDepartment.products.push(product);
+        await newDepartment.save();
       }
       console.log(product.name);
     }

@@ -13,11 +13,11 @@ function MainView() {
   return (
     <Container>
       <Grid container className={classes.grid}>
-        <Grid item xs={4}>
+        <Grid item xs={3}>
           <AllProductsFilters />
         </Grid>
 
-        <Grid item xs={8}>
+        <Grid item xs={9}>
           <AllProducts />
         </Grid>
       </Grid>

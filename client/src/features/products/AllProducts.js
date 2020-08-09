@@ -8,14 +8,14 @@ import {
 } from "./productsSlice";
 import { selectAuthorizedUser } from "../auth/authSlice";
 import { Grid, Container } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import ProductCard from "./ProductCard";
 import CustomPagination from "../shared/CustomPagination";
 import { fetchWishlistItems } from "../dashboard/dashboardSlice";
 const useStyles = makeStyles((theme) => ({
   container: { display: "flex", flexDirection: "column" },
   grid: {
-    margin: "2rem 0",
+    margin: theme.spacing(4, 0),
   },
 }));
 function AllProducts() {
@@ -43,6 +43,7 @@ function AllProducts() {
         data-testid="component-allproducts"
         container
         className={classes.grid}
+        spacing={3}
       >
         {isFetching === "pending"
           ? "Loading..."

@@ -10,14 +10,32 @@ import { fetchAllProducts } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
   filterContainer: {},
-  filterLabel: { marginBottom: theme.spacing(1) },
+
   inputDiv: {
     display: "flex",
     alignItems: "center",
-    marginRight: theme.spacing(1),
+    margin: theme.spacing(0, 0, 2, 1),
+  },
+  filterRoot: {
+    width: "5rem",
+    padding: theme.spacing(0),
   },
   filterInput: {
-    width: "4rem",
+    padding: theme.spacing(1, 1),
+    fontSize: theme.typography.caption.fontSize,
+  },
+  filterTextLabel: {
+    fontSize: theme.typography.caption.fontSize,
+    transform: "translate(14px, 10px) scale(1) !important",
+  },
+
+  filterTextLabelShrink: {
+    fontSize: theme.typography.caption.fontSize,
+    transform: "translate(14px, -10px) scale(.85) !important",
+  },
+  iconButton: {
+    padding: theme.spacing(0.75),
+    marginLeft: theme.spacing(1),
   },
   separator: {
     padding: theme.spacing(1),
@@ -40,12 +58,21 @@ function MinMaxFilter() {
 
   return (
     <div className={classes.filterContainer}>
-      <Typography className={classes.filterLabel} variant="body2">
+      <Typography className={classes.filterLabel} variant="body1">
         Price range
       </Typography>
       <div className={classes.inputDiv}>
         <TextField
-          className={classes.filterInput}
+          classes={{ root: classes.filterRoot }}
+          inputProps={{
+            className: classes.filterInput,
+          }}
+          InputLabelProps={{
+            classes: {
+              root: classes.filterTextLabel,
+              shrink: classes.filterTextLabelShrink,
+            },
+          }}
           label="Min"
           id="min-filter"
           variant="outlined"
@@ -55,7 +82,16 @@ function MinMaxFilter() {
         />
         <Typography className={classes.separator}>~</Typography>
         <TextField
-          className={classes.filterInput}
+          classes={{ root: classes.filterRoot }}
+          inputProps={{
+            className: classes.filterInput,
+          }}
+          InputLabelProps={{
+            classes: {
+              root: classes.filterTextLabel,
+              shrink: classes.filterTextLabelShrink,
+            },
+          }}
           label="Max"
           id="max-filter"
           variant="outlined"
@@ -63,7 +99,10 @@ function MinMaxFilter() {
           type="number"
           onChange={handleMaxFilterChange}
         />
-        <IconButton onClick={handleApplyFilter}>
+        <IconButton
+          classes={{ root: classes.iconButton }}
+          onClick={handleApplyFilter}
+        >
           <SearchIcon />
         </IconButton>
       </div>

@@ -26,6 +26,14 @@ module.exports = {
         brandFilter && brandFilter.length
           ? { $in: brandFilter }
           : { $regex: "", $options: "gi" },
+      price:
+        minPriceFilter && maxPriceFilter
+          ? { $gte: minPriceFilter, $lte: maxPriceFilter }
+          : minPriceFilter
+          ? { $gte: minPriceFilter }
+          : maxPriceFilter
+          ? { $lte: maxPriceFilter }
+          : { $regex: "", $options: "gi" },
     };
     const products = await Product.paginate(filterOptions, options);
     res.send(products);

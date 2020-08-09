@@ -13,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
   brandsDiv: {
     display: "flex",
     flexDirection: "column",
+    margin: theme.spacing(0, 0, 2, 1.75),
   },
   checkbox: {
     padding: theme.spacing(0.25, 0.5),
@@ -60,8 +61,8 @@ function BrandsFilter() {
   };
 
   return (
-    <div>
-      <Typography variant="body2">Brands</Typography>
+    <>
+      <Typography variant="body1">Brands</Typography>
       <div className={classes.brandsDiv}>
         {brands
           .filter((brand, index) => index < 15)
@@ -69,7 +70,7 @@ function BrandsFilter() {
             <Brand key={`brand-${index}`} brandName={brand.name} />
           ))}
       </div>
-    </div>
+    </>
   );
 }
 

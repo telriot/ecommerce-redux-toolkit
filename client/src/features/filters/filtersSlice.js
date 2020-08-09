@@ -71,7 +71,10 @@ const filtersSlice = createSlice({
     },
     filtersReset: {
       reducer(state) {
-        state = initialState;
+        state.brandFilter = [];
+        state.minPriceFilter = "";
+        state.maxPriceFilter = "";
+        state.departmentFilter = "";
       },
     },
   },

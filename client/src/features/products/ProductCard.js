@@ -11,7 +11,6 @@ import DescriptionText from "../shared/DescriptionText";
 const useStyles = makeStyles((theme) => ({
   card: {
     padding: theme.spacing(1),
-    margin: theme.spacing(2),
     height: "24rem",
   },
   media: {
@@ -20,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   nameDiv: { marginBottom: theme.spacing(2) },
+  productName: { lineHeight: "1.6rem" },
   bottomDiv: {
     display: "flex",
     justifyContent: "space-between",

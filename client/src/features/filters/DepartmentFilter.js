@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   departmentsDiv: {
     display: "flex",
     flexDirection: "column",
-    padding: theme.spacing(0.5, 0, 0.5, 1),
+    padding: theme.spacing(0.5, 0, 2, 1),
   },
 }));
 function DepartmentFilter() {
@@ -43,8 +43,8 @@ function DepartmentFilter() {
   };
 
   return (
-    <div>
-      <Typography variant="body2">Departments</Typography>
+    <>
+      <Typography variant="body1">Departments</Typography>
       <div className={classes.departmentsDiv}>
         {departments
           .filter((department, index) => index < 15)
@@ -56,7 +56,7 @@ function DepartmentFilter() {
             />
           ))}
       </div>
-    </div>
+    </>
   );
 }
 

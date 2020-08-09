@@ -13,6 +13,7 @@ module.exports = {
     const products = await Product.paginate(filterOptions, options);
     res.send(products);
   },
+
   updateProducts: async (req, res, next) => {
     const { products, action } = req.body;
     for (let product of products) {

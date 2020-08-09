@@ -3,6 +3,8 @@
 const faker = require("faker");
 const mongoose = require("mongoose");
 const Product = require("../models/Product");
+const Brand = require("../models/Brand");
+const { findOne } = require("../models/Product");
 const seedProducts = async () => {
   mongoose.connect(`mongodb://127.0.0.1:27017/shopping-cart`, {
     useNewUrlParser: true,
@@ -38,6 +40,19 @@ const seedProducts = async () => {
       };
       const product = new Product(newProduct);
       await product.save();
+      const existingBrand = await Brand.findOne({ name: brand });
+      if (existingBrand) {
+        existingBrand.products.push(product);
+      } else {
+        const brandObj = {
+          name: brand,
+          description: faker.lorem.paragraph(2),
+          products: [],
+        };
+        const newBrand = new Brand(brandObj);
+        await newBrand.products.push(product);
+        await newBrand.save();
+      }
       console.log(product.name);
     }
   } catch (error) {

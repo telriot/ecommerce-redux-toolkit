@@ -6,7 +6,7 @@ const initialState = {
   hasNextPage: false,
   hasPrevPage: false,
   totalPages: 1,
-  limit: 10,
+  limit: 24,
   products: [],
   status: "idle",
 };

@@ -11,10 +11,10 @@ import DescriptionText from "../shared/DescriptionText";
 const useStyles = makeStyles((theme) => ({
   card: {
     padding: theme.spacing(1),
-    height: "24rem",
+    height: "100%",
   },
   media: {
-    height: 150,
+    height: 200,
     width: "100%",
     marginBottom: theme.spacing(1),
   },
@@ -24,6 +24,15 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  price: {
+    display: "flex",
+  },
+  priceUnit: {
+    transform: "translateY(5px)",
+  },
+  priceTag: {
+    fontWeight: 400,
   },
   priceDiv: {
     display: "flex",
@@ -48,11 +57,19 @@ function ProductCard({ product }) {
         </Typography>
       </div>
 
-      <DescriptionText description={description} maxLength={80} />
+      <DescriptionText description={description} maxLength={60} />
       <br />
       <div className={classes.bottomDiv}>
         <div className={classes.priceDiv}>
-          <Typography variant="body1">${price}</Typography>
+          <div className={classes.price}>
+            <Typography className={classes.priceUnit} variant="caption">
+              $
+            </Typography>
+            <Typography className={classes.priceTag} variant="h6" component="p">
+              {price}
+            </Typography>
+          </div>
+
           <AvailabilityInfo availability={availability} />
         </div>
 

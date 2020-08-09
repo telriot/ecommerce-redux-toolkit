@@ -4,6 +4,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import { minPriceFilterSet, maxPriceFilterSet } from "./filtersSlice";
+import { IconButton } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import { fetchAllProducts } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
   filterContainer: {},
@@ -31,6 +34,9 @@ function MinMaxFilter() {
   const handleMaxFilterChange = (e) => {
     dispatch(maxPriceFilterSet(e.target.value));
   };
+  const handleApplyFilter = () => {
+    dispatch(fetchAllProducts());
+  };
 
   return (
     <div className={classes.filterContainer}>
@@ -57,6 +63,9 @@ function MinMaxFilter() {
           type="number"
           onChange={handleMaxFilterChange}
         />
+        <IconButton onClick={handleApplyFilter}>
+          <SearchIcon />
+        </IconButton>
       </div>
     </div>
   );

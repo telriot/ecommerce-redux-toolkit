@@ -8,6 +8,8 @@ module.exports = {
       textFilter,
       brandFilter,
       departmentFilter,
+      minPriceFilter,
+      maxPriceFilter,
     } = req.query;
     const options = {
       page,

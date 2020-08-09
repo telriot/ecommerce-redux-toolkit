@@ -41,8 +41,7 @@ export default function Review() {
                 secondary={product.description}
               />
               <Typography variant="body2">{`${
-                product.itemsInCart *
-                parseFloat(product.price.slice(1, -1)).toFixed(2)
+                product.itemsInCart * parseFloat(product.price).toFixed(2)
               }$`}</Typography>
             </ListItem>
           ))}

@@ -4,8 +4,7 @@ const calculateOrderAmount = async (products) => {
   let amount = 0;
   for (let product of Object.values(products)) {
     const dbProduct = await Product.findById(product._id);
-    amount +=
-      parseFloat(dbProduct.price.slice(1, -1)).toFixed(2) * product.itemsInCart;
+    amount += parseFloat(dbProduct.price).toFixed(2) * product.itemsInCart;
   }
   return amount * 100;
 };

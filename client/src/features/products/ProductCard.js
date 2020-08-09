@@ -52,7 +52,7 @@ function ProductCard({ product }) {
       <br />
       <div className={classes.bottomDiv}>
         <div className={classes.priceDiv}>
-          <Typography variant="body1">{price}</Typography>
+          <Typography variant="body1">${price}</Typography>
           <AvailabilityInfo availability={availability} />
         </div>
 

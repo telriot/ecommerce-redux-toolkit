@@ -21,7 +21,7 @@ const joinCarts = (cart1, cart2, getState) => {
   for (let [id, product] of Object.entries(cart1.products)) {
     let product1 = cart1.products[id];
     let product2 = cart2.products[id];
-    let product1Price = parseInt(product1.price.slice(1, -1));
+    let product1Price = parseFloat(product1.price).toFixed(2);
     if (
       cart2.products.hasOwnProperty(id) &&
       product2.itemsInCart < product1.itemsInCart
@@ -106,7 +106,7 @@ const cartSlice = createSlice({
       reducer(state, action) {
         const { _id, price, quantity } = action.payload;
         console.log(action.payload);
-        const parsedPrice = parseFloat(price.slice(1, -1)).toFixed(2);
+        const parsedPrice = parseFloat(price).toFixed(2);
         if (!state.products[_id]) {
           let { quantity, ...rest } = action.payload;
           state.products[_id] = rest;
@@ -121,7 +121,7 @@ const cartSlice = createSlice({
     productRemoved: {
       reducer(state, action) {
         const { _id, price, quantity } = action.payload;
-        const parsedPrice = parseFloat(price.slice(1, -1)).toFixed(2);
+        const parsedPrice = parseFloat(price).toFixed(2);
         const removalQuantity =
           state.products[_id].itemsInCart < quantity
             ? state.products[_id].itemsInCart

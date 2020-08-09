@@ -22,7 +22,10 @@ const seedProducts = async () => {
     for (let i = 0; i < 500; i += 1) {
       const name = faker.commerce.productName();
       const brand = faker.company.companyName();
-      const price = faker.commerce.price(5, 2000, 2, "$");
+      const price = faker.random.number({
+        min: 10,
+        max: 1000,
+      });
       const description = faker.lorem.paragraph(1);
       const department = faker.commerce.department();
       const availability = Math.ceil(Math.random() * 20);

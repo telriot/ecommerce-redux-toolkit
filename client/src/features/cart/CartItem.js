@@ -54,7 +54,7 @@ function CartItem({ product }) {
       <div className={classes.product}>
         <Typography variant="h6">{name}</Typography>
         <Typography variant="subtitle1">{brand}</Typography>
-        <Typography variant="body1">{price}</Typography>
+        <Typography variant="body1">${price}</Typography>
         <Button color="secondary" onClick={handleDeleteBtnClick}>
           Remove from cart
         </Button>

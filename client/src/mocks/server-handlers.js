@@ -4,7 +4,7 @@ const testProducts = [
     name: "testProduct1",
     date: "2020-01-26T04:17:06.415Z",
 
-    price: "$100",
+    price: 100,
     description: "test product 1",
     availability: 2,
     brand: "test brand 1",
@@ -14,7 +14,7 @@ const testProducts = [
   {
     name: "testProduct2",
     date: "2020-02-26T04:17:06.415Z",
-    price: "$200",
+    price: 200,
     description: "test product 2",
     availability: 2,
     brand: "test brand 2",
@@ -24,7 +24,7 @@ const testProducts = [
   {
     name: "testProduct3",
     date: "2020-03-26T04:17:06.415Z",
-    price: "$300",
+    price: 300,
     description: "test product 3",
     availability: 3,
     brand: "test brand 3",

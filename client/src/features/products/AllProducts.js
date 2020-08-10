@@ -13,10 +13,12 @@ import ProductCard from "./ProductCard";
 import CustomPagination from "../shared/CustomPagination";
 import { fetchWishlistItems } from "../dashboard/dashboardSlice";
 const useStyles = makeStyles((theme) => ({
-  container: { display: "flex", flexDirection: "column" },
-  grid: {
-    margin: theme.spacing(4, 0),
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    padding: theme.spacing(4),
   },
+  grid: { marginBottom: theme.spacing(2) },
 }));
 function AllProducts() {
   const classes = useStyles();

@@ -8,8 +8,10 @@ import CustomPagination from "../shared/CustomPagination";
 import { pageChanged } from "../dashboard/dashboardSlice";
 
 const useStyles = makeStyles((theme) => ({
-  grid: {},
-  paper: { padding: theme.spacing(3) },
+  grid: { marginBottom: theme.spacing(4) },
+  subGridRight: {
+    padding: theme.spacing(0, 4),
+  },
 }));
 
 function Wishlist() {
@@ -52,22 +54,26 @@ function Wishlist() {
   return (
     <Grid container data-testid="wishlist-component">
       <Grid item xs={9}>
-        <Typography variant="h5">Wishlist history</Typography>
-        <Typography variant="subtitle1">
-          Dolor anim minim anim proident occaecat nulla do.
-        </Typography>
-        <Paper className={classes.paper}>
-          {isFetching === "pending" ? "Loading..." : wishlistItemsToRender}
-        </Paper>
+        <Typography variant="h5">Wishlist</Typography>
+
+        {isFetching === "pending" ? (
+          "Loading..."
+        ) : wishlistItemsToRender.length ? (
+          wishlistItemsToRender
+        ) : (
+          <Typography variant="subtitle1">Your wishlist is empty</Typography>
+        )}
       </Grid>
-      <Grid item xs={3}>
+      <Grid className={classes.subGridRight} item xs={3}>
         Right
       </Grid>
-      <CustomPagination
-        totalPages={totalPages}
-        currentPage={page}
-        handleChange={handleChange}
-      />
+      {totalPages > 1 && (
+        <CustomPagination
+          totalPages={totalPages}
+          currentPage={page}
+          handleChange={handleChange}
+        />
+      )}
     </Grid>
   );
 }

@@ -139,11 +139,16 @@ const cartSlice = createSlice({
     },
     productDeleted: {
       reducer(state, action) {
-        const { _id } = action.payload;
+        const { _id, price } = action.payload;
+        const parsedPrice = parseFloat(price).toFixed(2);
+        const removalQuantity = state.products[_id].itemsInCart;
         if (!state.products[_id]) {
           console.log("No product to remove");
         } else {
           state.count -= state.products[_id].itemsInCart;
+          state.itemTotal -= parsedPrice * removalQuantity;
+          state.total =
+            (state.itemTotal * (100 + state.taxPercent)) / 100 + state.shipping;
           delete state.products[_id];
         }
       },

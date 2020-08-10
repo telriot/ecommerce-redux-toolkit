@@ -1,78 +1,94 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Button, IconButton, Card, Typography } from "@material-ui/core";
+import { Button, CardMedia, Card, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import { isStockAvailable } from "../products/productsSlice";
-import {
-  productAdded,
-  productDeleted,
-  productRemoved,
-  updateCart,
-  selectCartContents,
-} from "./cartSlice";
+import QuantityHandlerButton from "./QuantityHandlerButton";
+import { productDeleted, updateCart } from "./cartSlice";
+import { wishlistItemAdded, updateWishlist } from "../dashboard/dashboardSlice";
 
 const useStyles = makeStyles((theme) => ({
   card: {
+    margin: theme.spacing(2, 0),
     display: "flex",
-    justifyContent: "space-between",
-    padding: theme.spacing(1),
-    margin: theme.spacing(2),
-    height: "8rem",
   },
-  product: {},
-  itemsInCartDiv: {
+  media: {
+    width: 150,
+  },
+  infoDiv: {
     display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
+    flexDirection: "column",
+  },
+  textElements: {
+    display: "flex",
+    flexDirection: "column",
+    paddingLeft: theme.spacing(0.75),
+    marginBottom: theme.spacing(2),
+  },
+  buttonDiv: {
+    display: "flex",
+  },
+  deleteButton: {
+    alignSelf: "flex-start",
+  },
+  product: {
+    display: "flex",
+    flex: 1,
+    justifyContent: "space-between",
+    padding: theme.spacing(2),
   },
 }));
 
 function CartItem({ product }) {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { name, brand, itemsInCart, price } = product;
-  const cartProducts = useSelector(selectCartContents);
-  const handleAddBtnClick = () => {
-    if (isStockAvailable(cartProducts, product)) {
-      dispatch(productAdded({ ...product, quantity: 1 }));
-      dispatch(updateCart());
-    }
-  };
-  const handleRemoveBtnClick = () => {
-    dispatch(productRemoved({ ...product, quantity: 1 }));
+  const user = useSelector((state) => state.auth.user._id);
+  const { name, brand, price } = product;
+
+  const handleDeleteBtnClick = () => {
+    dispatch(productDeleted(product));
     dispatch(updateCart());
   };
-  const handleDeleteBtnClick = () => {
+  const handleMoveToWishlist = () => {
+    dispatch(wishlistItemAdded(product));
+    dispatch(updateWishlist());
     dispatch(productDeleted(product));
     dispatch(updateCart());
   };
 
   return (
     <Card className={classes.card}>
+      <CardMedia className={classes.media} image={product.image} />
       <div className={classes.product}>
-        <Typography variant="h6">{name}</Typography>
-        <Typography variant="subtitle1">{brand}</Typography>
-        <Typography variant="body1">${price}</Typography>
-        <Button color="secondary" onClick={handleDeleteBtnClick}>
-          Remove from cart
-        </Button>
-      </div>
-      <div className={classes.itemsInCartDiv}>
-        <IconButton
-          disabled={!isStockAvailable(cartProducts, product)}
-          onClick={handleAddBtnClick}
-          aria-label="increase"
-        >
-          <AddIcon />
-        </IconButton>
-        <Typography aria-label="items-in-cart" variant="body1">
-          {itemsInCart}
+        <div className={classes.infoDiv}>
+          <div className={classes.textElements}>
+            <Typography variant="h6">{name}</Typography>
+            <Typography variant="caption">{brand}</Typography>
+          </div>
+
+          <div className={classes.buttonDiv}>
+            <QuantityHandlerButton product={product} />
+            <Button
+              color="secondary"
+              classes={{ root: classes.deleteButton }}
+              onClick={handleDeleteBtnClick}
+              size="small"
+            >
+              Remove
+            </Button>
+            {user && (
+              <Button
+                classes={{ root: classes.deleteButton }}
+                onClick={handleMoveToWishlist}
+                size="small"
+              >
+                Add to Wishlist
+              </Button>
+            )}
+          </div>
+        </div>
+        <Typography variant="h6" component="p">
+          ${price}
         </Typography>
-        <IconButton onClick={handleRemoveBtnClick} aria-label="decrease">
-          <RemoveIcon />
-        </IconButton>
       </div>
     </Card>
   );

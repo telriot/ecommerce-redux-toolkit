@@ -9,12 +9,12 @@ import { fetchUser } from "./dashboardSlice";
 import { selectAuthorizedUser } from "../auth/authSlice";
 import Wishlist from "./Wishlist";
 const useStyles = makeStyles((theme) => ({
-  grid: {},
   container: {
     display: "flex",
     flexDirection: "column",
-    padding: theme.spacing(3),
+    padding: theme.spacing(4),
   },
+
   breadcrumbs: {
     marginBottom: theme.spacing(4),
   },
@@ -32,8 +32,12 @@ function Dashboard() {
     authUser._id && dispatch(fetchUser());
   }, [dispatch, authUser]);
   return (
-    <Grid data-testid="component-dashboard" container className={classes.grid}>
-      <Container className={classes.container}>
+    <Container className={classes.container}>
+      <Grid
+        data-testid="component-dashboard"
+        container
+        className={classes.grid}
+      >
         <Breadcrumbs className={classes.breadcrumbs} aria-label="breadcrumb">
           <Link
             color="inherit"
@@ -62,8 +66,8 @@ function Dashboard() {
         ) : activeTab === "wishlist" ? (
           <Wishlist />
         ) : null}
-      </Container>
-    </Grid>
+      </Grid>
+    </Container>
   );
 }
 

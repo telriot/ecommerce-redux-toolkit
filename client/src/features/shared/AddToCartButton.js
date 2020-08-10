@@ -1,5 +1,5 @@
 import React from "react";
-import { IconButton } from "@material-ui/core";
+import { Button, IconButton } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import {
   productAdded,
@@ -10,25 +10,42 @@ import { isStockAvailable } from "../products/productsSlice";
 
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
-function AddToCartButton({ product }) {
+function AddToCartButton({ product, format, quantity }) {
   const dispatch = useDispatch();
-
+  console.log(format);
   const handleAddToCart = () => {
     if (isStockAvailable(cartProducts, product)) {
-      dispatch(productAdded({ ...product, quantity: 1 }));
+      dispatch(productAdded({ ...product, quantity: parseInt(quantity) || 1 }));
       dispatch(updateCart());
     }
   };
-
   const cartProducts = useSelector(selectCartContents);
-  return (
-    <IconButton
-      onClick={handleAddToCart}
-      disabled={!isStockAvailable(cartProducts, product)}
-    >
-      <AddShoppingCartIcon />
-    </IconButton>
-  );
+  const ButtonVariant = ({ format }) => {
+    switch (format) {
+      case "icon":
+        return (
+          <IconButton
+            onClick={handleAddToCart}
+            disabled={!isStockAvailable(cartProducts, product)}
+          >
+            <AddShoppingCartIcon />
+          </IconButton>
+        );
+      case "button":
+        return (
+          <Button
+            onClick={handleAddToCart}
+            disabled={!isStockAvailable(cartProducts, product)}
+          >
+            Add to cart{" "}
+          </Button>
+        );
+      default:
+        return null;
+    }
+  };
+
+  return <ButtonVariant format={format} />;
 }
 
 export default AddToCartButton;

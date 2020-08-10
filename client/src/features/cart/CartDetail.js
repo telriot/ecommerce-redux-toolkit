@@ -44,7 +44,7 @@ function CartDetail() {
             <Typography variant="h6">Your shopping cart is empty</Typography>
           )}
         </Grid>
-        <Grid className={classes.subGridRight} item={true} sm={3}>
+        <Grid className={classes.subGridRight} item sm={3}>
           <CartRecap />
         </Grid>
       </Grid>

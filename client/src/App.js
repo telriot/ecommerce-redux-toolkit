@@ -6,7 +6,6 @@ import {
   fetchAuthState,
   selectAuthorizedUser,
 } from "./features/auth/authSlice";
-import AllProducts from "./features/products/AllProducts";
 import CartDetail from "./features/cart/CartDetail";
 import CheckoutView from "./features/checkout/CheckoutView";
 import Dashboard from "./features/dashboard/Dashboard";
@@ -14,6 +13,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { fetchCart } from "./features/cart/cartSlice";
 import MainView from "./features/products/MainView";
+import ProductDetail from "./features/products/ProductDetail";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
@@ -34,10 +34,9 @@ function App() {
         <Switch>
           <Route exact path="/" component={MainView}></Route>
           <Route exact path="/cart" component={CartDetail}></Route>
-
           <Route exact path="/checkout" component={CheckoutView}></Route>
-
           <Route exact path="/dashboard" component={Dashboard}></Route>
+          <Route exact path="/products/:id" component={ProductDetail}></Route>
         </Switch>
       </Elements>
     </div>

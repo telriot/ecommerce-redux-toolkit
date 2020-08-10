@@ -9,6 +9,7 @@ const initialState = {
   limit: 24,
   products: [],
   status: "idle",
+  selectedProduct: {},
 };
 export const isStockAvailable = (cartProducts, product) =>
   product.availability &&
@@ -49,6 +50,20 @@ export const fetchAllProducts = createAsyncThunk(
     }
   }
 );
+export const fetchProduct = createAsyncThunk(
+  "products/fetchProduct",
+  async (_id, { getState }) => {
+    try {
+      const response = await axios.get(`/api/products/${_id}`);
+      console.log(response);
+      return { success: true, product: response.data };
+    } catch (error) {
+      console.log(error);
+      return { success: false, error };
+    }
+  }
+);
+
 export const removePurchasedItems = createAsyncThunk(
   "products/removePurchasedItems",
   async (products, { getState }) => {
@@ -92,6 +107,23 @@ const productsSlice = createSlice({
       state.status = "fulfilled";
     },
     [fetchAllProducts.rejected]: (state, action) => {
+      state.error = "Something went wrong with our servers";
+      state.status = "rejected";
+    },
+    [fetchProduct.pending]: (state, action) => {
+      state.status = "pending";
+    },
+    [fetchProduct.fulfilled]: (state, action) => {
+      const { product, success } = action.payload;
+      if (success) {
+        state.selectedProduct = product;
+        state.status = "fulfilled";
+      } else {
+        state.error = action.payload.error;
+        state.status = "fulfilled";
+      }
+    },
+    [fetchProduct.rejected]: (state, action) => {
       state.error = "Something went wrong with our servers";
       state.status = "rejected";
     },

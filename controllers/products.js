@@ -38,7 +38,10 @@ module.exports = {
     const products = await Product.paginate(filterOptions, options);
     res.send(products);
   },
-
+  getProduct: async (req, res, next) => {
+    const product = await Product.findById(req.params.id);
+    res.status(200).send(product);
+  },
   updateProducts: async (req, res, next) => {
     const { products, action } = req.body;
     for (let product of products) {

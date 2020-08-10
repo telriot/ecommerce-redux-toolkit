@@ -25,13 +25,13 @@ function QuantityHandlerButton({ product }) {
   const dispatch = useDispatch();
   const { itemsInCart } = product;
   const cartProducts = useSelector(selectCartContents);
-  const handleAddBtnClick = () => {
+  const handleIncreaseBtnClick = () => {
     if (isStockAvailable(cartProducts, product)) {
       dispatch(productAdded({ ...product, quantity: 1 }));
       dispatch(updateCart());
     }
   };
-  const handleRemoveBtnClick = () => {
+  const handleDecreaseBtnClick = () => {
     dispatch(productRemoved({ ...product, quantity: 1 }));
     dispatch(updateCart());
   };
@@ -40,7 +40,7 @@ function QuantityHandlerButton({ product }) {
     <div className={classes.itemsInCartDiv}>
       <IconButton
         disabled={!isStockAvailable(cartProducts, product)}
-        onClick={handleAddBtnClick}
+        onClick={handleIncreaseBtnClick}
         aria-label="increase"
         size="small"
       >
@@ -50,7 +50,7 @@ function QuantityHandlerButton({ product }) {
         {itemsInCart}
       </Typography>
       <IconButton
-        onClick={handleRemoveBtnClick}
+        onClick={handleDecreaseBtnClick}
         aria-label="decrease"
         size="small"
       >

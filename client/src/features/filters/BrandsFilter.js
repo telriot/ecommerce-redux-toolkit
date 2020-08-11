@@ -6,6 +6,8 @@ import { FormControlLabel, Checkbox, Typography } from "@material-ui/core";
 import { fetchAllProducts } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
+  title: { marginBottom: theme.spacing(1) },
+
   brandLink: {
     cursor: "pointer",
     marginBottom: theme.spacing(0.25),
@@ -32,7 +34,7 @@ function BrandsFilter() {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(fetchBrandsList());
-  }, []);
+  }, [dispatch]);
 
   const Brand = ({ brandName }) => {
     const handleCheckBoxChange = (e) => {
@@ -62,7 +64,9 @@ function BrandsFilter() {
 
   return (
     <>
-      <Typography variant="body1">Brands</Typography>
+      <Typography className={classes.title} variant="body1">
+        Brands
+      </Typography>
       <div className={classes.brandsDiv}>
         {brands
           .filter((brand, index) => index < 15)

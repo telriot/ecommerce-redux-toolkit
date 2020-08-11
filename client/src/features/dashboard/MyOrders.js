@@ -6,6 +6,7 @@ import { fetchOrders, selectDashboardStatus } from "./dashboardSlice";
 import OrderItem from "./OrderItem";
 import CustomPagination from "../shared/CustomPagination";
 import { pageChanged } from "../dashboard/dashboardSlice";
+import RecentlyViewed from "../shared/RecentlyViewed";
 
 const useStyles = makeStyles((theme) => ({
   grid: {},
@@ -53,7 +54,7 @@ function MyOrders() {
         </Paper>
       </Grid>
       <Grid item xs={3}>
-        Right
+        <RecentlyViewed />
       </Grid>
       <CustomPagination
         totalPages={totalPages}

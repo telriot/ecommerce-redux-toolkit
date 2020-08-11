@@ -6,6 +6,7 @@ import { Typography, Link } from "@material-ui/core";
 import { fetchAllProducts } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
+  title: { marginBottom: theme.spacing(1) },
   departmentLink: {
     cursor: "pointer",
     fontSize: theme.typography.caption.fontSize,
@@ -23,7 +24,7 @@ function DepartmentFilter() {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(fetchDepartmentsList());
-  }, []);
+  }, [dispatch]);
 
   const Department = ({ departmentName }) => {
     const handleDepartmentClick = (e) => {
@@ -44,7 +45,9 @@ function DepartmentFilter() {
 
   return (
     <>
-      <Typography variant="body1">Departments</Typography>
+      <Typography className={classes.title} variant="body1">
+        Departments
+      </Typography>
       <div className={classes.departmentsDiv}>
         {departments
           .filter((department, index) => index < 15)

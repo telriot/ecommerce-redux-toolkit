@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { textFilterSet } from "../features/filters/filtersSlice";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import { IconButton, InputBase } from "@material-ui/core";

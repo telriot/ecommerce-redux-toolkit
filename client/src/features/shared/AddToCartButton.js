@@ -10,9 +10,8 @@ import { isStockAvailable } from "../products/productsSlice";
 
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 
-function AddToCartButton({ product, format, quantity }) {
+function AddToCartButton({ product, format, quantity, size }) {
   const dispatch = useDispatch();
-  console.log(format);
   const handleAddToCart = () => {
     if (isStockAvailable(cartProducts, product)) {
       dispatch(productAdded({ ...product, quantity: parseInt(quantity) || 1 }));
@@ -36,6 +35,7 @@ function AddToCartButton({ product, format, quantity }) {
           <Button
             onClick={handleAddToCart}
             disabled={!isStockAvailable(cartProducts, product)}
+            size={size || "normal"}
           >
             Add to cart{" "}
           </Button>

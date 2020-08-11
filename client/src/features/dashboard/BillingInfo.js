@@ -50,6 +50,7 @@ function BillingInfo() {
       validationSchema={profileSchema}
       onSubmit={(values, { setSubmitting }) => {
         dispatch(updateUser(values));
+        setIsEditing(false);
         setSubmitting(false);
       }}
     >

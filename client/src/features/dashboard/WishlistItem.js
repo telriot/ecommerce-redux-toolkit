@@ -7,6 +7,7 @@ import {
   wishlistItemRemoved,
   updateWishlist,
 } from "../dashboard/dashboardSlice";
+import AvailabilityInfo from "../shared/AvailabilityInfo";
 const useStyles = makeStyles((theme) => ({
   card: {
     margin: theme.spacing(2, 0),
@@ -37,12 +38,17 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "space-between",
     padding: theme.spacing(2),
   },
+  priceDiv: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex-end",
+  },
 }));
 function WishlistItem({ product, index }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user._id);
-  const { name, brand, price, image } = product;
+  const { name, brand, price, image, availability } = product;
   const handleRemoveFromWishlist = () => {
     dispatch(wishlistItemRemoved(product));
     dispatch(updateCart());
@@ -83,9 +89,12 @@ function WishlistItem({ product, index }) {
             )}
           </div>
         </div>
-        <Typography variant="h6" component="p">
-          ${price}
-        </Typography>
+        <div className={classes.priceDiv}>
+          <Typography variant="h6" component="p">
+            ${price}
+          </Typography>
+          <AvailabilityInfo availability={availability} format="card" />
+        </div>
       </div>
     </Card>
   );

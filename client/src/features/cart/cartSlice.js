@@ -18,7 +18,7 @@ const joinCarts = (cart1, cart2, getState) => {
     taxPercent: getState().cart.taxPercent,
     total: cart2.total,
   };
-  for (let [id, product] of Object.entries(cart1.products)) {
+  for (let [id] of Object.keys(cart1.products)) {
     let product1 = cart1.products[id];
     let product2 = cart2.products[id];
     let product1Price = parseFloat(product1.price).toFixed(2);
@@ -105,7 +105,6 @@ const cartSlice = createSlice({
     productAdded: {
       reducer(state, action) {
         const { _id, price, quantity } = action.payload;
-        console.log(action.payload);
         const parsedPrice = parseFloat(price).toFixed(2);
         if (!state.products[_id]) {
           let { quantity, ...rest } = action.payload;

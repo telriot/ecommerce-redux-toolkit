@@ -12,6 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import ProductCard from "./ProductCard";
 import CustomPagination from "../shared/CustomPagination";
 import { fetchWishlistItems } from "../dashboard/dashboardSlice";
+import SortSelect from "./SortSelect";
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(4),
   },
   grid: { marginBottom: theme.spacing(2) },
+  sortSelectDiv: { display: "flex", justifyContent: "flex-end" },
 }));
 function AllProducts() {
   const classes = useStyles();
@@ -32,6 +34,7 @@ function AllProducts() {
   const handlePageChange = (e, page) => {
     dispatch(pageChanged(page));
   };
+
   React.useEffect(() => {
     dispatch(fetchAllProducts());
   }, [dispatch, currentPage]);
@@ -41,6 +44,9 @@ function AllProducts() {
 
   return (
     <Container className={classes.container}>
+      <div className={classes.sortSelectDiv}>
+        <SortSelect />
+      </div>
       <Grid
         data-testid="component-allproducts"
         container
@@ -56,11 +62,13 @@ function AllProducts() {
               </Grid>
             ))}
       </Grid>
-      <CustomPagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        handleChange={handlePageChange}
-      />
+      {totalPages > 1 && (
+        <CustomPagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          handleChange={handlePageChange}
+        />
+      )}
     </Container>
   );
 }

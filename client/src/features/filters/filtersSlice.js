@@ -69,6 +69,12 @@ const filtersSlice = createSlice({
         }
       },
     },
+    brandFilterImperativelySet: {
+      reducer(state, action) {
+        state.brandFilter = [];
+        state.brandFilter.push(action.payload);
+      },
+    },
     filtersReset: {
       reducer(state) {
         state.brandFilter = [];
@@ -125,6 +131,7 @@ export const {
   minPriceFilterSet,
   maxPriceFilterSet,
   brandFilterSet,
+  brandFilterImperativelySet,
   departmentFilterSet,
   filtersReset,
 } = filtersSlice.actions;

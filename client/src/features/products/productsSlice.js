@@ -10,6 +10,8 @@ const initialState = {
   products: [],
   status: "idle",
   selectedProduct: {},
+  fromTheSameCategory: [],
+  sortOrder: "",
 };
 export const isStockAvailable = (cartProducts, product) =>
   product.availability &&
@@ -27,6 +29,8 @@ export const fetchAllProducts = createAsyncThunk(
       minPriceFilter,
       maxPriceFilter,
     } = getState().filters;
+    const { sortOrder } = getState().products;
+
     try {
       const response = await axios.get("api/products/", {
         params: {
@@ -37,6 +41,7 @@ export const fetchAllProducts = createAsyncThunk(
           departmentFilter,
           minPriceFilter,
           maxPriceFilter,
+          sortOrder,
         },
       });
       return {
@@ -55,8 +60,21 @@ export const fetchProduct = createAsyncThunk(
   async (_id, { getState }) => {
     try {
       const response = await axios.get(`/api/products/${_id}`);
-      console.log(response);
       return { success: true, product: response.data };
+    } catch (error) {
+      console.log(error);
+      return { success: false, error };
+    }
+  }
+);
+export const fetchFromTheSameCategory = createAsyncThunk(
+  "products/fetchFromTheSameCategory",
+  async (department, { getState }) => {
+    try {
+      const response = await axios.get("/api/products", {
+        params: { limit: 36, departmentFilter: department },
+      });
+      return { success: true, products: response.data.docs };
     } catch (error) {
       console.log(error);
       return { success: false, error };
@@ -90,8 +108,12 @@ const productsSlice = createSlice({
   reducers: {
     pageChanged: {
       reducer(state, action) {
-        console.log(action.payload);
         state.page = action.payload;
+      },
+    },
+    sortOrderSet: {
+      reducer(state, action) {
+        state.sortOrder = action.payload;
       },
     },
   },
@@ -107,6 +129,22 @@ const productsSlice = createSlice({
       state.status = "fulfilled";
     },
     [fetchAllProducts.rejected]: (state, action) => {
+      state.error = "Something went wrong with our servers";
+      state.status = "rejected";
+    },
+    [fetchFromTheSameCategory.pending]: (state, action) => {
+      state.status = "pending";
+    },
+    [fetchFromTheSameCategory.fulfilled]: (state, action) => {
+      const { products, success } = action.payload;
+      if (success) {
+        state.fromTheSameCategory = products;
+      } else {
+        state.error = action.payload.error;
+      }
+      state.status = "fulfilled";
+    },
+    [fetchFromTheSameCategory.rejected]: (state, action) => {
       state.error = "Something went wrong with our servers";
       state.status = "rejected";
     },
@@ -132,6 +170,7 @@ const productsSlice = createSlice({
 
 export const selectAllProducts = (state) => state.products.products;
 export const selectIsFetchingProducts = (state) => state.products.status;
-export const { pageChanged } = productsSlice.actions;
+export const selectSortOrder = (state) => state.products.sortOrder;
+export const { pageChanged, sortOrderSet } = productsSlice.actions;
 
 export default productsSlice.reducer;

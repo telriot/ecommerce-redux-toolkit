@@ -1,5 +1,4 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Card, Typography } from "@material-ui/core";
 import AvailabilityInfo from "../shared/AvailabilityInfo";
@@ -13,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 function ProductDetail({ product }) {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const { price, availability } = product;
   const [desiredAmount, setDesiredAmount] = React.useState("");
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectCartContents, selectCartItemTotal } from "./cartSlice";
+import { selectCartContents } from "./cartSlice";
 import { Container, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import CartItem from "./CartItem";

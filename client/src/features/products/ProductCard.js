@@ -8,7 +8,6 @@ import AvailabilityInfo from "../shared/AvailabilityInfo";
 import AddToCartButton from "../shared/AddToCartButton";
 import DescriptionText from "../shared/DescriptionText";
 import { useHistory } from "react-router-dom";
-
 const useStyles = makeStyles((theme) => ({
   card: {
     height: "100%",

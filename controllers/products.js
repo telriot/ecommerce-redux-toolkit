@@ -10,10 +10,12 @@ module.exports = {
       departmentFilter,
       minPriceFilter,
       maxPriceFilter,
+      sortOrder,
     } = req.query;
     const options = {
       page,
       limit,
+      sort: sortOrder,
     };
     const textSearchRegex = new RegExp(textFilter);
 
@@ -33,8 +35,9 @@ module.exports = {
           ? { $gte: minPriceFilter }
           : maxPriceFilter
           ? { $lte: maxPriceFilter }
-          : { $regex: "", $options: "gi" },
+          : { $gte: 0 },
     };
+
     const products = await Product.paginate(filterOptions, options);
     res.send(products);
   },

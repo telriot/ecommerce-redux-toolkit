@@ -10,6 +10,7 @@ import { fetchAllProducts } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
   filterContainer: {},
+  title: { marginBottom: theme.spacing(1) },
 
   inputDiv: {
     display: "flex",
@@ -58,7 +59,7 @@ function MinMaxFilter() {
 
   return (
     <div className={classes.filterContainer}>
-      <Typography className={classes.filterLabel} variant="body1">
+      <Typography className={classes.title} variant="body1">
         Price range
       </Typography>
       <div className={classes.inputDiv}>

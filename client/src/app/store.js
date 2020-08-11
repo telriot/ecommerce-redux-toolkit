@@ -5,6 +5,7 @@ import dashboardReducer from "../features/dashboard/dashboardSlice";
 import productsReducer from "../features/products/productsSlice";
 import checkoutReducer from "../features/checkout/checkoutSlice";
 import filtersReducer from "../features/filters/filtersSlice";
+import recentViewsReducer from "../features/recentViews/recentViewsSlice";
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     products: productsReducer,
     checkout: checkoutReducer,
     filters: filtersReducer,
+    recentViews: recentViewsReducer,
   },
 });

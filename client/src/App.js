@@ -14,6 +14,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { fetchCart } from "./features/cart/cartSlice";
 import MainView from "./features/products/MainView";
 import ProductDetail from "./features/products/ProductDetail";
+import { fetchRecentViews } from "./features/recentViews/recentViewsSlice";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
@@ -25,6 +26,7 @@ function App() {
   }, [dispatch]);
   React.useEffect(() => {
     dispatch(fetchCart());
+    dispatch(fetchRecentViews());
   }, [dispatch, authUser]);
 
   return (

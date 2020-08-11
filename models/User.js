@@ -16,6 +16,7 @@ const UserSchema = new Schema(
     email: String,
     address: String,
     phone: String,
+    recentViews: [{ type: Schema.Types.ObjectId, ref: "Product" }],
     cart: {
       products: Object,
       count: Number,

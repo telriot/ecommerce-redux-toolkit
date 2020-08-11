@@ -1,13 +1,21 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { Card, Grid, Typography, Link, IconButton } from "@material-ui/core";
+import {
+  Card,
+  Grid,
+  Typography,
+  Link,
+  IconButton,
+  Divider,
+} from "@material-ui/core";
 import ScrollerCard from "../shared/ScrollerCard";
 const useStyles = makeStyles((theme) => ({
   card: {
     display: "flex",
     flexDirection: "column",
     padding: theme.spacing(2),
+    width: "16rem",
   },
 }));
 const products = [
@@ -50,18 +58,22 @@ const products = [
 ];
 function RecentlyViewed() {
   const classes = useStyles();
+  const recentViews = useSelector((state) => state.recentViews.recentViews);
 
   return (
     <>
       <Card className={classes.card}>
         {" "}
         <Typography className={classes.title}>Recently viewed items</Typography>
-        {products.map((product, index) => (
-          <ScrollerCard
-            key={`scroller-${index}`}
-            product={product}
-            variant="vertical"
-          />
+        {recentViews.map((product, index) => (
+          <>
+            <ScrollerCard
+              key={`scroller-${index}`}
+              product={product}
+              variant="vertical"
+            />
+            {index !== recentViews.length - 1 && <Divider />}
+          </>
         ))}
       </Card>
     </>

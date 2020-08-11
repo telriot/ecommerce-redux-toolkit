@@ -7,6 +7,7 @@ import OrderItem from "./OrderItem";
 import CustomPagination from "../shared/CustomPagination";
 import { pageChanged } from "../dashboard/dashboardSlice";
 import RecentlyViewed from "../shared/RecentlyViewed";
+import { fetchRecentViews } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
   grid: {},

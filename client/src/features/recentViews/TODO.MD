@@ -1,0 +1,1 @@
+write a decent join and update function for the recentView arrays

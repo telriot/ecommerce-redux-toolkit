@@ -4,12 +4,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Divider, Grid, Typography } from "@material-ui/core";
 import { fetchProduct, fetchFromTheSameCategory } from "./productsSlice";
+import {
+  recentViewAdded,
+  updateRecentViews,
+} from "../recentViews/recentViewsSlice";
 import ProductDetailActionCard from "./ProductDetailActionCard";
 import PictureSelector from "./PictureSelector";
 import ProductHorizontalScroller from "./ProductHorizontalScroller";
 import BackLink from "./BackLink";
 import BrandLink from "./BrandLink";
-
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
@@ -67,6 +70,12 @@ function ProductDetail() {
   React.useEffect(() => {
     department && dispatch(fetchFromTheSameCategory(department));
   }, [dispatch, department]);
+  React.useEffect(() => {
+    if (selectedProduct) {
+      dispatch(recentViewAdded(selectedProduct));
+      dispatch(updateRecentViews());
+    }
+  }, [dispatch, selectedProduct]);
   return (
     <Container className={classes.container}>
       <BackLink />

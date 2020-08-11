@@ -12,6 +12,7 @@ const initialState = {
   selectedProduct: {},
   fromTheSameCategory: [],
   sortOrder: "",
+  recentViews: [],
 };
 export const isStockAvailable = (cartProducts, product) =>
   product.availability &&
@@ -114,6 +115,16 @@ const productsSlice = createSlice({
     sortOrderSet: {
       reducer(state, action) {
         state.sortOrder = action.payload;
+      },
+    },
+    recentViewAdded: {
+      reducer(state, action) {
+        if (state.recentViews.length === 10) {
+          state.recentViews.pop();
+        }
+        if (!state.recentViews.includes(action.payload._id)) {
+          state.recentViews.unshift(action.payload);
+        }
       },
     },
   },

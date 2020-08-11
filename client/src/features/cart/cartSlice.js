@@ -84,6 +84,7 @@ export const updateCart = createAsyncThunk(
         return { cart: response.data, error: null };
       } catch (error) {
         console.log(error);
+        return { error };
       }
     }
   }

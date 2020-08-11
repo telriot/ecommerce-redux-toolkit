@@ -1,5 +1,5 @@
 const Product = require("../models/Product");
-
+const User = require("../models/User");
 module.exports = {
   getAllProducts: async (req, res, next) => {
     const {
@@ -58,5 +58,19 @@ module.exports = {
     }
     res.status(200).send("Items succesfully removed");
   },
-  getSelectedProducts: async (req, res, next) => {},
+  getRecentViews: async (req, res, next) => {
+    const user = await User.findById(req.params.id)
+      .populate("recentViews")
+      .exec();
+    res.status(200).json(user.recentViews);
+  },
+  updateRecentViews: async (req, res, next) => {
+    const { recentViews } = req.body;
+    console.log(recentViews);
+    await User.findByIdAndUpdate(req.params.id, { recentViews });
+    const updatedUser = await User.findById(req.params.id)
+      .populate("recentViews")
+      .exec();
+    res.status(200).json(updatedUser.recentViews);
+  },
 };

@@ -5,7 +5,15 @@ const initialState = {
   status: "idle",
   recentViews: [],
 };
-
+const joinViews = (arr1, arr2) => {
+  let newArr = [];
+  for (let view of arr2) {
+    if (!arr1.some((el) => view._id === el._id)) {
+      newArr.push(view);
+    }
+  }
+  return arr1.concat(newArr);
+};
 export const fetchRecentViews = createAsyncThunk(
   "products/fetchRecentViews",
   async (_, { getState }) => {
@@ -18,7 +26,10 @@ export const fetchRecentViews = createAsyncThunk(
       if (recentViews.length) {
         try {
           const response = await axios.get(`/api/products/recentViews/${id}`);
-          const joinedViews = recentViews.concat(response.data).slice(0, 10);
+          const joinedViews = joinViews(recentViews, response.data).slice(
+            0,
+            10
+          );
           const update = await axios.put(`/api/products/recentViews/${id}`, {
             recentViews: joinedViews,
           });
@@ -87,7 +98,7 @@ const productsSlice = createSlice({
       state.status = "pending";
     },
     [fetchRecentViews.fulfilled]: (state, action) => {
-      const { recentViews, success, error } = action.payload;
+      const { recentViews, success } = action.payload;
       if (success) {
         state.recentViews = recentViews;
       }

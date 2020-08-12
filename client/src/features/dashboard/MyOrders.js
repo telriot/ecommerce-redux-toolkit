@@ -7,11 +7,9 @@ import OrderItem from "./OrderItem";
 import CustomPagination from "../shared/CustomPagination";
 import { pageChanged } from "../dashboard/dashboardSlice";
 import RecentlyViewed from "../shared/RecentlyViewed";
-import { fetchRecentViews } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
-  grid: {},
-  paper: { padding: theme.spacing(3) },
+  title: { marginBottom: theme.spacing(2) },
 }));
 
 function MyOrders() {
@@ -46,22 +44,29 @@ function MyOrders() {
   return (
     <Grid container data-testid="my-orders-component">
       <Grid item xs={9}>
-        <Typography variant="h5">Order history</Typography>
-        <Typography variant="subtitle1">
-          Dolor anim minim anim proident occaecat nulla do.
+        <Typography className={classes.title} variant="h5">
+          Order history
         </Typography>
-        <Paper className={classes.paper}>
-          {isFetching === "pending" ? "Loading..." : ordersToRender}
-        </Paper>
+        {isFetching === "pending" ? (
+          "Loading..."
+        ) : ordersToRender.length ? (
+          ordersToRender
+        ) : (
+          <Typography variant="subtitle1">
+            You have made no orders yet
+          </Typography>
+        )}
       </Grid>
       <Grid item xs={3}>
-        <RecentlyViewed />
+        <RecentlyViewed maxItems={5} />
       </Grid>
-      <CustomPagination
-        totalPages={totalPages}
-        currentPage={page}
-        handleChange={handleChange}
-      />
+      {totalPages > 1 && (
+        <CustomPagination
+          totalPages={totalPages}
+          currentPage={page}
+          handleChange={handleChange}
+        />
+      )}
     </Grid>
   );
 }

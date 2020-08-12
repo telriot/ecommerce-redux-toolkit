@@ -6,9 +6,12 @@ import { selectDashboardStatus } from "../dashboard/dashboardSlice";
 import OrderItem from "./OrderItem";
 import CustomPagination from "../shared/CustomPagination";
 import { pageChanged, fetchOrders } from "./ordersSlice";
-
+import OrdersOptions from "./OrdersOptions";
 const useStyles = makeStyles((theme) => ({
   title: { marginBottom: theme.spacing(2) },
+  subGridRight: {
+    padding: theme.spacing(0, 4),
+  },
 }));
 
 function MyOrders() {
@@ -56,8 +59,9 @@ function MyOrders() {
           </Typography>
         )}
       </Grid>
-      <Grid item xs={3}>
-        Right{" "}
+      <Grid className={classes.subGridRight} item xs={3}>
+        {" "}
+        <OrdersOptions />
       </Grid>
       {totalPages > 1 && (
         <CustomPagination

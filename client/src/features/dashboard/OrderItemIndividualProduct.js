@@ -1,18 +1,9 @@
 import React from "react";
-import {
-  Card,
-  CardMedia,
-  Typography,
-  IconButton,
-  Divider,
-  Button,
-} from "@material-ui/core";
+import { Typography, Divider, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { Link } from "react-router-dom";
 import MuiLink from "@material-ui/core/Link";
 import BrandLink from "../products/BrandLink";
-import AddToCartButton from "../shared/AddToCartButton";
 const useStyles = makeStyles((theme) => ({
   productCard: {
     display: "flex",
@@ -44,8 +35,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 function OrderItemIndividualProduct({ product, index }) {
   const classes = useStyles();
-  const { _id, image, name, brand, price } = product;
-
+  const { _id, image, name, brand, price, itemsInCart } = product;
   return (
     <>
       {index !== 0 && <Divider />}
@@ -60,7 +50,11 @@ function OrderItemIndividualProduct({ product, index }) {
             </Link>
             <BrandLink brand={brand} />
           </div>
-          <Typography variant="body1">${price}</Typography>
+
+          <Typography variant="body2">
+            {" "}
+            {itemsInCart > 1 ? `${itemsInCart} @ $${price} each` : `$${price}`}
+          </Typography>
         </div>
         <div className={classes.rightButtonsDiv}>
           <Button size="small">Buy again</Button>

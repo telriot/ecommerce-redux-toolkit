@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { fetchDepartmentsList, departmentFilterSet } from "./filtersSlice";
 import { Typography, Link } from "@material-ui/core";
 import { fetchAllProducts } from "../products/productsSlice";
+import { pageChanged } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
   title: { marginBottom: theme.spacing(1) },
@@ -30,6 +31,7 @@ function DepartmentFilter() {
     const handleDepartmentClick = (e) => {
       dispatch(departmentFilterSet(departmentName));
       dispatch(fetchAllProducts());
+      dispatch(pageChanged(1));
     };
 
     return (

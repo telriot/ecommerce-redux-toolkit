@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { fetchBrandsList, brandFilterSet } from "./filtersSlice";
 import { FormControlLabel, Checkbox, Typography } from "@material-ui/core";
 import { fetchAllProducts } from "../products/productsSlice";
+import { pageChanged } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
   title: { marginBottom: theme.spacing(1) },
@@ -40,6 +41,7 @@ function BrandsFilter() {
     const handleCheckBoxChange = (e) => {
       dispatch(brandFilterSet(brandName));
       dispatch(fetchAllProducts());
+      dispatch(pageChanged(1));
     };
     const isChecked = brandFilter.includes(brandName);
 

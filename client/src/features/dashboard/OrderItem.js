@@ -1,14 +1,13 @@
 import React from "react";
-import { Card, CardHeader, Typography } from "@material-ui/core";
+import { Card, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Divider from "@material-ui/core/Divider";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import OrderItemIndividualProduct from "./OrderItemIndividualProduct";
 const useStyles = makeStyles((theme) => ({
   card: {
     display: "flex",
     flexDirection: "column",
     width: "100%",
+    marginBottom: theme.spacing(3),
   },
   cardHeader: {
     display: "flex",
@@ -34,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 function OrderItem({ order, index }) {
-  const [isOpen, setIsOpen] = React.useState(false);
   const classes = useStyles();
   const date = new Date(order.date);
   const parsedDate = date.toLocaleString().split(",")[0];

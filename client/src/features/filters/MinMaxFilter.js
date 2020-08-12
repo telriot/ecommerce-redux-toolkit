@@ -7,6 +7,7 @@ import { minPriceFilterSet, maxPriceFilterSet } from "./filtersSlice";
 import { IconButton } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { fetchAllProducts } from "../products/productsSlice";
+import { pageChanged } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
   filterContainer: {},
@@ -55,6 +56,7 @@ function MinMaxFilter() {
   };
   const handleApplyFilter = () => {
     dispatch(fetchAllProducts());
+    dispatch(pageChanged(1));
   };
 
   return (

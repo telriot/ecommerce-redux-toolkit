@@ -3,10 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, CardMedia, Card, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { productAdded, updateCart } from "../cart/cartSlice";
-import {
-  wishlistItemRemoved,
-  updateWishlist,
-} from "../dashboard/dashboardSlice";
+import { wishlistItemRemoved, updateWishlist } from "./wishlistSlice";
 import AvailabilityInfo from "../shared/AvailabilityInfo";
 const useStyles = makeStyles((theme) => ({
   card: {

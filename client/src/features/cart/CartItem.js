@@ -4,7 +4,7 @@ import { Button, CardMedia, Card, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import QuantityHandlerButton from "./QuantityHandlerButton";
 import { productDeleted, updateCart } from "./cartSlice";
-import { wishlistItemAdded, updateWishlist } from "../dashboard/dashboardSlice";
+import { wishlistItemAdded, updateWishlist } from "../wishlist/wishlistSlice";
 
 const useStyles = makeStyles((theme) => ({
   card: {

@@ -14,10 +14,6 @@ const initialState = {
   ordersPage: 1,
   ordersTotalPages: 1,
   ordersPerPage: 10,
-  wishlistItems: [],
-  wishlistItemsPage: 1,
-  wishlistItemsTotalPages: 1,
-  wishlistItemsPerPage: 10,
 };
 
 export const fetchUser = createAsyncThunk(
@@ -75,34 +71,6 @@ export const fetchOrders = createAsyncThunk(
     }
   }
 );
-export const fetchWishlistItems = createAsyncThunk(
-  "dashboard/fetchWishlistItems",
-  async (_, { getState }) => {
-    const id = getState().auth.user._id;
-    try {
-      const response = await axios.get(`/api/users/wishlist/${id}`);
-      return { success: true, wishlistItems: response.data };
-    } catch (error) {
-      console.error(error);
-      return { success: false, error };
-    }
-  }
-);
-export const updateWishlist = createAsyncThunk(
-  "wishlist/updateWishlist",
-  async (_, { getState }) => {
-    const id = getState().auth.user._id;
-    const wishlistItems = getState().dashboard.wishlistItems;
-    try {
-      const response = await axios.put(`/api/users/wishlist/${id}`, {
-        wishlist: wishlistItems,
-      });
-      return { wishlistItems: response.data, error: null };
-    } catch (error) {
-      console.log(error);
-    }
-  }
-);
 
 const dashboardSlice = createSlice({
   name: "dashboard",
@@ -111,30 +79,6 @@ const dashboardSlice = createSlice({
     pageChanged: {
       reducer(state, action) {
         state.ordersPage = action.payload;
-      },
-    },
-    wishlistPageChanged: {
-      reducer(state, action) {
-        state.wishlistPage = action.payload;
-      },
-    },
-    wishlistItemAdded: {
-      reducer(state, action) {
-        const item = action.payload;
-        state.wishlistItems.push(item);
-      },
-    },
-    wishlistItemRemoved: {
-      reducer(state, action) {
-        const item = action.payload;
-        state.wishlistItems = state.wishlistItems.filter(
-          (stateItem) => stateItem._id !== item._id
-        );
-      },
-    },
-    wishlistReset: {
-      reducer(state) {
-        state.wishlistItems = [];
       },
     },
   },
@@ -201,23 +145,7 @@ const dashboardSlice = createSlice({
       }
       state.status = "fulfilled";
     },
-    [fetchWishlistItems.rejected]: (state, action) => {
-      state.error = "Something went wrong with our servers";
-      state.status = "rejected";
-    },
-    [fetchWishlistItems.fulfilled]: (state, action) => {
-      if (action.payload.success) {
-        const { wishlistItems } = action.payload;
-        state.wishlistItems = wishlistItems || [];
-        state.wishlistItemsTotalPages = wishlistItems
-          ? Math.ceil(wishlistItems.length / state.wishlistItemsPerPage)
-          : 0;
-      } else {
-        state.error = action.error;
-      }
-      state.status = "fulfilled";
-    },
-    [fetchWishlistItems.rejected]: (state, action) => {
+    [fetchOrders.rejected]: (state, action) => {
       state.error = "Something went wrong with our servers";
       state.status = "rejected";
     },
@@ -226,11 +154,5 @@ const dashboardSlice = createSlice({
 
 export const selectBillingInfo = (state) => state.dashboard.billingInfo;
 export const selectDashboardStatus = (state) => state.dashboard.status;
-export const {
-  pageChanged,
-  wishlistPageChanged,
-  wishlistItemAdded,
-  wishlistItemRemoved,
-  wishlistReset,
-} = dashboardSlice.actions;
+export const { pageChanged } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

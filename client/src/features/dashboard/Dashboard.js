@@ -7,7 +7,7 @@ import MyOrders from "./MyOrders";
 import MyProfile from "./MyProfile";
 import { fetchUser } from "./dashboardSlice";
 import { selectAuthorizedUser } from "../auth/authSlice";
-import Wishlist from "./Wishlist";
+import Wishlist from "../wishlist/Wishlist";
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",

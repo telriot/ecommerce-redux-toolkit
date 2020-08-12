@@ -11,7 +11,7 @@ import { Grid, Container } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ProductCard from "./ProductCard";
 import CustomPagination from "../shared/CustomPagination";
-import { fetchWishlistItems } from "../dashboard/dashboardSlice";
+import { fetchWishlistItems } from "../wishlist/wishlistSlice";
 import SortSelect from "./SortSelect";
 const useStyles = makeStyles((theme) => ({
   container: {

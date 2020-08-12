@@ -7,13 +7,13 @@ import {
   wishlistItemAdded,
   wishlistItemRemoved,
   updateWishlist,
-} from "../dashboard/dashboardSlice";
+} from "../wishlist/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 function WishlistButton({ product, deleteIcon }) {
   const dispatch = useDispatch();
-  const wishlist = useSelector((state) => state.dashboard.wishlistItems);
+  const wishlist = useSelector((state) => state.wishlist.wishlistItems);
   const handleAddToWishlist = () => {
     dispatch(wishlistItemAdded(product));
     dispatch(updateWishlist());

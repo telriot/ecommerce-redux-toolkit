@@ -2,11 +2,10 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { fetchOrders, selectDashboardStatus } from "./dashboardSlice";
+import { selectDashboardStatus } from "../dashboard/dashboardSlice";
 import OrderItem from "./OrderItem";
 import CustomPagination from "../shared/CustomPagination";
-import { pageChanged } from "../dashboard/dashboardSlice";
-import RecentlyViewed from "../shared/RecentlyViewed";
+import { pageChanged, fetchOrders } from "./ordersSlice";
 
 const useStyles = makeStyles((theme) => ({
   title: { marginBottom: theme.spacing(2) },
@@ -15,11 +14,11 @@ const useStyles = makeStyles((theme) => ({
 function MyOrders() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state.dashboard.orders);
+  const orders = useSelector((state) => state.orders.orders);
   const isFetching = useSelector(selectDashboardStatus);
-  const page = useSelector((state) => state.dashboard.ordersPage);
-  const totalPages = useSelector((state) => state.dashboard.ordersTotalPages);
-  const ordersPerPage = useSelector((state) => state.dashboard.ordersPerPage);
+  const page = useSelector((state) => state.orders.ordersPage);
+  const totalPages = useSelector((state) => state.orders.ordersTotalPages);
+  const ordersPerPage = useSelector((state) => state.orders.ordersPerPage);
   const [ordersToRender, setOrdersToRender] = React.useState([]);
 
   const handleChange = (e, page) => {
@@ -58,7 +57,7 @@ function MyOrders() {
         )}
       </Grid>
       <Grid item xs={3}>
-        <RecentlyViewed maxItems={5} />
+        Right{" "}
       </Grid>
       {totalPages > 1 && (
         <CustomPagination

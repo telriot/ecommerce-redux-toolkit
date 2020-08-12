@@ -10,10 +10,6 @@ const initialState = {
     address: "",
     phone: "",
   },
-  orders: [],
-  ordersPage: 1,
-  ordersTotalPages: 1,
-  ordersPerPage: 10,
 };
 
 export const fetchUser = createAsyncThunk(
@@ -54,34 +50,11 @@ export const updateUser = createAsyncThunk(
     }
   }
 );
-export const fetchOrders = createAsyncThunk(
-  "dashboard/fetchOrders",
-  async (_, { getState }) => {
-    const id = getState().auth.user._id;
-    if (id !== null) {
-      try {
-        const response = await axios.get(`/api/users/orders/${id}`);
-        return { success: true, orders: response.data };
-      } catch (error) {
-        console.error(error);
-        return { success: false, error };
-      }
-    } else {
-      return { success: false, error: null };
-    }
-  }
-);
 
 const dashboardSlice = createSlice({
   name: "dashboard",
   initialState,
-  reducers: {
-    pageChanged: {
-      reducer(state, action) {
-        state.ordersPage = action.payload;
-      },
-    },
-  },
+  reducers: {},
   extraReducers: {
     [fetchUser.pending]: (state, action) => {
       state.status = "pending";
@@ -129,30 +102,9 @@ const dashboardSlice = createSlice({
       state.error = "Something went wrong with our servers";
       state.status = "rejected";
     },
-    [fetchOrders.pending]: (state, action) => {
-      state.status = "pending";
-    },
-    [fetchOrders.fulfilled]: (state, action) => {
-      if (action.payload.success) {
-        const { orders } = action.payload;
-
-        state.orders = orders || [];
-        state.ordersTotalPages = orders
-          ? Math.ceil(orders.length / state.ordersPerPage)
-          : 0;
-      } else {
-        state.error = action.error;
-      }
-      state.status = "fulfilled";
-    },
-    [fetchOrders.rejected]: (state, action) => {
-      state.error = "Something went wrong with our servers";
-      state.status = "rejected";
-    },
   },
 });
 
 export const selectBillingInfo = (state) => state.dashboard.billingInfo;
 export const selectDashboardStatus = (state) => state.dashboard.status;
-export const { pageChanged } = dashboardSlice.actions;
 export default dashboardSlice.reducer;

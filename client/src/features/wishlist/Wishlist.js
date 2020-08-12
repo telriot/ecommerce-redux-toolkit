@@ -6,7 +6,8 @@ import { fetchWishlistItems } from "./wishlistSlice";
 import { selectDashboardStatus } from "../dashboard/dashboardSlice";
 import WishlistItem from "./WishlistItem";
 import CustomPagination from "../shared/CustomPagination";
-import { pageChanged } from "../dashboard/dashboardSlice";
+import { pageChanged } from "./wishlistSlice";
+import RecentlyViewed from "../recentViews/RecentlyViewed";
 
 const useStyles = makeStyles((theme) => ({
   grid: { marginBottom: theme.spacing(4) },
@@ -66,7 +67,7 @@ function Wishlist() {
         )}
       </Grid>
       <Grid className={classes.subGridRight} item xs={3}>
-        Right
+        <RecentlyViewed maxItems={5} />
       </Grid>
       {totalPages > 1 && (
         <CustomPagination

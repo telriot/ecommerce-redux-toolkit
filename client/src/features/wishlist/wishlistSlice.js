@@ -66,6 +66,11 @@ const wishlistSlice = createSlice({
         state.wishlistItems = [];
       },
     },
+    pageChanged: {
+      reducer(state, action) {
+        state.wishlistItemsPage = action.payload;
+      },
+    },
   },
   extraReducers: {
     [fetchWishlistItems.pending]: (state, action) => {
@@ -95,5 +100,6 @@ export const {
   wishlistItemAdded,
   wishlistItemRemoved,
   wishlistReset,
+  pageChanged,
 } = wishlistSlice.actions;
 export default wishlistSlice.reducer;

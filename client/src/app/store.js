@@ -7,7 +7,7 @@ import checkoutReducer from "../features/checkout/checkoutSlice";
 import filtersReducer from "../features/filters/filtersSlice";
 import recentViewsReducer from "../features/recentViews/recentViewsSlice";
 import wishlistReducer from "../features/wishlist/wishlistSlice";
-
+import ordersReducer from "../features/orders/ordersSlice";
 export default configureStore({
   reducer: {
     auth: authReducer,
@@ -18,5 +18,6 @@ export default configureStore({
     filters: filtersReducer,
     recentViews: recentViewsReducer,
     wishlist: wishlistReducer,
+    orders: ordersReducer,
   },
 });

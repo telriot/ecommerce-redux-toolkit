@@ -16,9 +16,21 @@ export const fetchOrders = createAsyncThunk(
   "orders/fetchOrders",
   async (_, { getState }) => {
     const id = getState().auth.user._id;
+    const {
+      ordersTextFilter,
+      ordersTimeFilter,
+      ordersStatusFilter,
+    } = getState().orders;
+    const filtersObj = {
+      text: ordersTextFilter,
+      time: ordersTimeFilter,
+      status: ordersStatusFilter,
+    };
     if (id !== null) {
       try {
-        const response = await axios.get(`/api/users/orders/${id}`);
+        const response = await axios.get(`/api/users/orders/${id}`, {
+          params: filtersObj,
+        });
         return { success: true, orders: response.data };
       } catch (error) {
         console.error(error);

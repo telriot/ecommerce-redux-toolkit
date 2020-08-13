@@ -4,7 +4,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Button, Paper, Typography, Divider } from "@material-ui/core";
 import OrdersTextFilter from "./OrdersTextFilter";
 import OrdersSelect from "./OrdersSelect";
-import { ordersStatusFilterSet, ordersTimeFilterSet } from "./ordersSlice";
+import {
+  ordersStatusFilterSet,
+  ordersTimeFilterSet,
+  fetchOrders,
+} from "./ordersSlice";
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
@@ -42,6 +46,9 @@ function OrdersOptions({ maxItems }) {
   const handleChangeStatus = (e) => {
     dispatch(ordersStatusFilterSet(e.target.value));
   };
+  const handleClickSearch = () => {
+    dispatch(fetchOrders());
+  };
   return (
     <Paper className={classes.paper}>
       {" "}
@@ -59,7 +66,7 @@ function OrdersOptions({ maxItems }) {
         options={statusOptions}
         label="Status"
       />
-      <Button>Search</Button>
+      <Button onClick={handleClickSearch}>Search</Button>
     </Paper>
   );
 }

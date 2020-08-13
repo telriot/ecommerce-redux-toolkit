@@ -26,8 +26,19 @@ module.exports = {
     res.status(200).json(updatedUser.cart);
   },
   getOrders: async (req, res, next) => {
+    const { status, text, time } = req.query;
+    const filterOptions = {};
     const user = await User.findById(req.params.id).populate("orders").exec();
-    res.status(200).json(user.orders);
+    let filteredOrders = user.orders;
+    if (text) {
+      const textRegex = RegExp(text, "i");
+      filteredOrders = filteredOrders.filter((order) =>
+        Object.values(order.products).some((product) =>
+          textRegex.test(product.name)
+        )
+      );
+    }
+    res.status(200).json(filteredOrders.sort((a, b) => b.date - a.date));
   },
   getWishlistItems: async (req, res, next) => {
     const user = await User.findById(req.params.id).populate("wishlist").exec();

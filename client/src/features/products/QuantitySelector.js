@@ -1,5 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
@@ -18,7 +19,7 @@ function QuantitySelector({ availability, desiredAmount, setDesiredAmount }) {
   const renderOptions = (availability) => {
     const options = [];
     for (let i = 1; i <= availability; i++) {
-      options.push(<option value={i}>{i}</option>);
+      options.push(<MenuItem value={i}>{i.toString()}</MenuItem>);
     }
     return options;
   };
@@ -27,9 +28,9 @@ function QuantitySelector({ availability, desiredAmount, setDesiredAmount }) {
   };
   return (
     <FormControl variant="outlined" className={classes.formControl}>
-      <InputLabel htmlFor="outlined-age-native-simple">Quantity</InputLabel>
+      <InputLabel id="quantity-select-label">Quantity</InputLabel>
       <Select
-        native
+        labelId="quantity-select-label"
         value={desiredAmount}
         onChange={handleSelectChange}
         label="Quantity"
@@ -38,7 +39,6 @@ function QuantitySelector({ availability, desiredAmount, setDesiredAmount }) {
           id: "quantity-selector",
         }}
       >
-        <option aria-label="None" value="" />
         {renderOptions(availability)}
       </Select>
     </FormControl>

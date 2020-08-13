@@ -1,9 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button, Paper, Typography, Divider } from "@material-ui/core";
 import OrdersTextFilter from "./OrdersTextFilter";
 import OrdersSelect from "./OrdersSelect";
+import { ordersStatusFilterSet, ordersTimeFilterSet } from "./ordersSlice";
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
@@ -12,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     width: "16rem",
   },
 }));
-const periodOptions = [
+const timeOptions = [
   { value: "", display: "Any time" },
   { value: "1mo", display: "This month" },
   { value: "1mo", display: "This year" },
@@ -27,15 +28,37 @@ const statusOptions = [
 ];
 function OrdersOptions({ maxItems }) {
   const classes = useStyles();
-  const recentViews = useSelector((state) => state.recentViews.recentViews);
+  const dispatch = useDispatch();
+  const timeSearchSelection = useSelector(
+    (state) => state.orders.ordersTimeFilter
+  );
+  const statusSearchSelection = useSelector(
+    (state) => state.orders.ordersStatusFilter
+  );
 
+  const handleChangeTime = (e) => {
+    dispatch(ordersTimeFilterSet(e.target.value));
+  };
+  const handleChangeStatus = (e) => {
+    dispatch(ordersStatusFilterSet(e.target.value));
+  };
   return (
     <Paper className={classes.paper}>
       {" "}
       <Typography className={classes.title}>Browse your orders</Typography>
       <OrdersTextFilter />
-      <OrdersSelect options={periodOptions} label="Period" />
-      <OrdersSelect options={statusOptions} label="Status" />
+      <OrdersSelect
+        value={timeSearchSelection}
+        onChange={handleChangeTime}
+        options={timeOptions}
+        label="Period"
+      />
+      <OrdersSelect
+        value={statusSearchSelection}
+        onChange={handleChangeStatus}
+        options={statusOptions}
+        label="Status"
+      />
       <Button>Search</Button>
     </Paper>
   );

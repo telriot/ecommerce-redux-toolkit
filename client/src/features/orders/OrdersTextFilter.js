@@ -1,21 +1,24 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/FormHelperText";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
+import { ordersTextFilterSet } from "./ordersSlice";
 
 const useStyles = makeStyles((theme) => ({
   inputForm: { margin: theme.spacing(2, 1) },
 }));
 
 export default function ComposedTextField() {
-  const [name, setName] = React.useState("Composed TextField");
+  const dispatch = useDispatch();
+  const textSearchInput = useSelector((state) => state.orders.ordersTextFilter);
   const classes = useStyles();
 
   const handleChange = (event) => {
-    setName(event.target.value);
+    dispatch(ordersTextFilterSet(event.target.value));
   };
 
   return (
@@ -25,6 +28,7 @@ export default function ComposedTextField() {
         id="component-outlined"
         onChange={handleChange}
         label="Name"
+        value={textSearchInput}
       />
     </FormControl>
   );

@@ -12,21 +12,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function OrdersYearSelect({ options, label }) {
+function OrdersSelect({ options, label, value, onChange }) {
   const classes = useStyles();
-  const [age, setAge] = React.useState("");
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
-  };
   return (
     <FormControl variant="outlined" className={classes.formControl}>
       <InputLabel id="demo-simple-select-outlined-label">{label}</InputLabel>
       <Select
         labelId={`order-select-${label}-outlined`}
         id={`order-select-${label}`}
-        value={age}
-        onChange={handleChange}
+        value={value}
+        onChange={onChange}
         label={label}
       >
         {options.map((option, index) =>
@@ -43,4 +39,4 @@ function OrdersYearSelect({ options, label }) {
   );
 }
 
-export default OrdersYearSelect;
+export default OrdersSelect;

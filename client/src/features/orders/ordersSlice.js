@@ -7,6 +7,9 @@ const initialState = {
   ordersPage: 1,
   ordersTotalPages: 1,
   ordersPerPage: 10,
+  ordersTextFilter: "",
+  ordersTimeFilter: "",
+  ordersStatusFilter: "",
 };
 
 export const fetchOrders = createAsyncThunk(
@@ -33,6 +36,21 @@ const ordersSlice = createSlice({
     pageChanged: {
       reducer(state, action) {
         state.ordersPage = action.payload;
+      },
+    },
+    ordersTextFilterSet: {
+      reducer(state, action) {
+        state.ordersTextFilter = action.payload;
+      },
+    },
+    ordersStatusFilterSet: {
+      reducer(state, action) {
+        state.ordersStatusFilter = action.payload;
+      },
+    },
+    ordersTimeFilterSet: {
+      reducer(state, action) {
+        state.ordersTimeFilter = action.payload;
       },
     },
   },
@@ -62,5 +80,10 @@ const ordersSlice = createSlice({
 
 export const selectBillingInfo = (state) => state.orders.billingInfo;
 export const selectDashboardStatus = (state) => state.orders.status;
-export const { pageChanged } = ordersSlice.actions;
+export const {
+  pageChanged,
+  ordersTextFilterSet,
+  ordersStatusFilterSet,
+  ordersTimeFilterSet,
+} = ordersSlice.actions;
 export default ordersSlice.reducer;

@@ -30,13 +30,24 @@ module.exports = {
     const filterOptions = {};
     const user = await User.findById(req.params.id).populate("orders").exec();
     let filteredOrders = user.orders;
+    const filterByValueText = (orders, regex) => {
+      let filteredArr = [];
+      for (let order of orders) {
+        for (let product of Object.keys(order.products)) {
+          if (regex.test(order.products[product].name)) filteredArr.push(order);
+          break;
+        }
+      }
+      return filteredArr;
+    };
     if (text) {
       const textRegex = RegExp(text, "i");
-      filteredOrders = filteredOrders.filter((order) =>
+      filteredOrders = filterByValueText(filteredOrders, textRegex);
+      /*filteredOrders = filteredOrders.filter((order) =>
         Object.values(order.products).some((product) =>
           textRegex.test(product.name)
         )
-      );
+      );*/
     }
     res.status(200).json(filteredOrders.sort((a, b) => b.date - a.date));
   },

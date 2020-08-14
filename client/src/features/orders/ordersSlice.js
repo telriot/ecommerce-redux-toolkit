@@ -6,7 +6,7 @@ const initialState = {
   orders: [],
   ordersPage: 1,
   ordersTotalPages: 1,
-  ordersPerPage: 10,
+  ordersPerPage: 2,
   ordersTextFilter: "",
   ordersTimeFilter: "",
   ordersStatusFilter: "",
@@ -20,18 +20,26 @@ export const fetchOrders = createAsyncThunk(
       ordersTextFilter,
       ordersTimeFilter,
       ordersStatusFilter,
+      ordersPage,
+      ordersPerPage,
     } = getState().orders;
     const filtersObj = {
       text: ordersTextFilter,
       time: ordersTimeFilter,
       status: ordersStatusFilter,
+      page: ordersPage,
+      ordersPerPage,
     };
     if (id !== null) {
       try {
         const response = await axios.get(`/api/users/orders/${id}`, {
           params: filtersObj,
         });
-        return { success: true, orders: response.data };
+        return {
+          success: true,
+          orders: response.data.orders,
+          totalPages: response.data.totalPages,
+        };
       } catch (error) {
         console.error(error);
         return { success: false, error };
@@ -72,12 +80,9 @@ const ordersSlice = createSlice({
     },
     [fetchOrders.fulfilled]: (state, action) => {
       if (action.payload.success) {
-        const { orders } = action.payload;
-
+        const { orders, totalPages } = action.payload;
         state.orders = orders || [];
-        state.ordersTotalPages = orders
-          ? Math.ceil(orders.length / state.ordersPerPage)
-          : 0;
+        state.ordersTotalPages = orders ? totalPages : 0;
       } else {
         state.error = action.error;
       }

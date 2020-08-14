@@ -19,9 +19,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 const timeOptions = [
   { value: "", display: "Any time" },
-  { value: "1mo", display: "This month" },
-  { value: "1mo", display: "This year" },
-  { value: "2019", display: "2019" },
+  {
+    value: {
+      start: new Date(Date.now() - 2629800000),
+      end: new Date(Date.now()),
+    },
+    display: "This month",
+  },
+  {
+    value: {
+      start: new Date(Date.now() - 31557600000),
+      end: new Date(Date.now()),
+    },
+    display: "This year",
+  },
+  {
+    value: {
+      start: new Date("2020-01-01"),
+      end: new Date("2020-12-31T23:59:59"),
+    },
+    display: "2020",
+  },
+  {
+    value: {
+      start: new Date("2019-01-01"),
+      end: new Date("2019-12-31T23:59:59"),
+    },
+    display: "2019",
+  },
 ];
 const statusOptions = [
   { value: "", display: "Any status" },

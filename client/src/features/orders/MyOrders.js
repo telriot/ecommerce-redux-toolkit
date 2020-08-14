@@ -21,28 +21,15 @@ function MyOrders() {
   const isFetching = useSelector(selectDashboardStatus);
   const page = useSelector((state) => state.orders.ordersPage);
   const totalPages = useSelector((state) => state.orders.ordersTotalPages);
-  const ordersPerPage = useSelector((state) => state.orders.ordersPerPage);
-  const [ordersToRender, setOrdersToRender] = React.useState([]);
 
   const handleChange = (e, page) => {
     dispatch(pageChanged(page));
+    dispatch(fetchOrders());
   };
   React.useEffect(() => {
     dispatch(fetchOrders());
   }, [dispatch]);
-  React.useEffect(() => {
-    const paginateOrders = (orders) =>
-      orders
-        .filter(
-          (order, index) =>
-            index < page * ordersPerPage &&
-            index >= page * ordersPerPage - ordersPerPage
-        )
-        .map((order, index) => (
-          <OrderItem key={`order-${order._id}`} order={order} index={index} />
-        ));
-    setOrdersToRender(paginateOrders(orders));
-  }, [orders, page, ordersPerPage]);
+
   return (
     <Grid container data-testid="my-orders-component">
       <Grid item xs={9}>
@@ -51,8 +38,10 @@ function MyOrders() {
         </Typography>
         {isFetching === "pending" ? (
           "Loading..."
-        ) : ordersToRender.length ? (
-          ordersToRender
+        ) : orders.length ? (
+          orders.map((order, index) => (
+            <OrderItem key={`order-${order._id}`} order={order} index={index} />
+          ))
         ) : (
           <Typography variant="subtitle1">
             You have made no orders yet

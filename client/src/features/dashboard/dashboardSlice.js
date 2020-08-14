@@ -9,10 +9,12 @@ const initialState = {
     email: "",
     phone: "",
     street: "",
+    city: "",
     country: "",
     state: "",
     postcode: "",
   },
+  addressList: [],
 };
 
 export const fetchUser = createAsyncThunk(
@@ -45,11 +47,45 @@ export const updateUser = createAsyncThunk(
     }
   }
 );
+export const addNewAddress = createAsyncThunk(
+  "dashboard/addNewAddress",
+  async (address, { getState }) => {
+    try {
+      const id = getState().auth.user._id;
+      const response = await axios.put(`api/users/${id}/new-address`, address);
+      return { success: true, addressList: response.data };
+    } catch (error) {
+      console.error(error);
+      return { success: false, error };
+    }
+  }
+);
+export const removeAddress = createAsyncThunk(
+  "dashboard/addNewAddress",
+  async (index, { getState }) => {
+    try {
+      const id = getState().auth.user._id;
+      const response = await axios.delete(`api/users/${id}/remove-address`, {
+        params: { index },
+      });
+      return { success: true, addressList: response.data };
+    } catch (error) {
+      console.error(error);
+      return { success: false, error };
+    }
+  }
+);
 
 const dashboardSlice = createSlice({
   name: "dashboard",
   initialState,
-  reducers: {},
+  reducers: {
+    newAddressAdded: {
+      reducer(state, action) {
+        state.addressList.push(action.payload);
+      },
+    },
+  },
   extraReducers: {
     [fetchUser.pending]: (state, action) => {
       state.status = "pending";
@@ -63,9 +99,11 @@ const dashboardSlice = createSlice({
           email,
           phone,
           street,
+          city,
           country,
           state,
           postcode,
+          addressList,
         } = action.payload.user;
         thisState.billingInfo = {
           firstName,
@@ -73,10 +111,13 @@ const dashboardSlice = createSlice({
           email,
           phone,
           street,
+          city,
+
           country,
           state,
           postcode,
         };
+        thisState.addressList = addressList;
       } else {
         thisState.error = action.error;
       }
@@ -97,6 +138,8 @@ const dashboardSlice = createSlice({
           email,
           phone,
           street,
+          city,
+
           country,
           state,
           postcode,
@@ -107,6 +150,8 @@ const dashboardSlice = createSlice({
           email,
           phone,
           street,
+          city,
+
           country,
           state,
           postcode,
@@ -117,7 +162,39 @@ const dashboardSlice = createSlice({
       }
       thisState.status = "fulfilled";
     },
-    [updateUser.rejected]: (state, action) => {
+    [updateUser.rejected]: (state) => {
+      state.error = "Something went wrong with our servers";
+      state.status = "rejected";
+    },
+    [addNewAddress.pending]: (state) => {
+      state.status = "pending";
+    },
+    [addNewAddress.fulfilled]: (state, action) => {
+      if (action.payload.success) {
+        state.status = "fulfilled";
+        state.addressList = action.payload.addressList;
+      } else {
+        state.error = action.error;
+      }
+      state.status = "fulfilled";
+    },
+    [addNewAddress.rejected]: (state) => {
+      state.error = "Something went wrong with our servers";
+      state.status = "rejected";
+    },
+    [removeAddress.pending]: (state) => {
+      state.status = "pending";
+    },
+    [removeAddress.fulfilled]: (state, action) => {
+      if (action.payload.success) {
+        state.status = "fulfilled";
+        state.addressList = action.payload.addressList;
+      } else {
+        state.error = action.error;
+      }
+      state.status = "fulfilled";
+    },
+    [removeAddress.rejected]: (state) => {
       state.error = "Something went wrong with our servers";
       state.status = "rejected";
     },

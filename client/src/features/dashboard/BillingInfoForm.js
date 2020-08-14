@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function BillingInfo() {
+function BillingInfoForm() {
   const billingInfo = useSelector(selectBillingInfo);
   const dashboardStatus = useSelector(selectDashboardStatus);
   const dispatch = useDispatch();
@@ -42,6 +42,7 @@ function BillingInfo() {
     phone,
     street,
     country,
+    city,
     state,
     postcode,
   } = billingInfo;
@@ -58,6 +59,8 @@ function BillingInfo() {
         lastName: lastName || "",
         email: email || "",
         street: street || "",
+        city: city || "",
+
         country: country || "",
         state: state || "",
         postcode: postcode || "",
@@ -104,11 +107,18 @@ function BillingInfo() {
                   name="phone"
                 />
               </Grid>
-              <Grid item item xs={12}>
+              <Grid item item xs={12} sm={9}>
                 <CustomTextField
                   disabled={!isEditing}
                   label="Street"
                   name="street"
+                />
+              </Grid>
+              <Grid item item xs={12} sm={3}>
+                <CustomTextField
+                  disabled={!isEditing}
+                  label="City"
+                  name="city"
                 />
               </Grid>
               <Grid item item xs={12} sm={5}>
@@ -175,4 +185,4 @@ function BillingInfo() {
   );
 }
 
-export default BillingInfo;
+export default BillingInfoForm;

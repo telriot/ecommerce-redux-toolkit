@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     padding: theme.spacing(2),
-    width: "16rem",
+    minWidth: "16rem",
   },
 }));
 const timeOptions = [

@@ -78,4 +78,19 @@ module.exports = {
     await user.save();
     res.status(200).json(user.wishlist);
   },
+  addNewAddress: async (req, res, next) => {
+    const address = req.body;
+    console.log(address);
+    const user = await User.findById(req.params.id);
+    await user.addressList.push(address);
+    await user.save();
+    res.status(200).json(user.addressList);
+  },
+  removeAddress: async (req, res, next) => {
+    const { index } = req.query;
+    const user = await User.findById(req.params.id);
+    await user.addressList.splice(index, 1);
+    await user.save();
+    res.status(200).json(user.addressList);
+  },
 };

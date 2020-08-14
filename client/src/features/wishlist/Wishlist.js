@@ -12,7 +12,7 @@ import RecentlyViewed from "../recentViews/RecentlyViewed";
 const useStyles = makeStyles((theme) => ({
   grid: { marginBottom: theme.spacing(4) },
   subGridRight: {
-    padding: theme.spacing(0, 4),
+    paddingLeft: theme.spacing(4),
   },
 }));
 
@@ -55,7 +55,7 @@ function Wishlist() {
   }, [wishlistItems, page, wishlistItemsPerPage]);
   return (
     <Grid container data-testid="wishlist-component">
-      <Grid item xs={9}>
+      <Grid item xs={8}>
         <Typography variant="h5">Wishlist</Typography>
 
         {isFetching === "pending" ? (
@@ -66,7 +66,7 @@ function Wishlist() {
           <Typography variant="subtitle1">Your wishlist is empty</Typography>
         )}
       </Grid>
-      <Grid className={classes.subGridRight} item xs={3}>
+      <Grid className={classes.subGridRight} item xs={4}>
         <RecentlyViewed maxItems={5} />
       </Grid>
       {totalPages > 1 && (

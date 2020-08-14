@@ -10,7 +10,7 @@ import OrdersOptions from "./OrdersOptions";
 const useStyles = makeStyles((theme) => ({
   title: { marginBottom: theme.spacing(2) },
   subGridRight: {
-    padding: theme.spacing(0, 4),
+    paddingLeft: theme.spacing(4),
   },
 }));
 
@@ -32,7 +32,7 @@ function MyOrders() {
 
   return (
     <Grid container data-testid="my-orders-component">
-      <Grid item xs={9}>
+      <Grid item xs={8}>
         <Typography className={classes.title} variant="h5">
           Order history
         </Typography>
@@ -48,7 +48,7 @@ function MyOrders() {
           </Typography>
         )}
       </Grid>
-      <Grid className={classes.subGridRight} item xs={3}>
+      <Grid className={classes.subGridRight} item xs={4}>
         {" "}
         <OrdersOptions />
       </Grid>

@@ -31,6 +31,7 @@ const twitterStrategy = new TwitterStrategy(
           orders: [],
           wishlist: [],
           recentViews: [],
+          addressList: [],
         }).save();
         if (newUser) {
           done(null, newUser);

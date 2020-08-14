@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const Schema = mongoose.Schema;
-const Order = require("../models/Order");
 
 const UserSchema = new Schema(
   {
@@ -19,7 +18,7 @@ const UserSchema = new Schema(
     postcode: String,
     country: String,
     state: String,
-    addressList: Array,
+    addressList: [],
     phone: String,
     recentViews: [{ type: Schema.Types.ObjectId, ref: "Product" }],
     cart: {

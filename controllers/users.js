@@ -45,7 +45,7 @@ module.exports = {
         date < Date.parse(parsedTimeObj.end)
       );
     };
-    const filterByValueText = (orders, regex) => {
+    const filterOrders = (orders) => {
       let filteredArr = [];
       for (let order of orders) {
         if (!isTimeMatch(order.date, time)) continue;
@@ -58,11 +58,8 @@ module.exports = {
       return filteredArr;
     };
 
-    if (text) {
-      const textRegex = RegExp(text, "i");
+    filteredOrders = filterOrders(filteredOrders);
 
-      filteredOrders = filterByValueText(filteredOrders, textRegex);
-    }
     const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
 
     res.status(200).json({

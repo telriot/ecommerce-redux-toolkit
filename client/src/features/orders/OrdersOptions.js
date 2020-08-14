@@ -8,6 +8,7 @@ import {
   ordersStatusFilterSet,
   ordersTimeFilterSet,
   fetchOrders,
+  pageChanged,
 } from "./ordersSlice";
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -72,6 +73,7 @@ function OrdersOptions({ maxItems }) {
     dispatch(ordersStatusFilterSet(e.target.value));
   };
   const handleClickSearch = () => {
+    dispatch(pageChanged(1));
     dispatch(fetchOrders());
   };
   return (

@@ -59,13 +59,11 @@ function SearchInput() {
   };
   const handleSearchKeyUp = (e) => {
     if (e.keyCode === 13) {
-      console.log("search");
       dispatch(fetchAllProducts());
       dispatch(pageChanged(1));
     }
   };
   const handleSearchIconClick = () => {
-    console.log("search");
     dispatch(fetchAllProducts());
     dispatch(pageChanged(1));
   };

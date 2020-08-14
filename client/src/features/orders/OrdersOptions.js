@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, Paper, Typography, Divider } from "@material-ui/core";
+import { Button, Paper, Typography } from "@material-ui/core";
 import OrdersTextFilter from "./OrdersTextFilter";
 import OrdersSelect from "./OrdersSelect";
 import {
@@ -23,14 +23,14 @@ const timeOptions = [
   {
     value: {
       start: new Date(Date.now() - 2629800000),
-      end: new Date(Date.now()),
+      end: new Date(Date.now() + 3600),
     },
     display: "This month",
   },
   {
     value: {
       start: new Date(Date.now() - 31557600000),
-      end: new Date(Date.now()),
+      end: new Date(Date.now() + 3600),
     },
     display: "This year",
   },
@@ -54,9 +54,9 @@ const statusOptions = [
   { value: "delivered", display: "Delivered" },
   { value: "shipped", display: "Shipped" },
   { value: "processing", display: "Processing" },
-  { value: "cancelled", display: "Cancelled" },
+  { value: "canceled", display: "Canceled" },
 ];
-function OrdersOptions({ maxItems }) {
+function OrdersOptions() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const timeSearchSelection = useSelector(

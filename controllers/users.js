@@ -27,7 +27,6 @@ module.exports = {
   },
   getOrders: async (req, res, next) => {
     const { status, text, time, page, ordersPerPage } = req.query;
-    const filterOptions = {};
     const user = await User.findById(req.params.id).populate("orders").exec();
     let filteredOrders = user.orders;
 
@@ -38,17 +37,18 @@ module.exports = {
     };
     const isTimeMatch = (date, time) => {
       if (!time) return true;
-      let parsedTimeObj = JSON.parse(time);
-      console.log(parsedTimeObj);
-      return (
-        Date.parse(date) > Date.parse(parsedTimeObj.start) &&
-        date < Date.parse(parsedTimeObj.end)
-      );
+      let { start, end } = JSON.parse(time);
+      return Date.parse(date) > Date.parse(start) && date < Date.parse(end);
+    };
+    const isStatusMatch = (orderStatus, status) => {
+      if (!status) return true;
+      return orderStatus === status;
     };
     const filterOrders = (orders) => {
       let filteredArr = [];
       for (let order of orders) {
         if (!isTimeMatch(order.date, time)) continue;
+        if (!isStatusMatch(order.status, status)) continue;
         for (let product of Object.keys(order.products)) {
           if (isTextMatch(order.products[product].name, text))
             filteredArr.push(order);

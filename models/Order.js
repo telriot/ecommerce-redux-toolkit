@@ -9,6 +9,7 @@ const OrderSchema = new Schema({
   taxPercent: Number,
   shipping: Number,
   total: Number,
+  status: String,
   user: { type: Schema.Types.ObjectId, ref: "User" },
   date: {
     type: Date,

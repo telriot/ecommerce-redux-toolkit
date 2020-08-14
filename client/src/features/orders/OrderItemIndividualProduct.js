@@ -1,9 +1,10 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Typography, Divider, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
 import MuiLink from "@material-ui/core/Link";
 import BrandLink from "../products/BrandLink";
+
 const useStyles = makeStyles((theme) => ({
   productCard: {
     display: "flex",
@@ -25,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
+  productLink: {
+    cursor: "pointer",
+  },
   brandLink: {
     marginBottom: theme.spacing(2),
   },
@@ -35,19 +39,33 @@ const useStyles = makeStyles((theme) => ({
 }));
 function OrderItemIndividualProduct({ product, index }) {
   const classes = useStyles();
+  const history = useHistory();
+
   const { _id, image, name, brand, price, itemsInCart } = product;
+  const handleProductRedirect = () => {
+    history.push(`/products/${_id}`);
+  };
   return (
     <>
       {index !== 0 && <Divider />}
       <div className={classes.productCard}>
-        <Link to={`/api/products/${_id}`}>
-          <img className={classes.media} alt={`product-${_id}`} src={image} />
-        </Link>
+        <img
+          onClick={handleProductRedirect}
+          className={classes.media}
+          alt={`product-${_id}`}
+          src={image}
+        />
+
         <div className={classes.mainDiv}>
           <div className={classes.mainTextDiv}>
-            <Link to={`/api/products/${_id}`}>
-              <MuiLink variant="body2">{name}</MuiLink>
-            </Link>
+            <MuiLink
+              className={classes.productLink}
+              onClick={handleProductRedirect}
+              variant="body2"
+            >
+              {name}
+            </MuiLink>
+
             <BrandLink brand={brand} />
           </div>
 

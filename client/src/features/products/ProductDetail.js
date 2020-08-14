@@ -11,13 +11,13 @@ import {
 import ProductDetailActionCard from "./ProductDetailActionCard";
 import PictureSelector from "./PictureSelector";
 import ProductHorizontalScroller from "./ProductHorizontalScroller";
-import BackLink from "./BackLink";
+//import BackLink from "./BackLink";
 import BrandLink from "./BrandLink";
 const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     flexDirection: "column",
-    padding: theme.spacing(1, 4, 4, 4),
+    padding: theme.spacing(4, 4, 4, 4),
   },
   mainContentGrid: {
     marginBottom: theme.spacing(3),
@@ -78,7 +78,7 @@ function ProductDetail() {
   }, [dispatch, selectedProduct]);
   return (
     <Container className={classes.container}>
-      <BackLink />
+      {/*<BackLink />*/}
 
       <Grid className={classes.mainContentGrid} container>
         <Grid item container xs={10}>

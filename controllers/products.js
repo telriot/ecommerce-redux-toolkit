@@ -66,7 +66,6 @@ module.exports = {
   },
   updateRecentViews: async (req, res, next) => {
     const { recentViews } = req.body;
-    console.log(recentViews);
     await User.findByIdAndUpdate(req.params.id, { recentViews });
     const updatedUser = await User.findById(req.params.id)
       .populate("recentViews")

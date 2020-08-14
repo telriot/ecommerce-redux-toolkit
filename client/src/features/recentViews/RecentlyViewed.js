@@ -24,12 +24,12 @@ function RecentlyViewed({ maxItems }) {
         .filter((item, index) => index < maxItems)
         .map((product, index) => (
           <>
+            {index !== 0 && <Divider />}
             <ScrollerCard
               key={`scroller-${index}`}
               product={product}
               variant="vertical"
             />
-            {index !== maxItems - 1 && <Divider />}
           </>
         ))}
     </Paper>

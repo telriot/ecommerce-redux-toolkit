@@ -18,7 +18,11 @@ module.exports = {
     if (!user) {
       res.status(401).json({ message: "No authenticated user" });
     } else {
-      const order = await new Order({ ...orderObj, user }).save();
+      const order = await new Order({
+        ...orderObj,
+        user,
+        status: "processing",
+      }).save();
       await user.orders.push(order);
       await user.save();
     }

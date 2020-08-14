@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 function ProductDetail({ product }) {
   const classes = useStyles();
   const { price, availability } = product;
-  const [desiredAmount, setDesiredAmount] = React.useState("");
+  const [desiredAmount, setDesiredAmount] = React.useState(1);
 
   return (
     <Card className={classes.rightSideCard}>

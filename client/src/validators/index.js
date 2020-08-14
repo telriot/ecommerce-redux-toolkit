@@ -10,10 +10,13 @@ export const profileSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
-  address: Yup.string()
-    .min(10, "Too Short!")
+  street: Yup.string()
+    .min(3, "Too Short!")
     .max(60, "Too Long!")
     .required("Required"),
+  country: Yup.string().required("Required"),
+  state: Yup.string(),
+  postcode: Yup.string().required("Required"),
   phone: Yup.string()
     .min(8, "Too Short!")
     .max(15, "Too Long!")

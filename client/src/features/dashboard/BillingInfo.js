@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Button, LinearProgress } from "@material-ui/core";
+import { Button, LinearProgress, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -9,6 +9,9 @@ import {
   updateUser,
 } from "./dashboardSlice";
 import CustomTextField from "../shared/CustomTextField";
+import CustomSelect from "../shared/CustomSelect";
+import countries from "../../assets/countries.json";
+
 import { profileSchema } from "../../validators";
 const useStyles = makeStyles((theme) => ({
   formItems: {
@@ -16,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     marginBottom: theme.spacing(3),
   },
+
   disabled: {
     color: "red",
   },
@@ -31,7 +35,16 @@ function BillingInfo() {
   const billingInfo = useSelector(selectBillingInfo);
   const dashboardStatus = useSelector(selectDashboardStatus);
   const dispatch = useDispatch();
-  const { firstName, lastName, email, address, phone } = billingInfo;
+  const {
+    firstName,
+    lastName,
+    email,
+    phone,
+    street,
+    country,
+    state,
+    postcode,
+  } = billingInfo;
   const classes = useStyles();
   const [isEditing, setIsEditing] = React.useState(false);
 
@@ -44,7 +57,10 @@ function BillingInfo() {
         firstName: firstName || "",
         lastName: lastName || "",
         email: email || "",
-        address: address || "",
+        street: street || "",
+        country: country || "",
+        state: state || "",
+        postcode: postcode || "",
         phone: phone || "",
       }}
       validationSchema={profileSchema}
@@ -57,33 +73,67 @@ function BillingInfo() {
       {({ values, submitForm, isSubmitting }) => (
         <Form aria-label="billing-info-form">
           <div className={classes.formItems}>
-            <CustomTextField
-              disabled={!isEditing}
-              label="First Name"
-              name="firstName"
-            />
-            <CustomTextField
-              disabled={!isEditing}
-              type="text"
-              label="Last Name"
-              name="lastName"
-            />
-            <CustomTextField
-              disabled={!isEditing}
-              name="email"
-              type="email"
-              label="Email"
-            />
-            <CustomTextField
-              disabled={!isEditing}
-              label="Address"
-              name="address"
-            />
-            <CustomTextField
-              disabled={!isEditing}
-              label="Phone Number"
-              name="phone"
-            />
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <CustomTextField
+                  disabled={!isEditing}
+                  label="First Name"
+                  name="firstName"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <CustomTextField
+                  disabled={!isEditing}
+                  type="text"
+                  label="Last Name"
+                  name="lastName"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <CustomTextField
+                  disabled={!isEditing}
+                  name="email"
+                  type="email"
+                  label="Email"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <CustomTextField
+                  disabled={!isEditing}
+                  label="Phone Number"
+                  name="phone"
+                />
+              </Grid>
+              <Grid item item xs={12}>
+                <CustomTextField
+                  disabled={!isEditing}
+                  label="Street"
+                  name="street"
+                />
+              </Grid>
+              <Grid item item xs={12} sm={5}>
+                <CustomSelect
+                  disabled={!isEditing}
+                  name="country"
+                  label="Country"
+                  options={countries}
+                />
+              </Grid>
+              <Grid item item xs={12} sm={4}>
+                <CustomTextField
+                  disabled={!isEditing}
+                  name="state"
+                  label="State"
+                />
+              </Grid>
+              <Grid item item xs={12} sm={3}>
+                <CustomTextField
+                  disabled={!isEditing}
+                  name="postcode"
+                  label="Postcode"
+                />
+              </Grid>
+            </Grid>
           </div>
           {isSubmitting && <LinearProgress />}
           <div>

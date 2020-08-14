@@ -14,7 +14,12 @@ const UserSchema = new Schema(
     firstName: String,
     lastName: String,
     email: String,
-    address: String,
+    street: String,
+    city: String,
+    postcode: String,
+    country: String,
+    state: String,
+    addressList: Array,
     phone: String,
     recentViews: [{ type: Schema.Types.ObjectId, ref: "Product" }],
     cart: {

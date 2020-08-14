@@ -7,8 +7,11 @@ const initialState = {
     firstName: "",
     lastName: "",
     email: "",
-    address: "",
     phone: "",
+    street: "",
+    country: "",
+    state: "",
+    postcode: "",
   },
 };
 
@@ -33,16 +36,8 @@ export const updateUser = createAsyncThunk(
   "dashboard/updateUser",
   async (formData, { getState }) => {
     const id = getState().auth.user._id;
-    const { firstName, lastName, email, address, phone } = formData;
-    const updateObj = {
-      firstName,
-      lastName,
-      email,
-      address,
-      phone,
-    };
     try {
-      const response = await axios.put(`/api/users/${id}`, updateObj);
+      const response = await axios.put(`/api/users/${id}`, { ...formData });
       return { success: true, user: response.data };
     } catch (error) {
       console.error(error);
@@ -60,20 +55,32 @@ const dashboardSlice = createSlice({
       state.status = "pending";
     },
 
-    [fetchUser.fulfilled]: (state, action) => {
+    [fetchUser.fulfilled]: (thisState, action) => {
       if (action.payload.success) {
         const {
           firstName,
           lastName,
           email,
-          address,
           phone,
+          street,
+          country,
+          state,
+          postcode,
         } = action.payload.user;
-        state.billingInfo = { firstName, lastName, email, address, phone };
+        thisState.billingInfo = {
+          firstName,
+          lastName,
+          email,
+          phone,
+          street,
+          country,
+          state,
+          postcode,
+        };
       } else {
-        state.error = action.error;
+        thisState.error = action.error;
       }
-      state.status = "fulfilled";
+      thisState.status = "fulfilled";
     },
     [fetchUser.rejected]: (state, action) => {
       state.error = "Something went wrong with our servers";
@@ -82,21 +89,33 @@ const dashboardSlice = createSlice({
     [updateUser.pending]: (state, action) => {
       state.status = "pending";
     },
-    [updateUser.fulfilled]: (state, action) => {
+    [updateUser.fulfilled]: (thisState, action) => {
       if (action.payload.success) {
         const {
           firstName,
           lastName,
           email,
-          address,
           phone,
+          street,
+          country,
+          state,
+          postcode,
         } = action.payload.user;
-        state.billingInfo = { firstName, lastName, email, address, phone };
-        state.status = "fulfilled";
+        thisState.billingInfo = {
+          firstName,
+          lastName,
+          email,
+          phone,
+          street,
+          country,
+          state,
+          postcode,
+        };
+        thisState.status = "fulfilled";
       } else {
-        state.error = action.error;
+        thisState.error = action.error;
       }
-      state.status = "fulfilled";
+      thisState.status = "fulfilled";
     },
     [updateUser.rejected]: (state, action) => {
       state.error = "Something went wrong with our servers";

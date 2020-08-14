@@ -9,6 +9,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Formik, Form } from "formik";
 import { profileSchema } from "../../validators";
 import CustomTextField from "../shared/CustomTextField";
+import CustomSelect from "../shared/CustomSelect";
+import countries from "../../assets/countries.json";
 const useStyles = makeStyles((theme) => ({
   form: {
     display: "flex",
@@ -51,9 +53,17 @@ export default function AddressForm() {
                   label="Last Name"
                   name="lastName"
                 />
-                <CustomTextField name="email" type="email" label="Email" />
-                <CustomTextField label="Address" name="address" />
-                <CustomTextField label="Phone Number" name="phone" />
+                <CustomTextField label="Email" name="email" type="email" />
+                <CustomTextField label="Postcode" name="street" />
+                <CustomTextField label="City" name="city" />
+                <CustomTextField label="Postcode" name="postcode" />
+                <CustomSelect
+                  name="country"
+                  label="Country"
+                  options={countries}
+                />
+                <CustomTextField name="state" label="State" />
+                <CustomTextField name="phone" label="Phone Number" />
               </Form>
             )}
           </Formik>

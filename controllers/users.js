@@ -8,8 +8,7 @@ module.exports = {
     res.send(user);
   },
   updateUser: async (req, res, next) => {
-    const { firstName, lastName, email, address, phone } = req.body;
-    const updateObj = { firstName, lastName, email, address, phone };
+    const updateObj = { ...req.body };
     const user = await User.findByIdAndUpdate(req.params.id, updateObj);
     await user.save();
     const updatedUser = await User.findById(req.params.id);

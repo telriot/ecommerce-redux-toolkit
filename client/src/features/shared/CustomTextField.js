@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     marginBottom: theme.spacing(1),
+    width: "100%",
   },
 }));
 function CustomTextField({ disabled, label, name, type }) {

@@ -1,7 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectBillingInfo } from "../dashboard/dashboardSlice";
-import { selectCheckoutTransactionDetails } from "./checkoutSlice";
+import {
+  selectCheckoutTransactionDetails,
+  selectShippingAddress,
+} from "./checkoutSlice";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -22,12 +25,21 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginTop: theme.spacing(2),
   },
+  shippingDiv: { marginBottom: theme.spacing(2) },
 }));
 
 export default function Review({ handleNext }) {
   const classes = useStyles();
   const { products, total } = useSelector(selectCheckoutTransactionDetails);
-  const billingInfo = useSelector(selectBillingInfo);
+  const {
+    firstName,
+    lastName,
+    street,
+    postcode,
+    city,
+    state,
+    country,
+  } = useSelector(selectShippingAddress);
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -54,20 +66,31 @@ export default function Review({ handleNext }) {
         </ListItem>
       </List>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid className={classes.shippingDiv} item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Shipping
+            Shipping to:
           </Typography>
           <Typography
+            variant="body2"
             gutterBottom
-          >{`${billingInfo.firstName} ${billingInfo.lastName}`}</Typography>
-          <Typography gutterBottom>{billingInfo.address}</Typography>
+          >{`${firstName} ${lastName}`}</Typography>
+          <Typography className={classes.text} variant="body2">
+            {street}
+          </Typography>
+          <Typography
+            className={classes.text}
+            variant="body2"
+          >{`${postcode} ${city}`}</Typography>
+          <Typography
+            className={classes.text}
+            variant="body2"
+          >{`${state} ${country}`}</Typography>
         </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
+        {/* <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
             Payment details
-          </Typography>
-        </Grid>
+            </Typography>
+        </Grid>*/}
       </Grid>
       <div>
         <Button

@@ -10,6 +10,7 @@ import { Formik, Form } from "formik";
 import { profileSchema } from "../../validators";
 import UserInfoForm from "../shared/UserInfoForm";
 import { selectCartItemCount } from "../cart/cartSlice";
+import { activeShippingAddressSet } from "./checkoutSlice";
 const useStyles = makeStyles((theme) => ({
   form: {
     display: "flex",
@@ -45,8 +46,9 @@ export default function AddressForm({ handleNext }) {
   );
 
   React.useEffect(() => {
-    shippingAddress.firstName &&
-      formikRef.current.setValues({ ...shippingAddress });
+    shippingAddress.firstName
+      ? formikRef.current.setValues({ ...shippingAddress })
+      : dispatch(activeShippingAddressSet({ ...billingInfo }));
   }, [shippingAddress]);
   return (
     <>

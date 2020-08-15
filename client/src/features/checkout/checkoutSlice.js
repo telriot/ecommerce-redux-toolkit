@@ -145,7 +145,8 @@ const checkoutSlice = createSlice({
     },
   },
 });
-
+export const selectShippingAddress = (state) =>
+  state.checkout.activeShippingAddress;
 export const selectCheckoutError = (state) => state.checkout.error;
 export const selectCheckoutStatus = (state) => state.checkout.status;
 export const selectCheckoutTransactionDetails = (state) =>

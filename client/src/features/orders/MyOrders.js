@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import MuiLink from "@material-ui/core/Link";
 import { useSelector, useDispatch } from "react-redux";
 import { Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -21,7 +23,7 @@ function MyOrders() {
   const isFetching = useSelector(selectDashboardStatus);
   const page = useSelector((state) => state.orders.ordersPage);
   const totalPages = useSelector((state) => state.orders.ordersTotalPages);
-
+  const ordersHistory = useSelector((state) => state.auth.user.orders);
   const handleChange = (e, page) => {
     dispatch(pageChanged(page));
     dispatch(fetchOrders());
@@ -42,9 +44,17 @@ function MyOrders() {
           orders.map((order, index) => (
             <OrderItem key={`order-${order._id}`} order={order} index={index} />
           ))
+        ) : !ordersHistory.length ? (
+          <Typography variant="subtitle1">
+            No orders yet. Try finding something you like{" "}
+            <Link to="/">
+              <MuiLink>here</MuiLink>
+            </Link>
+            .
+          </Typography>
         ) : (
           <Typography variant="subtitle1">
-            You have made no orders yet
+            There are no orders matching your search.
           </Typography>
         )}
       </Grid>

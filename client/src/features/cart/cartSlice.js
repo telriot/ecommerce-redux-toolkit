@@ -18,7 +18,7 @@ const joinCarts = (cart1, cart2, getState) => {
     taxPercent: getState().cart.taxPercent,
     total: cart2.total,
   };
-  for (let [id] of Object.keys(cart1.products)) {
+  for (let id of Object.keys(cart1.products)) {
     let product1 = cart1.products[id];
     let product2 = cart2.products[id];
     let product1Price = parseFloat(product1.price).toFixed(2);
@@ -57,14 +57,14 @@ export const fetchCart = createAsyncThunk(
           localStorage.clear();
           return { cart: update.data, error: null };
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       } else {
         try {
           const response = await axios.get(`/api/users/cart/${id}`);
           return { cart: response.data, error: null };
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }
     }
@@ -155,6 +155,9 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: {
+    [fetchCart.pending]: (state, action) => {
+      state.status = "pending";
+    },
     [fetchCart.fulfilled]: (state, action) => {
       const { cart, error } = action.payload;
       if (!error) {
@@ -171,6 +174,8 @@ const cartSlice = createSlice({
     },
 
     [fetchCart.rejected]: (state, action) => {
+      state.status = "idle";
+
       state.error = "Something went wrong with our servers";
     },
   },

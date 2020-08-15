@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { asyncErrorHandler } = require("../middleware");
+const { asyncErrorHandler, isAuthorizedUser } = require("../middleware");
 const {
   getAuth,
   getLoginSuccess,
@@ -17,7 +17,7 @@ const passport = require("../passport");
 router.get("/", asyncErrorHandler(getAuth));
 router.get("/login/success", asyncErrorHandler(getLoginSuccess));
 router.get("/login/failed", asyncErrorHandler(getLoginFailed));
-router.get("/logout", asyncErrorHandler(getLogout));
+router.get("/logout", isAuthorizedUser, asyncErrorHandler(getLogout));
 router.get("/twitter", passport.authenticate("twitter"));
 router.get(
   "/twitter/redirect",

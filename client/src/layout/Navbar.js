@@ -80,9 +80,11 @@ function Navbar() {
           <div className={classes.searchDiv}>
             <SearchInput />
           </div>
-          <Link to="/dashboard">
-            <AccountCircleIcon className={classes.accountIcon} />
-          </Link>
+          {Boolean(user._id) && (
+            <Link to="/dashboard">
+              <AccountCircleIcon className={classes.accountIcon} />
+            </Link>
+          )}
           <CartIcon />
 
           <Menu

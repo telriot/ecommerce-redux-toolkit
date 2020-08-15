@@ -1,8 +1,12 @@
 const express = require("express");
 var router = express.Router();
-const { asyncErrorHandler } = require("../middleware");
+const { asyncErrorHandler, isAuthorizedUser } = require("../middleware");
 const { createIntent } = require("../controllers/stripe");
 
-router.post("/create-intent", asyncErrorHandler(createIntent));
+router.post(
+  "/create-intent",
+  isAuthorizedUser,
+  asyncErrorHandler(createIntent)
+);
 
 module.exports = router;

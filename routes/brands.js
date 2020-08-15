@@ -3,7 +3,6 @@ var router = express.Router();
 const { asyncErrorHandler } = require("../middleware");
 const { getAllBrands, getBrandsList } = require("../controllers/brands");
 
-/* GET home page. */
 router.get("/", asyncErrorHandler(getAllBrands));
 router.get("/list", asyncErrorHandler(getBrandsList));
 module.exports = router;

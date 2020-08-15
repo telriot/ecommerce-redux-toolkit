@@ -1,11 +1,8 @@
 import React from "react";
 import { Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 import CustomTextField from "../shared/CustomTextField";
 import CustomSelect from "../shared/CustomSelect";
 import countries from "../../assets/countries.json";
-
-const useStyles = makeStyles((theme) => ({}));
 
 function BillingInfoForm({ disabled }) {
   return (
@@ -56,7 +53,11 @@ function BillingInfoForm({ disabled }) {
           />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <CustomTextField disabled={disabled} name="state" label="State" />
+          <CustomTextField
+            disabled={disabled}
+            name="state"
+            label="State / Province"
+          />
         </Grid>
         <Grid item xs={12} sm={3}>
           <CustomTextField

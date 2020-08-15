@@ -10,6 +10,11 @@ const {
   loginUser,
   CLIENT_HOME_PAGE_URL,
 } = require("../controllers/auth");
+const {
+  userSignupValidationRules,
+  userLoginValidationRules,
+  validate,
+} = require("../validators");
 
 const passport = require("../passport");
 
@@ -28,14 +33,14 @@ router.get(
 );
 router.post(
   "/signup",
-  //userSignupValidationRules(),
-  //validate,
+  userSignupValidationRules(),
+  validate,
   asyncErrorHandler(createUser)
 );
 router.post(
   "/login",
-  //userLoginValidationRules(),
-  //validate,
+  userLoginValidationRules(),
+  validate,
   passport.authenticate("local"),
   asyncErrorHandler(loginUser)
 );

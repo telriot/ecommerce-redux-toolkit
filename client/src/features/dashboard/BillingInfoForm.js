@@ -32,6 +32,8 @@ function BillingInfoForm() {
   const billingInfo = useSelector(selectBillingInfo);
   const dashboardStatus = useSelector(selectDashboardStatus);
   const dispatch = useDispatch();
+  const formikRef = React.useRef();
+
   const {
     firstName,
     lastName,
@@ -47,10 +49,12 @@ function BillingInfoForm() {
   const [isEditing, setIsEditing] = React.useState(false);
 
   const toggleEdit = () => {
+    isEditing && formikRef.current.setValues({ ...billingInfo });
     setIsEditing((prevState) => !prevState);
   };
   return dashboardStatus === "fulfilled" ? (
     <Formik
+      innerRef={formikRef}
       initialValues={{
         firstName: firstName || "",
         lastName: lastName || "",

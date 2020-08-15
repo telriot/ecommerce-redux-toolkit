@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Grid, Paper } from "@material-ui/core";
 import ShippingAddressCard from "../dashboard/ShippingAddressCard";
 import { selectAddressList } from "../dashboard/dashboardSlice";
 import { activeShippingAddressSet } from "./checkoutSlice";

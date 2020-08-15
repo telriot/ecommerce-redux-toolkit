@@ -1,75 +1,36 @@
 import * as Yup from "yup";
 
+const stringReq = (min, max) =>
+  Yup.string()
+    .min(min, `Please enter at least ${min} characters`)
+    .max(max, `Please enter at most ${max} characters`)
+    .required("Required");
+
+const emailReq = Yup.string().email("Invalid email").required("Required");
+const phoneReq = Yup.string()
+  .min(6, "Too Short!")
+  .max(20, "Too Long!")
+  .matches(/^\d+$/)
+  .required("Required");
+
 export const profileSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  lastName: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
-  street: Yup.string()
-    .min(3, "Too Short!")
-    .max(60, "Too Long!")
-    .required("Required"),
-  city: Yup.string()
-    .min(2, "Too Short!")
-    .max(60, "Too Long!")
-    .required("Required"),
-  country: Yup.string().required("Required"),
-  state: Yup.string(),
-  postcode: Yup.string().required("Required"),
-  phone: Yup.string()
-    .min(8, "Too Short!")
-    .max(15, "Too Long!")
-    .matches(/^\d+$/)
-    .required("Required"),
+  firstName: stringReq(2, 30),
+  lastName: stringReq(2, 30),
+  email: emailReq,
+  street: stringReq(2, 60),
+  city: stringReq(2, 60),
+  country: stringReq(2, 40),
+  state: stringReq(2, 30),
+  postcode: stringReq(4, 15),
+  phone: phoneReq,
 });
-export const shippingSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  lastName: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  street: Yup.string()
-    .min(3, "Too Short!")
-    .max(60, "Too Long!")
-    .required("Required"),
-  city: Yup.string()
-    .min(2, "Too Short!")
-    .max(60, "Too Long!")
-    .required("Required"),
-  country: Yup.string().required("Required"),
-  state: Yup.string(),
-  postcode: Yup.string().required("Required"),
-  phone: Yup.string()
-    .min(8, "Too Short!")
-    .max(15, "Too Long!")
-    .matches(/^\d+$/),
-});
+
 export const signupSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  password: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  email: Yup.string().email("Invalid email").required("Required"),
+  username: stringReq(2, 30),
+  password: stringReq(2, 30),
+  email: emailReq,
 });
 export const loginSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
-  password: Yup.string()
-    .min(2, "Too Short!")
-    .max(50, "Too Long!")
-    .required("Required"),
+  username: stringReq(2, 30),
+  password: stringReq(2, 30),
 });

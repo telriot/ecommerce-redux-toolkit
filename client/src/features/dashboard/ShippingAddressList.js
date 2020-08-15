@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Divider, Paper, Typography } from "@material-ui/core";
 import ShippingAddressCard from "./ShippingAddressCard";
@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
 
 function ShippingAddressList() {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const addressList = useSelector(selectAddressList);
   return (
     <Paper className={classes.paper}>

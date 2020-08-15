@@ -49,7 +49,7 @@ export default function AddressForm({ handleNext }) {
     shippingAddress.firstName
       ? formikRef.current.setValues({ ...shippingAddress })
       : dispatch(activeShippingAddressSet({ ...billingInfo }));
-  }, [shippingAddress]);
+  }, [shippingAddress, billingInfo, dispatch]);
   return (
     <>
       <Typography variant="h6" gutterBottom>

@@ -17,6 +17,7 @@ const {
   addNewAddress,
   removeAddress,
 } = require("../controllers/users");
+const { userEditValidationRules, validate } = require("../validators");
 /* GET home page. */
 router.get("/", asyncErrorHandler(getAllUsers));
 router.get(
@@ -29,6 +30,8 @@ router.put(
   "/:id",
   isAuthorizedUser,
   isProfileOwner,
+  userEditValidationRules(),
+  validate,
   asyncErrorHandler(updateUser)
 );
 router.get(
@@ -65,6 +68,8 @@ router.put(
   "/:id/new-address",
   isAuthorizedUser,
   isProfileOwner,
+  userEditValidationRules(),
+  validate,
   asyncErrorHandler(addNewAddress)
 );
 router.delete(

@@ -4,6 +4,6 @@ const { asyncErrorHandler, isAuthorizedUser } = require("../middleware");
 const { postOrder } = require("../controllers/orders");
 
 /* GET home page. */
-router.post("/", asyncErrorHandler(postOrder));
+router.post("/", isAuthorizedUser, asyncErrorHandler(postOrder));
 
 module.exports = router;

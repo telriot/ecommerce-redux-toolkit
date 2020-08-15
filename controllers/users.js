@@ -80,7 +80,6 @@ module.exports = {
   },
   addNewAddress: async (req, res, next) => {
     const address = req.body;
-    console.log(address);
     const user = await User.findById(req.params.id);
     await user.addressList.push(address);
     await user.save();

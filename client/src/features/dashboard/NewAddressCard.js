@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControlLabel, Grid, Paper, Typography } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import NewAddressForm from "./NewAddressForm";
 import Switch from "@material-ui/core/Switch";

@@ -8,6 +8,12 @@ import { pageChanged } from "../products/productsSlice";
 
 const useStyles = makeStyles((theme) => ({
   title: { marginBottom: theme.spacing(1) },
+  allProducts: {
+    cursor: "pointer",
+    fontSize: theme.typography.caption.fontSize,
+    marginBottom: theme.spacing(1),
+    transform: "translateX(-.25rem)",
+  },
   departmentLink: {
     cursor: "pointer",
     fontSize: theme.typography.caption.fontSize,
@@ -27,9 +33,12 @@ function DepartmentFilter() {
     dispatch(fetchDepartmentsList());
   }, [dispatch]);
 
-  const Department = ({ departmentName }) => {
+  const Department = ({ departmentName, className }) => {
+    const activeDepartment = useSelector(
+      (state) => state.filters.departmentFilter
+    );
     const handleDepartmentClick = (e) => {
-      dispatch(departmentFilterSet(departmentName));
+      dispatch(departmentFilterSet(departmentName ? departmentName : ""));
       dispatch(fetchAllProducts());
       dispatch(pageChanged(1));
     };
@@ -37,10 +46,11 @@ function DepartmentFilter() {
     return (
       <Link
         underline="none"
-        className={classes.departmentLink}
+        className={className || classes.departmentLink}
         onClick={handleDepartmentClick}
+        color={activeDepartment === departmentName ? "secondary" : "primary"}
       >
-        {departmentName}
+        {departmentName ? departmentName : "All Products"}
       </Link>
     );
   };
@@ -51,6 +61,7 @@ function DepartmentFilter() {
         Departments
       </Typography>
       <div className={classes.departmentsDiv}>
+        <Department className={classes.allProducts} key={`department-all`} />
         {departments
           .filter((department, index) => index < 15)
           .sort((a, b) => a.name.localeCompare(b.name))

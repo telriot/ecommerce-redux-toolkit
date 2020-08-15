@@ -1,16 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   selectBillingInfo,
   selectDashboardStatus,
 } from "../dashboard/dashboardSlice";
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { Formik, Form } from "formik";
 import { profileSchema } from "../../validators";
-import CustomTextField from "../shared/CustomTextField";
-import CustomSelect from "../shared/CustomSelect";
-import countries from "../../assets/countries.json";
+import UserInfoForm from "../shared/UserInfoForm";
+import { selectCartItemCount } from "../cart/cartSlice";
 const useStyles = makeStyles((theme) => ({
   form: {
     display: "flex",
@@ -18,13 +17,37 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
     width: "100%",
   },
+  btnDiv: {
+    marginTop: theme.spacing(2),
+  },
 }));
-export default function AddressForm() {
+export default function AddressForm({ handleNext }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const billingInfo = useSelector(selectBillingInfo);
-  const { firstName, lastName, email, address, phone } = billingInfo;
-  const dashboardStatus = useSelector(selectDashboardStatus);
+  const itemCount = useSelector(selectCartItemCount);
 
+  const formikRef = React.useRef();
+  const {
+    firstName,
+    lastName,
+    email,
+    phone,
+    street,
+    country,
+    city,
+    state,
+    postcode,
+  } = billingInfo;
+  const dashboardStatus = useSelector(selectDashboardStatus);
+  const shippingAddress = useSelector(
+    (state) => state.checkout.activeShippingAddress
+  );
+
+  React.useEffect(() => {
+    shippingAddress.firstName &&
+      formikRef.current.setValues({ ...shippingAddress });
+  }, [shippingAddress]);
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -33,37 +56,38 @@ export default function AddressForm() {
       <Grid container>
         {dashboardStatus === "fulfilled" ? (
           <Formik
+            innerRef={formikRef}
             initialValues={{
               firstName: firstName || "",
               lastName: lastName || "",
               email: email || "",
-              address: address || "",
+              street: street || "",
+              city: city || "",
+              country: country || "",
+              state: state || "",
+              postcode: postcode || "",
               phone: phone || "",
             }}
             validationSchema={profileSchema}
             onSubmit={(values, { setSubmitting }) => {
+              handleNext();
               setSubmitting(false);
             }}
           >
-            {() => (
+            {({ submitForm }) => (
               <Form className={classes.form}>
-                <CustomTextField label="First Name" name="firstName" />
-                <CustomTextField
-                  type="text"
-                  label="Last Name"
-                  name="lastName"
-                />
-                <CustomTextField label="Email" name="email" type="email" />
-                <CustomTextField label="Postcode" name="street" />
-                <CustomTextField label="City" name="city" />
-                <CustomTextField label="Postcode" name="postcode" />
-                <CustomSelect
-                  name="country"
-                  label="Country"
-                  options={countries}
-                />
-                <CustomTextField name="state" label="State" />
-                <CustomTextField name="phone" label="Phone Number" />
+                <UserInfoForm />
+                <div className={classes.btnDiv}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    disabled={Boolean(itemCount === 0)}
+                    onClick={submitForm}
+                    className={classes.button}
+                  >
+                    Next
+                  </Button>
+                </div>
               </Form>
             )}
           </Formik>

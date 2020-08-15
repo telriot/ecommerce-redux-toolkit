@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Divider, Paper, Typography } from "@material-ui/core";
 import ShippingAddressCard from "./ShippingAddressCard";
+import { selectAddressList } from "./dashboardSlice";
 const useStyles = makeStyles((theme) => ({
   paper: {
     display: "flex",
@@ -15,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
 function ShippingAddressList() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const addressList = useSelector((state) => state.dashboard.addressList);
+  const addressList = useSelector(selectAddressList);
   return (
     <Paper className={classes.paper}>
       {" "}

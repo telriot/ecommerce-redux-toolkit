@@ -9,6 +9,17 @@ const initialState = {
   transactionDetails: {},
   error: "",
   status: "idle",
+  activeShippingAddress: {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    street: "",
+    city: "",
+    country: "",
+    state: "",
+    postcode: "",
+  },
 };
 
 export const createPaymentIntent = createAsyncThunk(
@@ -78,6 +89,11 @@ const checkoutSlice = createSlice({
   name: "checkout",
   initialState,
   reducers: {
+    activeShippingAddressSet: {
+      reducer(state, action) {
+        state.activeShippingAddress = action.payload;
+      },
+    },
     completedTransaction: {
       reducer(state, action) {
         const { products, total } = action.payload;
@@ -138,6 +154,7 @@ export const selectCheckoutClientSecret = (state) =>
   state.checkout.clientSecret;
 
 export const {
+  activeShippingAddressSet,
   movedToNextStep,
   movedToPrevStep,
   resetCheckoutSteps,

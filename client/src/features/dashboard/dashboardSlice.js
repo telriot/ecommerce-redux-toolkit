@@ -200,7 +200,7 @@ const dashboardSlice = createSlice({
     },
   },
 });
-
+export const selectAddressList = (state) => state.dashboard.addressList;
 export const selectBillingInfo = (state) => state.dashboard.billingInfo;
 export const selectDashboardStatus = (state) => state.dashboard.status;
 export default dashboardSlice.reducer;

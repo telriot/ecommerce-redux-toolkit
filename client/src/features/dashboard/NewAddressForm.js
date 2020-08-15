@@ -1,13 +1,10 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { Button, LinearProgress, Grid } from "@material-ui/core";
+import { Button, LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import CustomTextField from "../shared/CustomTextField";
-import CustomSelect from "../shared/CustomSelect";
-import countries from "../../assets/countries.json";
 import { selectDashboardStatus, addNewAddress } from "./dashboardSlice";
-
+import UserInfoForm from "../shared/UserInfoForm";
 import { profileSchema } from "../../validators";
 const useStyles = makeStyles((theme) => ({
   formItems: {
@@ -49,43 +46,7 @@ function BillingInfo() {
       {({ values, submitForm, isSubmitting }) => (
         <Form aria-label="new-address-info-form">
           <div className={classes.formItems}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <CustomTextField label="First Name" name="firstName" />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <CustomTextField
-                  type="text"
-                  label="Last Name"
-                  name="lastName"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <CustomTextField name="email" type="email" label="Email" />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <CustomTextField label="Phone Number" name="phone" />
-              </Grid>
-              <Grid item xs={12} sm={9}>
-                <CustomTextField label="Street" name="street" />
-              </Grid>
-              <Grid item xs={12} sm={3}>
-                <CustomTextField label="City" name="city" />
-              </Grid>
-              <Grid item xs={12} sm={5}>
-                <CustomSelect
-                  name="country"
-                  label="Country"
-                  options={countries}
-                />
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <CustomTextField name="state" label="State" />
-              </Grid>
-              <Grid item xs={12} sm={3}>
-                <CustomTextField name="postcode" label="Postcode" />
-              </Grid>
-            </Grid>
+            <UserInfoForm />
           </div>
           {isSubmitting && <LinearProgress />}
           <div>

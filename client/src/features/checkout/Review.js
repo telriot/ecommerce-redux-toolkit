@@ -4,6 +4,7 @@ import { selectBillingInfo } from "../dashboard/dashboardSlice";
 import { selectCheckoutTransactionDetails } from "./checkoutSlice";
 import { makeStyles } from "@material-ui/core/styles";
 import {
+  Button,
   Grid,
   List,
   ListItem,
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Review() {
+export default function Review({ handleNext }) {
   const classes = useStyles();
   const { products, total } = useSelector(selectCheckoutTransactionDetails);
   const billingInfo = useSelector(selectBillingInfo);
@@ -68,6 +69,16 @@ export default function Review() {
           </Typography>
         </Grid>
       </Grid>
+      <div>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleNext}
+          className={classes.button}
+        >
+          Back to Main Page
+        </Button>
+      </div>
     </React.Fragment>
   );
 }

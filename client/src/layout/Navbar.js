@@ -15,6 +15,7 @@ import {
   selectAuthorizedUser,
   openedAuthDialog,
 } from "../features/auth/authSlice";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import CartIcon from "../features/cart/CartIcon";
 import AuthDialog from "../features/auth/AuthDialog";
 import SearchInput from "./SearchInput";
@@ -27,6 +28,10 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     display: "flex",
     justifyContent: "center",
+  },
+  accountIcon: {
+    marginRight: theme.spacing(3),
+    transform: "translateY(2px)",
   },
 }));
 
@@ -75,7 +80,9 @@ function Navbar() {
           <div className={classes.searchDiv}>
             <SearchInput />
           </div>
-
+          <Link to="/dashboard">
+            <AccountCircleIcon className={classes.accountIcon} />
+          </Link>
           <CartIcon />
 
           <Menu

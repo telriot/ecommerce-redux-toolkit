@@ -14,12 +14,11 @@ function CartIcon() {
   const classes = useStyles();
 
   const count = useSelector(selectCartItemCount);
-  const handleCartClick = () => {};
   return (
     <Link to="/cart">
       <div className={classes.cartIconDiv}>
         <Badge badgeContent={count} color="secondary">
-          <ShoppingCartIcon onClick={handleCartClick} fontSize="normal" />
+          <ShoppingCartIcon fontSize="normal" />
         </Badge>
       </div>
     </Link>

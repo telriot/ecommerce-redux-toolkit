@@ -72,7 +72,12 @@ function CartRecap() {
         >
           Proceed to checkout
         </Button>
-        <Button size="small" color="secondary" onClick={handleCartReset}>
+        <Button
+          data-testid="reset-button"
+          size="small"
+          color="secondary"
+          onClick={handleCartReset}
+        >
           Remove all items
         </Button>
       </div>

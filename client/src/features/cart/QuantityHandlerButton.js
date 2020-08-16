@@ -47,7 +47,7 @@ function QuantityHandlerButton({ product }) {
         <AddIcon fontSize="small" />
       </IconButton>
       <Typography aria-label="items-in-cart" variant="body2">
-        {itemsInCart}
+        {itemsInCart || 0}
       </Typography>
       <IconButton
         onClick={handleDecreaseBtnClick}

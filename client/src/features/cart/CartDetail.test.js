@@ -12,7 +12,7 @@ afterEach(() => server.resetHandlers());
 afterAll(() => server.close());
 afterEach(cleanup);
 
-describe("AllProducts tests", () => {
+describe("CartDetail tests", () => {
   let getByText, getByTestId, getAllByText, queryByText, getAllByLabelText;
   describe("Cart is empty", () => {
     beforeEach(() => {
@@ -89,7 +89,7 @@ describe("AllProducts tests", () => {
       expect(getAllByText(/testproduct/gi)).toHaveLength(1);
     });
     test("Reset Button resets products", () => {
-      const resetBtn = getByText(/reset/gi);
+      const resetBtn = getByTestId("reset-button");
       fireEvent.click(resetBtn);
       expect(queryByText(/testproduct/gi)).toBeNull();
     });

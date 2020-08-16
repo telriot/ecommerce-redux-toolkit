@@ -57,7 +57,9 @@ function CartItem({ product }) {
 
   return (
     <Card className={classes.card}>
-      <CardMedia className={classes.media} image={product.image} />
+      {product.image && (
+        <CardMedia className={classes.media} image={product.image} />
+      )}
       <div className={classes.product}>
         <div className={classes.infoDiv}>
           <div className={classes.textElements}>

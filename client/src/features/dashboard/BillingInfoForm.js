@@ -67,10 +67,9 @@ function BillingInfoForm() {
         phone: phone || "",
       }}
       validationSchema={profileSchema}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values) => {
         dispatch(updateUser(values));
         setIsEditing(false);
-        setSubmitting(false);
       }}
     >
       {({ values, submitForm, isSubmitting }) => (
@@ -103,7 +102,7 @@ function BillingInfoForm() {
                   variant="contained"
                   color="secondary"
                   disabled={isSubmitting}
-                  onClick={() => submitForm(values)}
+                  type="submit"
                 >
                   Update
                 </Button>

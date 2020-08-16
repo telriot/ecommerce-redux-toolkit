@@ -10,6 +10,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     padding: theme.spacing(3),
     minWidth: "16rem",
+    maxHeight: "60vh",
+    overflow: "auto",
   },
 }));
 
@@ -23,14 +25,10 @@ function ShippingAddressList() {
         Your address list
       </Typography>
       {addressList.map((address, index) => (
-        <>
+        <React.Fragment key={`address-${index}`}>
           {index !== 0 && <Divider />}
-          <ShippingAddressCard
-            key={`address-${index}`}
-            address={address}
-            index={index}
-          />
-        </>
+          <ShippingAddressCard address={address} index={index} />
+        </React.Fragment>
       ))}
     </Paper>
   );

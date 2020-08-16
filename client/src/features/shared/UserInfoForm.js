@@ -4,10 +4,10 @@ import CustomTextField from "../shared/CustomTextField";
 import CustomSelect from "../shared/CustomSelect";
 import countries from "../../assets/countries.json";
 
-function BillingInfoForm({ disabled }) {
+function UserInfoForm({ disabled }) {
   return (
     <>
-      <Grid container spacing={2}>
+      <Grid data-testid="user-info-form" container spacing={2}>
         <Grid item xs={12} sm={6}>
           <CustomTextField
             disabled={disabled}
@@ -71,4 +71,4 @@ function BillingInfoForm({ disabled }) {
   );
 }
 
-export default BillingInfoForm;
+export default UserInfoForm;

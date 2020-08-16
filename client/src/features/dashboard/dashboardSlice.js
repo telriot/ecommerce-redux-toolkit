@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
   status: "idle",
+  addressListStatus: "idle",
   billingInfo: {
     firstName: "",
     lastName: "",
@@ -50,6 +51,8 @@ export const updateUser = createAsyncThunk(
 export const addNewAddress = createAsyncThunk(
   "dashboard/addNewAddress",
   async (address, { getState }) => {
+    console.log("response");
+
     try {
       const id = getState().auth.user._id;
       const response = await axios.put(`api/users/${id}/new-address`, address);
@@ -139,7 +142,6 @@ const dashboardSlice = createSlice({
           phone,
           street,
           city,
-
           country,
           state,
           postcode,
@@ -167,36 +169,37 @@ const dashboardSlice = createSlice({
       state.status = "rejected";
     },
     [addNewAddress.pending]: (state) => {
-      state.status = "pending";
+      state.addressListStatus = "pending";
     },
     [addNewAddress.fulfilled]: (state, action) => {
+      console.log(action.payload);
       if (action.payload.success) {
-        state.status = "fulfilled";
+        state.addressListStatus = "fulfilled";
         state.addressList = action.payload.addressList;
       } else {
         state.error = action.error;
       }
-      state.status = "fulfilled";
+      state.addressListStatus = "fulfilled";
     },
     [addNewAddress.rejected]: (state) => {
       state.error = "Something went wrong with our servers";
-      state.status = "rejected";
+      state.addressListStatus = "rejected";
     },
     [removeAddress.pending]: (state) => {
-      state.status = "pending";
+      state.addressListStatus = "pending";
     },
     [removeAddress.fulfilled]: (state, action) => {
       if (action.payload.success) {
-        state.status = "fulfilled";
+        state.addressListStatus = "fulfilled";
         state.addressList = action.payload.addressList;
       } else {
         state.error = action.error;
       }
-      state.status = "fulfilled";
+      state.addressListStatus = "fulfilled";
     },
     [removeAddress.rejected]: (state) => {
       state.error = "Something went wrong with our servers";
-      state.status = "rejected";
+      state.addressListStatus = "rejected";
     },
   },
 });

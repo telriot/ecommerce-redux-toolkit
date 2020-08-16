@@ -29,6 +29,7 @@
     "stripe": "^8.80.0"
   },
   "devDependencies": {
+    "@testing-library/user-event": "^12.1.1",
     "concurrently": "^5.1.0",
     "faker": "^4.1.0",
     "nodemon": "^2.0.2"

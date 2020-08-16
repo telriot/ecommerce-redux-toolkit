@@ -2,8 +2,8 @@ import React from "react";
 import { Formik, Form } from "formik";
 import { Button, LinearProgress } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { useDispatch, useSelector } from "react-redux";
-import { selectDashboardStatus, addNewAddress } from "./dashboardSlice";
+import { useDispatch } from "react-redux";
+import { addNewAddress } from "./dashboardSlice";
 import UserInfoForm from "../shared/UserInfoForm";
 import { profileSchema } from "../../validators";
 const useStyles = makeStyles((theme) => ({
@@ -15,17 +15,17 @@ const useStyles = makeStyles((theme) => ({
   buttonDiv: {
     display: "flex",
   },
-  cancelButton: {
+  progress: { marginBottom: theme.spacing(1) },
+  resetButton: {
     marginRight: theme.spacing(2),
   },
 }));
 
 function BillingInfo() {
-  const dashboardStatus = useSelector(selectDashboardStatus);
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  return dashboardStatus === "fulfilled" ? (
+  return (
     <Formik
       initialValues={{
         firstName: "",
@@ -36,33 +36,36 @@ function BillingInfo() {
         state: "",
         postcode: "",
         phone: "",
+        email: "",
       }}
       validationSchema={profileSchema}
-      onSubmit={(values, { setSubmitting }) => {
+      onSubmit={(values, { setSubmitting, resetForm }) => {
         dispatch(addNewAddress(values));
+        resetForm();
         setSubmitting(false);
       }}
     >
-      {({ values, submitForm, isSubmitting }) => (
+      {({ isSubmitting, resetForm }) => (
         <Form aria-label="new-address-info-form">
           <div className={classes.formItems}>
             <UserInfoForm />
           </div>
-          {isSubmitting && <LinearProgress />}
+          {isSubmitting && <LinearProgress className={classes.progress} />}
           <div>
             <>
               <Button
-                classes={{ root: classes.cancelButton }}
+                classes={{ root: classes.resetButton }}
                 variant="contained"
                 disabled={isSubmitting}
+                onClick={resetForm}
               >
-                Cancel
+                Reset
               </Button>
               <Button
                 variant="contained"
                 color="secondary"
                 disabled={isSubmitting}
-                onClick={() => submitForm(values)}
+                type="submit"
               >
                 Submit
               </Button>
@@ -71,8 +74,6 @@ function BillingInfo() {
         </Form>
       )}
     </Formik>
-  ) : (
-    "Loading"
   );
 }
 

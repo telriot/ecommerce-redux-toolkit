@@ -21,11 +21,13 @@ function CustomTextField({ disabled, label, name, type }) {
           disabled: classes.disabled,
         },
         "data-testid": `testid-${name}`,
+        "aria-labelledby": name,
       }}
       InputLabelProps={{
         classes: {
           disabled: classes.disabled,
         },
+        id: name,
       }}
       classes={{ root: classes.root }}
       disabled={disabled}

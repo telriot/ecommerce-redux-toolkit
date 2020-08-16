@@ -19,7 +19,9 @@ function CustomSelect({ label, name, options, type, disabled }) {
 
   return (
     <FormControl className={classes.formControl}>
-      <InputLabel htmlFor="tags">Country </InputLabel>
+      <InputLabel id="country-label" htmlFor={name}>
+        Country{" "}
+      </InputLabel>
 
       <Field
         inputProps={{
@@ -43,6 +45,7 @@ function CustomSelect({ label, name, options, type, disabled }) {
         type={type}
         label={label}
         name={name}
+        aria-labelledby="country-label"
       >
         {options.map((option, index) => (
           <MenuItem

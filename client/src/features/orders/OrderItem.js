@@ -41,7 +41,7 @@ function OrderItem({ order, index }) {
   );
 
   return (
-    <Card className={classes.card}>
+    <Card data-testid="order-item" className={classes.card}>
       <div className={classes.cardHeader}>
         <div className={classes.headerLeft}>
           <div className={classes.headerTextBlock}>

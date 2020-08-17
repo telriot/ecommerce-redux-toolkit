@@ -19,6 +19,7 @@ function OrdersSelect({ options, label, value, onChange, testid }) {
     <FormControl variant="outlined" className={classes.formControl}>
       <InputLabel id="demo-simple-select-outlined-label">{label}</InputLabel>
       <Select
+        native
         labelId={`order-select-${label}-outlined`}
         id={`order-select-${label}`}
         value={value}
@@ -28,13 +29,13 @@ function OrdersSelect({ options, label, value, onChange, testid }) {
       >
         {options.map((option, index) =>
           index === 0 ? (
-            <MenuItem key={`option-${option.value}`} value={option.value}>
-              <em>{option.display}</em>
-            </MenuItem>
-          ) : (
-            <MenuItem key={`option-${option.value}`} value={option.value}>
+            <option key={`option-${option.value}`} value={option.value}>
               {option.display}
-            </MenuItem>
+            </option>
+          ) : (
+            <option key={`option-${option.value}`} value={option.value}>
+              {option.display}
+            </option>
           )
         )}
       </Select>

@@ -19,33 +19,21 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const timeOptions = [
-  { value: "", display: "Any time" },
+  { value: 0, display: "Any time" },
   {
-    value: {
-      start: new Date(Date.now() - 2629800000),
-      end: new Date(Date.now() + 3600),
-    },
+    value: 1,
     display: "This month",
   },
   {
-    value: {
-      start: new Date(Date.now() - 31557600000),
-      end: new Date(Date.now() + 3600),
-    },
+    value: 2,
     display: "This year",
   },
   {
-    value: {
-      start: new Date("2020-01-01"),
-      end: new Date("2020-12-31T23:59:59"),
-    },
+    value: 3,
     display: "2020",
   },
   {
-    value: {
-      start: new Date("2019-01-01"),
-      end: new Date("2019-12-31T23:59:59"),
-    },
+    value: 4,
     display: "2019",
   },
 ];
@@ -82,12 +70,14 @@ function OrdersOptions() {
       <Typography className={classes.title}>Browse your orders</Typography>
       <OrdersTextFilter />
       <OrdersSelect
+        testid="period-select"
         value={timeSearchSelection}
         onChange={handleChangeTime}
         options={timeOptions}
         label="Period"
       />
       <OrdersSelect
+        testid="status-select"
         value={statusSearchSelection}
         onChange={handleChangeStatus}
         options={statusOptions}

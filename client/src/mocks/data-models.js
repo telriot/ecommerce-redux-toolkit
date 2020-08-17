@@ -1,129 +1,7 @@
-export const testProducts = [
-  {
-    name: "testProduct1",
-    date: "2020-01-26T04:17:06.415Z",
-    price: 100,
-    description: "test product 1",
-    availability: 2,
-    brand: "test brand 1",
-    weight: 10,
-    _id: "testid1",
-  },
-  {
-    name: "testProduct2",
-    date: "2020-02-26T04:17:06.415Z",
-    price: 200,
-    description: "test product 2",
-    availability: 2,
-    brand: "test brand 2",
-    weight: 20,
-    _id: "testid2",
-  },
-  {
-    name: "testProduct3",
-    date: "2020-03-26T04:17:06.415Z",
-    price: 300,
-    description: "test product 3",
-    availability: 3,
-    brand: "test brand 3",
-    weight: 30,
-    _id: "testid3",
-  },
-];
-export const testUser = {
-  cart: {
-    products: {},
-    count: 0,
-    shipping: 0,
-    itemTotal: 0,
-    taxPercent: 8,
-    total: 0,
-  },
-  street: "TestStreet",
-  city: "TestCity",
-  postcode: "123456789",
-  country: "IT",
-  state: "TestState",
-  addressList: [
-    {
-      city: "TestCity",
-      postcode: "123456789",
-      country: "IT",
-      state: "TestState",
-      email: "beniamino@gmail.com",
-      username: "TestUser123",
-      firstName: "Beniamino",
-      lastName: "Tartarini",
-      phone: "5456564564564",
-    },
-  ],
-  email: "beniamino@gmail.com",
-  username: "TestUser123",
-  firstName: "Beniamino",
-  lastName: "Tartarini",
-  name: "Beniamino Tartarini",
-  orders: ["5f2831b0c32e65336d3f0bfd", "5f2953b042729163191c198b"],
-  phone: "5456564564564",
-  twitterId: "TestUser123",
-  profileImageUrl:
-    "http://pbs.twimg.com/profile_images/1274906565967966208/jbQouO38_normal.jpg",
-  _id: "5f282b89754c312c3da2dcaa",
-};
-export const testOrder = [
-  {
-    date: "2020-08-03T15:48:00.923Z",
-    itemTotal: 4958,
-    products: {
-      testProduct1: testProducts[0],
-      testProduct2: testProducts[1],
-    },
-    shipping: 0,
-    taxPercent: 8,
-    total: 648,
-    user: "5f282b89754c312c3da2dcaa",
-    _id: "5f2831b0c32e65336d3f0bf1",
-  },
-  {
-    date: "2020-08-03T15:48:00.923Z",
-    itemTotal: 4958,
-    products: {
-      testProduct3: testProducts[2],
-    },
-    shipping: 0,
-    taxPercent: 8,
-    total: 1062,
-    user: "5f282b89754c312c3da2dcaa",
-    _id: "5f2831b0c32e65336d3f0bfd",
-  },
-];
-export const testAddressList = [
-  {
-    city: "TestCity",
-    postcode: "123456789",
-    country: "IT",
-    state: "TestState",
-    email: "beniamino@gmail.com",
-    username: "TestUser123",
-    firstName: "Beniamino",
-    lastName: "Tartarini",
-    phone: "5456564564564",
-  },
-  {
-    city: "newTestCity",
-    postcode: "123456789",
-    country: "IT",
-    state: "newTestState",
-    email: "beniamino@gmail.com",
-    username: "TestUser123",
-    firstName: "newTestUser",
-    lastName: "newTestUser",
-    phone: "5456564564564",
-  },
-];
 export const testProductsBig = [
   {
     _id: "5f3631bcef673061532a81df",
-    name: "Incredible Rubber Fish",
+    name: "Test Product 1",
     brand: "Collins, Bruen and Wunsch",
     price: 100,
     description:
@@ -138,7 +16,7 @@ export const testProductsBig = [
   },
   {
     _id: "5f3631bcef673061532a81e2",
-    name: "Gorgeous Soft Salad",
+    name: "Test Product 2",
     brand: "Target Brand",
     price: 843,
     description:
@@ -238,5 +116,153 @@ export const testProductsBig = [
     itemsInCart: 0,
     date: "2020-08-14T06:39:56.347Z",
     __v: 0,
+  },
+];
+
+export const testOrder = [
+  {
+    date: "2020-08-03T15:48:00.923Z",
+    itemTotal: 4958,
+    products: {
+      testProduct1: testProductsBig[0],
+      testProduct2: testProductsBig[1],
+    },
+    shipping: 0,
+    taxPercent: 8,
+    total: 648,
+    user: "5f282b89754c312c3da2dcaa",
+    _id: "5f2831b0c32e65336d3f0bf1",
+  },
+  {
+    date: "2020-08-03T15:48:00.923Z",
+    itemTotal: 4958,
+    products: {
+      testProduct3: testProductsBig[2],
+    },
+    shipping: 0,
+    taxPercent: 8,
+    total: 1062,
+    user: "5f282b89754c312c3da2dcaa",
+    _id: "5f2831b0c32e65336d3f0bfd",
+  },
+];
+
+export const testProducts = [
+  {
+    name: "testProduct1",
+    date: "2020-01-26T04:17:06.415Z",
+    price: 100,
+    description: "test product 1",
+    availability: 2,
+    brand: "test brand 1",
+    weight: 10,
+    _id: "testid1",
+  },
+  {
+    name: "testProduct2",
+    date: "2020-02-26T04:17:06.415Z",
+    price: 200,
+    description: "test product 2",
+    availability: 2,
+    brand: "test brand 2",
+    weight: 20,
+    _id: "testid2",
+  },
+  {
+    name: "testProduct3",
+    date: "2020-03-26T04:17:06.415Z",
+    price: 300,
+    description: "test product 3",
+    availability: 3,
+    brand: "test brand 3",
+    weight: 30,
+    _id: "testid3",
+  },
+];
+export const testUser = {
+  cart: {
+    products: {},
+    count: 0,
+    shipping: 0,
+    itemTotal: 0,
+    taxPercent: 8,
+    total: 0,
+  },
+  street: "TestStreet",
+  city: "TestCity",
+  postcode: "123456789",
+  country: "IT",
+  state: "TestState",
+  addressList: [
+    {
+      city: "TestCity",
+      postcode: "123456789",
+      country: "IT",
+      state: "TestState",
+      email: "beniamino@gmail.com",
+      username: "TestUser123",
+      firstName: "Beniamino",
+      lastName: "Tartarini",
+      phone: "5456564564564",
+    },
+  ],
+  email: "beniamino@gmail.com",
+  username: "TestUser123",
+  firstName: "Beniamino",
+  lastName: "Tartarini",
+  name: "Beniamino Tartarini",
+  orders: ["5f2831b0c32e65336d3f0bf1", "5f2831b0c32e65336d3f0bfd"],
+  phone: "5456564564564",
+  twitterId: "TestUser123",
+  profileImageUrl:
+    "http://pbs.twimg.com/profile_images/1274906565967966208/jbQouO38_normal.jpg",
+  _id: "5f282b89754c312c3da2dcaa",
+};
+
+export const testAddressList = [
+  {
+    city: "TestCity",
+    postcode: "123456789",
+    country: "IT",
+    state: "TestState",
+    email: "beniamino@gmail.com",
+    username: "TestUser123",
+    firstName: "Beniamino",
+    lastName: "Tartarini",
+    phone: "5456564564564",
+  },
+  {
+    city: "newTestCity",
+    postcode: "123456789",
+    country: "IT",
+    state: "newTestState",
+    email: "beniamino@gmail.com",
+    username: "TestUser123",
+    firstName: "newTestUser",
+    lastName: "newTestUser",
+    phone: "5456564564564",
+  },
+];
+
+export const timeOptions = [
+  {
+    start: new Date(Date.now() - 999999800000),
+    end: new Date(Date.now() + 3600),
+  },
+  {
+    start: new Date(Date.now() - 2629800000),
+    end: new Date(Date.now() + 3600),
+  },
+  {
+    start: new Date(Date.now() - 31557600000),
+    end: new Date(Date.now() + 3600),
+  },
+  {
+    start: new Date("2020-01-01"),
+    end: new Date("2020-12-31T23:59:59"),
+  },
+  {
+    start: new Date("2019-01-01"),
+    end: new Date("2019-12-31T23:59:59"),
   },
 ];

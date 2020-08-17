@@ -23,6 +23,7 @@ export default function ComposedTextField() {
     <FormControl className={classes.inputForm} variant="outlined">
       <InputLabel htmlFor="component-outlined">Product</InputLabel>
       <OutlinedInput
+        data-testid="text-filter-input"
         id="component-outlined"
         onChange={handleChange}
         label="Name"

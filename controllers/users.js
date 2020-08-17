@@ -1,4 +1,28 @@
 const User = require("../models/User");
+
+const timeOptions = [
+  {
+    start: new Date(Date.now() - 999999800000),
+    end: new Date(Date.now() + 3600),
+  },
+  {
+    start: new Date(Date.now() - 2629800000),
+    end: new Date(Date.now() + 3600),
+  },
+  {
+    start: new Date(Date.now() - 31557600000),
+    end: new Date(Date.now() + 3600),
+  },
+  {
+    start: new Date("2020-01-01"),
+    end: new Date("2020-12-31T23:59:59"),
+  },
+  {
+    start: new Date("2019-01-01"),
+    end: new Date("2019-12-31T23:59:59"),
+  },
+];
+
 module.exports = {
   getAllUsers: async (req, res, next) => {
     console.log("users");
@@ -35,9 +59,12 @@ module.exports = {
       return regex.test(name);
     };
     const isTimeMatch = (date, time) => {
-      if (!time) return true;
-      let { start, end } = JSON.parse(time);
-      return Date.parse(date) > Date.parse(start) && date < Date.parse(end);
+      if (!time) {
+        return true;
+      } else {
+        let { start, end } = timeOptions[time];
+        return Date.parse(date) > Date.parse(start) && date < Date.parse(end);
+      }
     };
     const isStatusMatch = (orderStatus, status) => {
       if (!status) return true;
@@ -58,7 +85,6 @@ module.exports = {
     };
 
     filteredOrders = filterOrders(filteredOrders);
-
     const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
 
     res.status(200).json({

@@ -17,8 +17,8 @@ function CartIcon() {
   return (
     <Link to="/cart">
       <div className={classes.cartIconDiv}>
-        <Badge badgeContent={count} color="secondary">
-          <ShoppingCartIcon fontSize="normal" />
+        <Badge data-testid="cart-badge" badgeContent={count} color="secondary">
+          <ShoppingCartIcon fontSize="default" />
         </Badge>
       </div>
     </Link>

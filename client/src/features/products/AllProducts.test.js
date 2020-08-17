@@ -1,11 +1,13 @@
 import React from "react";
 import { render, cleanup, waitFor, fireEvent } from "@testing-library/react";
-import { Provider } from "react-redux";
-import AllProducts from "./AllProducts";
-import store from "../../app/store";
-import { server } from "../../mocks/server";
-import CartIcon from "../cart/CartIcon";
 import { MemoryRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "../../app/store";
+import AllProducts from "./AllProducts";
+import CartIcon from "../cart/CartIcon";
+import { server } from "../../mocks/server";
+import { fetchAuthState } from "../auth/authSlice";
+import { fetchUser } from "../dashboard/dashboardSlice";
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -13,9 +15,9 @@ afterAll(() => server.close());
 afterEach(cleanup);
 
 describe("AllProducts tests", () => {
-  let getByText, getByTestId, getAllByText;
+  let getByTestId, getAllByTestId;
   beforeEach(() => {
-    return ({ getByText, getByTestId, getAllByText } = render(
+    return ({ getByTestId, getAllByTestId } = render(
       <Provider store={store}>
         <CartIcon />
         <AllProducts />
@@ -23,21 +25,51 @@ describe("AllProducts tests", () => {
       { wrapper: MemoryRouter }
     ));
   });
-  test("AllProducts renders succesfully", () => {
-    expect(getByTestId("component-allproducts")).toBeDefined();
-  });
-  test("The right number of products is rendered", async () => {
-    await waitFor(() => {
-      expect(getAllByText(/testProduct/)).toHaveLength(3);
+  describe("Basic tests", () => {
+    test("AllProducts renders succesfully", () => {
+      expect(getByTestId("component-allproducts")).toBeDefined();
+    });
+    test("The right number of products is rendered", async () => {
+      await waitFor(() => {
+        expect(getAllByTestId("product-card")).toHaveLength(8);
+      });
+    });
+
+    test("Clicking on Add to Cart updates CartIcon", async () => {
+      await waitFor(() => {
+        expect(getAllByTestId("product-card")).toHaveLength(8);
+      });
+      fireEvent.click(getAllByTestId("add-to-cart-button")[0]);
+      expect(getByTestId("cart-badge").lastChild.innerHTML).toBe("1");
+      fireEvent.click(getAllByTestId("add-to-cart-button")[1]);
+      expect(getByTestId("cart-badge").lastChild.innerHTML).toBe("2");
     });
   });
-  test("Clicking on Add to Cart updates CartIcon", async () => {
-    expect(getByText(/Items in cart/gi)).toHaveTextContent("Items in Cart: 0");
-    let button;
-    await waitFor(() => {
-      button = getAllByText(/add to cart/gi)[0];
+
+  describe("Tests for logged users", () => {
+    beforeEach(async () => {
+      await store.dispatch(fetchAuthState());
+      await store.dispatch(fetchUser());
     });
-    fireEvent.click(button);
-    expect(getByText(/Items in cart/gi)).toHaveTextContent("Items in Cart: 1");
+    test("Clicking on the wishlist button adds item to the wishlist", () => {
+      expect(store.getState().wishlist.wishlistItems.length).toBe(0);
+      fireEvent.click(getAllByTestId("add-to-wishlist-button")[0]);
+      expect(store.getState().wishlist.wishlistItems.length).toBe(1);
+    });
+    test("Clicking on the wishlist button adds item to the wishlist", () => {
+      expect(store.getState().wishlist.wishlistItems.length).toBe(1);
+      fireEvent.click(getAllByTestId("remove-from-wishlist-button")[0]);
+      expect(store.getState().wishlist.wishlistItems.length).toBe(0);
+    });
+  });
+  describe("Test product sorting", () => {
+    test("The filter selects applies state changes correctly", async () => {
+      await waitFor(() =>
+        fireEvent.change(getByTestId("sort-selector"), {
+          target: { value: "price" },
+        })
+      );
+      expect(store.getState().products.sortOrder).toBe("price");
+    });
   });
 });

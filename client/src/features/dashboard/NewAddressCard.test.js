@@ -3,10 +3,8 @@ import {
   render,
   cleanup,
   waitFor,
-  act,
   waitForElementToBeRemoved,
   fireEvent,
-  screen,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
@@ -65,7 +63,6 @@ describe("MyProfile tests", () => {
         userEvent.type(getByLabelText("Phone Number").firstChild, "123456789");
         userEvent.type(getByLabelText("Street").firstChild, "TestStreet");
         userEvent.type(getByLabelText("City").firstChild, "TestCity");
-
         userEvent.type(
           getByLabelText("State / Province").firstChild,
           "TestState"

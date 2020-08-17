@@ -24,7 +24,10 @@ function WishlistButton({ product, deleteIcon }) {
   };
 
   return wishlist.some((element) => element._id === product._id) ? (
-    <IconButton onClick={handleRemoveFromWishlist}>
+    <IconButton
+      data-testid="remove-from-wishlist-button"
+      onClick={handleRemoveFromWishlist}
+    >
       {deleteIcon ? (
         <DeleteIcon color="disabled" />
       ) : (
@@ -32,7 +35,10 @@ function WishlistButton({ product, deleteIcon }) {
       )}
     </IconButton>
   ) : (
-    <IconButton onClick={handleAddToWishlist}>
+    <IconButton
+      data-testid="add-to-wishlist-button"
+      onClick={handleAddToWishlist}
+    >
       <FavoriteBorderIcon color="disabled" />
     </IconButton>
   );

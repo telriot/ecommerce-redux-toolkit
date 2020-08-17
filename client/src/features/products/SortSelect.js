@@ -60,13 +60,14 @@ function SortSelect() {
         Sort by
       </InputLabel>
       <Select
-        labelId="demo-simple-select-outlined-label"
-        id="demo-simple-select-outlined"
+        labelId="sort-selector"
+        id="sort-selector"
         value={sortOrder}
         onChange={handleChange}
         label="Sort by"
         inputProps={{
           className: classes.selectInput,
+          "data-testid": "sort-selector",
         }}
       >
         <MenuItem value="">

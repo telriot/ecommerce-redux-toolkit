@@ -50,15 +50,21 @@ function ProductCard({ product }) {
     history.push(`/products/${_id}`);
   };
   return (
-    <Card className={classes.card}>
-      <CardMedia
-        onClick={handleProductRedirect}
-        className={classes.media}
-        image={product.image}
-      />
+    <Card data-testid="product-card" className={classes.card}>
+      {product.image && (
+        <CardMedia
+          onClick={handleProductRedirect}
+          className={classes.media}
+          image={product.image}
+        />
+      )}
       <div className={classes.infoDiv}>
         <div className={classes.nameDiv}>
-          <Typography className={classes.productName} variant="h6">
+          <Typography
+            data-testid="product-name"
+            className={classes.productName}
+            variant="h6"
+          >
             {name}
           </Typography>
           <Typography className={classes.productBrand} variant="caption">

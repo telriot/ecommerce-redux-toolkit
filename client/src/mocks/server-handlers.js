@@ -4,6 +4,7 @@ import {
   testUser,
   testOrder,
   testAddressList,
+  testProductsBig,
 } from "./data-models";
 export const handlers = [
   rest.get("/api/auth/login/success", (req, res, ctx) => {
@@ -20,7 +21,7 @@ export const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        docs: testProducts,
+        docs: testProductsBig,
       })
     );
   }),

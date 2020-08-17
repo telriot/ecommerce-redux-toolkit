@@ -26,6 +26,7 @@ function AddToCartButton({ product, format, quantity, size }) {
           <IconButton
             onClick={handleAddToCart}
             disabled={!isStockAvailable(cartProducts, product)}
+            data-testid="add-to-cart-button"
           >
             <AddShoppingCartIcon />
           </IconButton>

@@ -51,8 +51,6 @@ export const updateUser = createAsyncThunk(
 export const addNewAddress = createAsyncThunk(
   "dashboard/addNewAddress",
   async (address, { getState }) => {
-    console.log("response");
-
     try {
       const id = getState().auth.user._id;
       const response = await axios.put(`api/users/${id}/new-address`, address);

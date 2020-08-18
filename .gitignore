@@ -10,8 +10,8 @@
 
 # production
 /build
-
 # misc
+/dump
 .env
 .DS_Store
 .env.local

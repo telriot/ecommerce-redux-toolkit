@@ -29,9 +29,8 @@ app.use(
 
 //Connect to the DB
 mongoose.connect(
-  process.env.NODE_ENV === "production"
-    ? process.env.MONGO_URI
-    : `mongodb://localhost:27017/shopping-cart`,
+  //process.env.NODE_ENV === "production"
+  process.env.MONGO_URI || `mongodb://localhost:27017/shopping-cart`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,

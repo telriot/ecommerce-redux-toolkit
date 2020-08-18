@@ -1,7 +1,10 @@
 const User = require("../models/User");
 
 module.exports = {
-  CLIENT_HOME_PAGE_URL: "http://localhost:3000",
+  CLIENT_HOME_PAGE_URL:
+    process.env.NODE_ENV === "production"
+      ? "https://ecommerce-boilerplate-mern.herokuapp.com/"
+      : "http://localhost:3000",
   getAuth: async (req, res, next) => {
     console.log("auth");
   },

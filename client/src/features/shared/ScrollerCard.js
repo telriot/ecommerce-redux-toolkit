@@ -1,5 +1,6 @@
 import React from "react";
-import Link from "react-router-dom/Link";
+import { Link, useHistory } from "react-router-dom";
+
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AddToCartButton from "./AddToCartButton";
@@ -26,12 +27,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 function ScrollerCard({ product, variant }) {
   const classes = useStyles();
+  const history = useHistory();
   const { name, price, _id, image } = product;
+  const handleProductLink = (_id) => () => {
+    history.push(`/products/${_id}`);
+  };
   const renderScrollerCardVariant = (variant) => {
     switch (variant) {
       case "vertical":
         return (
-          <div className={classes.verticalDiv}>
+          <div data-testid="scroller-card" className={classes.verticalDiv}>
             <Link to={`/products/${_id}`}>
               <img
                 className={classes.productImageVertical}
@@ -41,8 +46,8 @@ function ScrollerCard({ product, variant }) {
             </Link>
             <div className={classes.rightSideDivVertical}>
               <div className={classes.productInfoVertical}>
-                <MuiLink variant="caption">
-                  <Link to={`/products/${_id}`}>{name}</Link>
+                <MuiLink onClick={handleProductLink(_id)} variant="caption">
+                  {name}
                 </MuiLink>
                 <Typography variant="body1">${price}</Typography>
               </div>
@@ -57,7 +62,7 @@ function ScrollerCard({ product, variant }) {
         );
       default:
         return (
-          <>
+          <div data-testid="scroller-card">
             <Link to={`/products/${_id}`}>
               <img className={classes.productImage} src={image} alt={name} />
             </Link>
@@ -65,7 +70,7 @@ function ScrollerCard({ product, variant }) {
               <Link to={`/products/${_id}`}>{name}</Link>
             </MuiLink>
             <Typography variant="body1">${price}</Typography>
-          </>
+          </div>
         );
     }
   };

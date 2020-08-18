@@ -8,6 +8,8 @@ import CartIcon from "../cart/CartIcon";
 import { server } from "../../mocks/server";
 import { fetchAuthState } from "../auth/authSlice";
 import { fetchUser } from "../dashboard/dashboardSlice";
+import { testWishlist } from "../../mocks/data-models";
+import { fetchWishlistItems } from "../wishlist/wishlistSlice";
 
 beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
@@ -50,16 +52,23 @@ describe("AllProducts tests", () => {
     beforeEach(async () => {
       await store.dispatch(fetchAuthState());
       await store.dispatch(fetchUser());
+      await store.dispatch(fetchWishlistItems());
     });
-    test("Clicking on the wishlist button adds item to the wishlist", () => {
-      expect(store.getState().wishlist.wishlistItems.length).toBe(0);
+    test("Clicking on the wishlist button adds item to the wishlist", async () => {
+      expect(store.getState().wishlist.wishlistItems.length).toBe(
+        testWishlist.length
+      );
       fireEvent.click(getAllByTestId("add-to-wishlist-button")[0]);
-      expect(store.getState().wishlist.wishlistItems.length).toBe(1);
+      expect(store.getState().wishlist.wishlistItems.length).toBe(
+        testWishlist.length + 1
+      );
     });
     test("Clicking on the wishlist button adds item to the wishlist", () => {
-      expect(store.getState().wishlist.wishlistItems.length).toBe(1);
+      fireEvent.click(getAllByTestId("add-to-wishlist-button")[0]);
       fireEvent.click(getAllByTestId("remove-from-wishlist-button")[0]);
-      expect(store.getState().wishlist.wishlistItems.length).toBe(0);
+      expect(store.getState().wishlist.wishlistItems.length).toBe(
+        testWishlist.length
+      );
     });
   });
   describe("Test product sorting", () => {

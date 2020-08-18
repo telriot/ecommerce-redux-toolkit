@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  render,
-  cleanup,
-  waitFor,
-  waitForElementToBeRemoved,
-  fireEvent,
-  findByLabelText,
-  screen,
-  findByTestId,
-  getByLabelText,
-} from "@testing-library/react";
+import { render, cleanup, waitFor, fireEvent } from "@testing-library/react";
 import { Provider } from "react-redux";
 import store from "../../app/store";
 import { server } from "../../mocks/server";
@@ -26,12 +16,7 @@ afterAll(() => server.close());
 afterEach(cleanup);
 
 describe("MyOrders tests", () => {
-  let getByText,
-    getByTestId,
-    getAllByTestId,
-    queryByText,
-    queryAllByText,
-    getByRole;
+  let getByText, getByTestId, getAllByTestId, queryAllByText, getByRole;
   describe("After fetch", () => {
     beforeEach(async () => {
       await store.dispatch(fetchAuthState());
@@ -42,7 +27,6 @@ describe("MyOrders tests", () => {
         getByText,
         getAllByTestId,
         getByTestId,
-        queryByText,
         queryAllByText,
         getByRole,
       } = render(

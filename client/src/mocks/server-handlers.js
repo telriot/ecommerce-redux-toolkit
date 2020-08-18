@@ -1,11 +1,12 @@
 import { rest } from "msw";
 import {
-  testProducts,
   testUser,
   testOrder,
   testAddressList,
-  testProductsBig,
+  testProducts,
   timeOptions,
+  testWishlist,
+  testRecentlyViewed,
 } from "./data-models";
 export const handlers = [
   rest.get("/api/auth/login/success", (req, res, ctx) => {
@@ -22,7 +23,7 @@ export const handlers = [
     return res(
       ctx.status(200),
       ctx.json({
-        docs: testProductsBig,
+        docs: testProducts,
       })
     );
   }),
@@ -82,5 +83,14 @@ export const handlers = [
   }),
   rest.delete("/api/users/:id/remove-address", (req, res, ctx) => {
     return res(ctx.status(200), ctx.json([]));
+  }),
+  rest.get(`/api/users/wishlist/:id`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(testWishlist));
+  }),
+  rest.get(`/api/products/recentViews/:id`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(testRecentlyViewed));
+  }),
+  rest.put(`/api/products/recentViews/:id`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(testRecentlyViewed));
   }),
 ];

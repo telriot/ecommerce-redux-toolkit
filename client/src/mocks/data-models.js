@@ -1,4 +1,4 @@
-export const testProductsBig = [
+export const testProducts = [
   {
     _id: "5f3631bcef673061532a81df",
     name: "Test Product 1",
@@ -118,14 +118,15 @@ export const testProductsBig = [
     __v: 0,
   },
 ];
+export const testRecentlyViewed = testProducts.slice(2, 4);
 
 export const testOrder = [
   {
     date: "2020-08-03T15:48:00.923Z",
     itemTotal: 4958,
     products: {
-      testProduct1: testProductsBig[0],
-      testProduct2: testProductsBig[1],
+      testProduct1: testProducts[0],
+      testProduct2: testProducts[1],
     },
     shipping: 0,
     taxPercent: 8,
@@ -137,7 +138,7 @@ export const testOrder = [
     date: "2020-08-03T15:48:00.923Z",
     itemTotal: 4958,
     products: {
-      testProduct3: testProductsBig[2],
+      testProduct3: testProducts[2],
     },
     shipping: 0,
     taxPercent: 8,
@@ -147,38 +148,6 @@ export const testOrder = [
   },
 ];
 
-export const testProducts = [
-  {
-    name: "testProduct1",
-    date: "2020-01-26T04:17:06.415Z",
-    price: 100,
-    description: "test product 1",
-    availability: 2,
-    brand: "test brand 1",
-    weight: 10,
-    _id: "testid1",
-  },
-  {
-    name: "testProduct2",
-    date: "2020-02-26T04:17:06.415Z",
-    price: 200,
-    description: "test product 2",
-    availability: 2,
-    brand: "test brand 2",
-    weight: 20,
-    _id: "testid2",
-  },
-  {
-    name: "testProduct3",
-    date: "2020-03-26T04:17:06.415Z",
-    price: 300,
-    description: "test product 3",
-    availability: 3,
-    brand: "test brand 3",
-    weight: 30,
-    _id: "testid3",
-  },
-];
 export const testUser = {
   cart: {
     products: {},
@@ -217,6 +186,8 @@ export const testUser = {
   profileImageUrl:
     "http://pbs.twimg.com/profile_images/1274906565967966208/jbQouO38_normal.jpg",
   _id: "5f282b89754c312c3da2dcaa",
+  wishlist: [...testProducts],
+  recentViews: [...testRecentlyViewed],
 };
 
 export const testAddressList = [
@@ -264,5 +235,37 @@ export const timeOptions = [
   {
     start: new Date("2019-01-01"),
     end: new Date("2019-12-31T23:59:59"),
+  },
+];
+export const testWishlist = [
+  {
+    _id: "5f3631bcef673061532atest",
+    name: "Test Product 1",
+    brand: "Collins, Bruen and Wunsch",
+    price: 100,
+    description:
+      "Labore rem totam et ad voluptatem molestiae. Quia sed rerum animi.",
+    department: "Outdoors",
+    availability: 13,
+    weight: 9.6,
+    image: "http://lorempixel.com/400/400/business",
+    itemsInCart: 0,
+    date: "2020-08-14T06:39:56.307Z",
+    __v: 0,
+  },
+  {
+    _id: "5f3631bcef6730615322test",
+    name: "Test Product 2",
+    brand: "Target Brand",
+    price: 843,
+    description:
+      "Sint maiores iusto autem eum sequi nam id perspiciatis. In minima praesentium incidunt voluptatem dolore distinctio aliquid beatae eveniet. Nihil omnis et blanditiis at incidunt id et dolorem unde.",
+    department: "Kids",
+    availability: 2,
+    weight: 0.2,
+    image: "http://lorempixel.com/400/400/business",
+    itemsInCart: 0,
+    date: "2020-08-14T06:39:56.312Z",
+    __v: 0,
   },
 ];
